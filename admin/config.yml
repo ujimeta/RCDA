@@ -1,21 +1,22 @@
 backend:
   name: git-gateway
-  branch: main # or master depending on your default branch
+  branch: main
 
-media_folder: "images/uploads" # Where uploaded field photos will be stored in your repo
+media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "thematics"
     label: "Thematic Focus Pages"
-    folder: "_thematics" # Folder where individual thematic page data will be saved
+    folder: "_thematics"
     create: true
     fields:
       - {label: "Thematic Area Title", name: "title", widget: "string"}
       - {label: "URL Slug (e.g. malaria)", name: "slug", widget: "string"}
       - {label: "Theme Primary Color (Hex)", name: "theme_color", widget: "string", default: "#00897B"}
       - {label: "Header Description", name: "description", widget: "text"}
-      - {label: "Overview Narrative", name: "overview", widget: "markdown"}
+      - {label: "Past Activities & Milestones", name: "past_activities", widget: "markdown"}
+      - {label: "Ongoing Projects & Current Operations", name: "ongoing_activities", widget: "markdown"}
       - label: "Performance Metrics & Statistics"
         name: "stats"
         widget: "object"
