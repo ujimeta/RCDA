@@ -35,7 +35,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 15px 5%;
             border-bottom: 1px solid #E5E5E5;
             position: sticky;
             top: 0;
@@ -44,28 +44,60 @@
         }
 
         .logo {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             color: var(--rcda-green);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .logo-box {
+        .logo-emblem {
+            width: 44px;
+            height: 44px;
             background: var(--rcda-green);
-            color: var(--accent-gold);
-            width: 38px;
-            height: 38px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--accent-gold);
             font-weight: 900;
-            border-radius: 6px;
-            border: 2px solid var(--accent-gold);
             font-size: 1.1rem;
+            box-shadow: 0 2px 6px rgba(15, 76, 58, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-emblem::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 16px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-text span:first-child {
+            font-size: 1.1rem;
+            color: var(--rcda-dark-green);
+            font-weight: 900;
+        }
+
+        .logo-text span:last-child {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         nav ul {
@@ -439,237 +471,4 @@
                 display: flex;
             }
             nav ul li {
-                width: 100%;
-                padding: 5px 0;
-            }
-            .dropdown-content {
-                position: static;
-                box-shadow: none;
-                border: none;
-                display: block;
-                background: var(--bg-light);
-                margin-top: 5px;
-            }
-            .header-cta {
-                display: none; 
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <a href="index.html" class="logo">
-            <div class="logo-box">R</div> RCDA Nigeria
-        </a>
-        <div class="menu-toggle" id="mobile-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <nav>
-            <ul id="nav-list">
-                <li class="dropdown">
-                    <a href="who-we-are.html">About Us ▾</a>
-                    <ul class="dropdown-content">
-                        <li><a href="who-we-are.html">Who We Are</a></li>
-                        <li><a href="what-we-do.html">What We Do</a></li>
-                        <li><a href="who-we-serve.html">Who We Serve</a></li>
-                    </ul>
-                </li>
-                <li><a href="index.html#thematic">Thematic Focus</a></li>
-                <li><a href="index.html#model">Our Model</a></li>
-                <li><a href="index.html#partnerships">Partnerships</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <a href="index.html#contact" class="btn-action header-cta">Support Our Work</a>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Compassion in Action, <span>Health in Every Community.</span></h1>
-            <p>Rahama Community Development Association (RCDA) works at the grassroots intersection of public health, disease case-finding, and sustainable socioeconomic empowerment across Kano State.</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn-action">Get Involved</a>
-                <a href="who-we-are.html" class="btn-secondary">Learn More</a>
-            </div>
-        </div>
-        <div class="hero-image"></div>
-    </section>
-
-    <div class="info-bar">
-        <div>Founded: 2014</div>
-        <div>CAC Registered: 2016</div>
-        <div>8 Thematic Focus Areas</div>
-        <div>State of Operation: Kano State</div>
-    </div>
-
-    <section id="thematic" class="content-section alt-bg">
-        <div class="alt-bg-inner" style="padding: 0 5%;">
-            <h2>Our Eight Thematic Focus Areas</h2>
-            <p style="color: var(--text-light); margin-bottom: 30px;">Delivered through a community-centered service model linking households directly to primary healthcare systems. Click any card to explore dedicated activities, data, and galleries.</p>
-            
-            <div class="grid-4">
-                <a href="reproductive-health.html" class="card">
-                    <div>
-                        <div class="card-icon">👩‍🍼</div>
-                        <h3>Reproductive Health & Child Spacing</h3>
-                        <p>Community-based provision of family planning information, dispelling myths, and reducing barriers to maternal care.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="nutrition.html" class="card">
-                    <div>
-                        <div class="card-icon">🥗</div>
-                        <h3>Nutrition Services</h3>
-                        <p>MUAC screening, growth monitoring, maternal nutrition counseling, and timely referral of malnourished children.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="child-survival.html" class="card">
-                    <div>
-                        <div class="card-icon">👶</div>
-                        <h3>Child Survival Services</h3>
-                        <p>Promoting routine immunization uptake and managing common childhood illnesses via trained volunteers.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="malaria.html" class="card">
-                    <div>
-                        <div class="card-icon">🦟</div>
-                        <h3>Malaria Interventions</h3>
-                        <p>Rapid Diagnostic Testing (RDT), Insecticide-Treated Net (ITN) distribution campaigns, and demand creation.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="hiv-tb.html" class="card">
-                    <div>
-                        <div class="card-icon">🎗️</div>
-                        <h3>HIV/AIDS Case Finding</h3>
-                        <p>Community mobilization, testing support, index testing, and active linkage to ART care facilities.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="hiv-tb.html" class="card">
-                    <div>
-                        <div class="card-icon">🫁</div>
-                        <h3>TB Case Finding</h3>
-                        <p>Partnering on the TB C:J-SOFT project for contact tracing, presumptive screening, and preventive therapy follow-up.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="systems-surveillance.html" class="card">
-                    <div>
-                        <div class="card-icon">🛡️</div>
-                        <h3>Diphtheria Contact Tracing</h3>
-                        <p>Surveillance, suspect identification, close contact tracing, and IDSR reporting in line with national protocols.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-
-                <a href="community-engagement.html" class="card">
-                    <div>
-                        <div class="card-icon">🤝</div>
-                        <h3>Community Systems Strengthening</h3>
-                        <p>OVC support, multi-sectoral advocacy, and vocational skills initiatives for sustainable communities.</p>
-                    </div>
-                    <span class="card-link">View Activities &rarr;</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="model" class="content-section">
-        <h2>Our Community Case-Finding & Referral Pathway</h2>
-        <p style="color: var(--text-light); margin-bottom: 20px;">A standardized 5-step framework ensuring consistent community sensitization, screening, testing, and follow-up.</p>
-        <div class="model-grid">
-            <div class="model-card">
-                <h4>01. Sensitization</h4>
-                <p>Household & community awareness drives on malaria, HIV, TB, and diphtheria.</p>
-            </div>
-            <div class="model-card">
-                <h4>02. Screening</h4>
-                <p>Community volunteers & CORPs identify presumptive and at-risk cases at the household level.</p>
-            </div>
-            <div class="model-card">
-                <h4>03. Testing / Tracing</h4>
-                <p>Malaria RDT, HIV testing, TB presumptive screening, and diphtheria contact listing.</p>
-            </div>
-            <div class="model-card">
-                <h4>04. Referral Linkage</h4>
-                <p>Confirmed cases linked directly to health facilities for treatment, ART, or preventive therapy.</p>
-            </div>
-            <div class="model-card">
-                <h4>05. Follow-up & M&E</h4>
-                <p>Treatment adherence support, data capture, and reporting to LGA/State surveillance.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="partnerships" class="content-section alt-bg">
-        <div class="alt-bg-inner" style="padding: 0 5%;">
-            <h2>Partnerships & Affiliations</h2>
-            <p style="color: var(--text-light);">Collaborating with leading technical networks and coordination bodies across Nigeria.</p>
-            <div class="partners-list">
-                <div class="partner-badge">Society for Family Health (SFH)</div>
-                <div class="partner-badge">KNCV Tuberculosis Foundation</div>
-                <div class="partner-badge">Nigeria Network of NGOs</div>
-                <div class="partner-badge">KANET (Coalition of NGOs in Kano State)</div>
-                <div class="partner-badge">New HIV Vaccine & Microbicide Advocacy Society (NHVMAS)</div>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4>RCDA Nigeria</h4>
-                <p>Suite 57, Buhari Shopping Complex, Hadejia Road, Nassarawa LGA, Kano State, Nigeria.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="who-we-are.html">Who We Are</a></li>
-                    <li><a href="what-we-do.html">What We Do</a></li>
-                    <li><a href="who-we-serve.html">Who We Serve</a></li>
-                    <li><a href="index.html#thematic">Thematic Focus</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Executive Leadership</h4>
-                <p><strong>Executive Director:</strong> Haj. Hajara Muhammad Argungu</p>
-                <p><strong>CAC Reg:</strong> CAC/IT/NO. 92853</p>
-            </div>
-            <div class="footer-col">
-                <h4>Contact Info</h4>
-                <p>Tel: 08037257176</p>
-                <p>Email: rahamacda4@gmail.com</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Rahama Community Development Association (RCDA). All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navList = document.getElementById('nav-list');
-
-        mobileMenu.addEventListener('click', () => {
-            navList.classList.toggle('active');
-        });
-
-        document.querySelectorAll('nav ul li a').forEach(link => {
-            link.addEventListener('click', () => {
-                if(!link.textContent.includes('▾')) {
-                    navList.classList.remove('active');
-                }
-            });
-        });
+                width: 100
