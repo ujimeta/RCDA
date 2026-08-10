@@ -1,0 +1,32 @@
+backend:
+  name: git-gateway
+  branch: main # or master depending on your default branch
+
+media_folder: "images/uploads" # Where uploaded field photos will be stored in your repo
+public_folder: "/images/uploads"
+
+collections:
+  - name: "thematics"
+    label: "Thematic Focus Pages"
+    folder: "_thematics" # Folder where individual thematic page data will be saved
+    create: true
+    fields:
+      - {label: "Thematic Area Title", name: "title", widget: "string"}
+      - {label: "URL Slug (e.g. malaria)", name: "slug", widget: "string"}
+      - {label: "Theme Primary Color (Hex)", name: "theme_color", widget: "string", default: "#00897B"}
+      - {label: "Header Description", name: "description", widget: "text"}
+      - {label: "Overview Narrative", name: "overview", widget: "markdown"}
+      - label: "Performance Metrics & Statistics"
+        name: "stats"
+        widget: "object"
+        fields:
+          - {label: "Target Population / Goal", name: "target", widget: "string"}
+          - {label: "Households / Individuals Reached", name: "achieved", widget: "string"}
+          - {label: "Achievement Percentage (%)", name: "percentage", widget: "number"}
+          - {label: "National / State Benchmark Context", name: "benchmark", widget: "text"}
+      - label: "Photo Gallery"
+        name: "gallery"
+        widget: "list"
+        fields:
+          - {label: "Activity Picture", name: "image", widget: "image"}
+          - {label: "Caption / Description", name: "caption", widget: "string"}
