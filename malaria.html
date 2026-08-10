@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaria Interventions | RCDA Nigeria</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        :root { 
+            --theme-primary: #00897B; /* Deep Teal designated for Malaria */
+            --theme-dark: #005B52; 
+            --accent-gold: #F4B41A; 
+            --text-main: #222222; 
+            --text-light: #555555; 
+            --bg-light: #F7F9F8; 
+            --white: #FFFFFF; 
+        }
+        body { color: var(--text-main); background-color: var(--white); line-height: 1.7; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid #E5E5E5; background: var(--white); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.3rem; font-weight: 800; color: var(--theme-primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo-box { background: var(--theme-primary); color: var(--accent-gold); padding: 6px 10px; font-weight: 900; border-radius: 4px; }
+        
+        .page-header { background-color: var(--theme-primary); color: var(--white); padding: 60px 5%; text-align: center; }
+        .page-header h1 { font-size: 2.8rem; margin-bottom: 10px; font-weight: 800; }
+        .page-header p { color: #E2ECE9; font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+        .container { max-width: 1000px; margin: 60px auto; padding: 0 5%; }
+        .section-box { margin-bottom: 50px; }
+        .container h2 { color: var(--theme-dark); font-size: 1.8rem; margin-bottom: 20px; font-weight: 700; border-left: 5px solid var(--accent-gold); padding-left: 15px; }
+        .container p { color: var(--text-light); font-size: 1.05rem; margin-bottom: 20px; }
+
+        /* Data & Statistics Section (Option A) */
+        .stats-container { background: var(--bg-light); padding: 35px; border-radius: 8px; border: 1px solid #E5E5E5; margin: 40px 0; }
+        .stats-container h3 { color: var(--theme-dark); font-size: 1.4rem; margin-bottom: 20px; }
+        
+        .stat-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-box { background: var(--white); padding: 20px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border-left: 4px solid var(--accent-gold); }
+        .stat-box span { display: block; font-size: 0.85rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; }
+        .stat-box strong { font-size: 1.8rem; color: var(--theme-dark); font-weight: 800; }
+
+        /* Progress Bar Styling */
+        .progress-group { margin-top: 20px; }
+        .progress-label { display: flex; justify-content: space-between; font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; color: var(--theme-dark); }
+        .progress-track { background: #E5E5E5; height: 14px; border-radius: 7px; overflow: hidden; }
+        .progress-fill { background: var(--theme-primary); height: 100%; border-radius: 7px; width: 93%; }
+        .national-benchmark { margin-top: 15px; font-size: 0.9rem; color: var(--text-light); font-style: italic; }
+
+        /* Photo Gallery Grid */
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 40px 0; }
+        .photo-card { background: var(--bg-light); border-radius: 6px; overflow: hidden; border: 1px solid #E5E5E5; }
+        .photo-card img { width: 100%; height: 220px; object-fit: cover; }
+        .photo-caption { padding: 15px; font-size: 0.9rem; color: var(--text-main); font-weight: 500; }
+
+        .back-btn { display: inline-block; background: var(--theme-primary); color: var(--white); padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: 600; margin-top: 20px; }
+        .back-btn:hover { background: var(--theme-dark); }
+
+        footer { background-color: var(--theme-dark); color: var(--white); text-align: center; padding: 30px 5%; margin-top: 80px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-box">R</div> RCDA Nigeria
+        </a>
+        <a href="index.html#thematic" style="color: var(--theme-primary); font-weight: 600; text-decoration: none;">&larr; Back to Home</a>
+    </header>
+
+    <div class="page-header">
+        <h1>Malaria Interventions</h1>
+        <p>Active case finding, Rapid Diagnostic Testing (RDT), treatment, and community distribution networks across Kano grassroots areas.</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="section-box">
+            <h2>Past Activities & Milestones</h2>
+            <p>Over previous funding cycles, RCDA successfully established grassroots intervention structures across target local government areas in Kano State. Historical operations focused heavily on building community trust, training local health volunteers, and deploying pilot distribution networks for Insecticide-Treated Nets (ITNs).</p>
+            <p>Milestones achieved include the training of over 150 Community-Oriented Resource Persons (CORPs) and conducting massive community awareness campaigns that significantly shifted local health-seeking behaviors toward early testing rather than presumptive self-medication.</p>
+        </div>
+
+        <div class="section-box">
+            <h2>Ongoing Projects & Current Operations</h2>
+            <p>Malaria remains a significant health burden across rural and peri-urban settlements. Currently, RCDA executes rigorous door-to-door screening protocols designed to close the treatment gap by bringing diagnostic and curative services directly to household doorsteps.</p>
+            <p>Our teams actively manage uncomplicated malaria cases using Artemisinin-based Combination Therapy (ACT) while simultaneously coordinating targeted net maintenance distributions and continuous community health education.</p>
+        </div>
+        
+        <div class="stats-container">
+            <h3>Performance Metrics & Data Insights</h3>
+            <div class="stat-card-grid">
+                <div class="stat-box">
+                    <span>Target Population</span>
+                    <strong>5,000</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Households Reached</span>
+                    <strong>4,650</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Achievement Rate</span>
+                    <strong>93%</strong>
+                </div>
+            </div>
+
+            <div class="progress-group">
+                <div class="progress-label">
+                    <span>Target vs Actual Achievement</span>
+                    <span>93% Achieved</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+            <p class="national-benchmark"><strong>National / State Context:</strong> Kano State baseline community diagnostic coverage averages 78%. RCDA's active case-finding model exceeds this benchmark by 15%.</p>
+        </div>
+
+        <div class="section-box">
+            <h2>Photo Gallery & Field Documentation</h2>
+            <p>Visual records capturing grassroots outreach, testing sessions, and net distribution drives:</p>
+
+            <div class="photo-grid">
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600" alt="Community Health Outreach">
+                    <div class="photo-caption">Figure 1: RCDA volunteers conducting household malaria screening and RDT testing in target communities.</div>
+                </div>
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600" alt="ITN Distribution">
+                    <div class="photo-caption">Figure 2: Distribution and practical demonstration of Insecticide-Treated Net (ITN) maintenance for mothers.</div>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html#thematic" class="back-btn">&larr; Return to All Thematic Focus Areas</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Rahama Community Development Association (RCDA). All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
