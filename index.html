@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rahama Community Development Association (RCDA) | Kano State</title>
     <style>
-        /* CSS Reset & Variables */
         * {
             margin: 0;
             padding: 0;
@@ -46,7 +45,6 @@
         .logo {
             font-size: 1.3rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
             color: var(--rcda-green);
             text-decoration: none;
             display: flex;
@@ -81,7 +79,6 @@
             color: var(--rcda-green);
         }
 
-        /* Dropdown Styling */
         .dropdown {
             position: relative;
         }
@@ -136,7 +133,6 @@
             background-color: #dda212;
         }
 
-        /* Mobile Menu Toggle Button */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -149,10 +145,9 @@
             height: 3px;
             background-color: var(--rcda-green);
             border-radius: 2px;
-            transition: 0.3s;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
@@ -209,7 +204,6 @@
             background: url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat;
         }
 
-        /* Quick Info Bar */
         .info-bar {
             background-color: var(--accent-gold);
             color: var(--rcda-dark-green);
@@ -222,23 +216,23 @@
             gap: 20px;
         }
 
-        /* Sections General Padding */
         section {
             scroll-margin-top: 90px;
         }
 
-        /* Content Sections */
         .content-section {
             padding: 90px 5%;
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .content-section h2 {
             font-size: 2.3rem;
             color: var(--rcda-dark-green);
             margin-bottom: 20px;
             font-weight: 800;
         }
+
         .content-section p {
             color: var(--text-light);
             font-size: 1.05rem;
@@ -255,7 +249,7 @@
             margin: 0 auto;
         }
 
-        /* Thematic Focus Areas Grid */
+        /* Thematic Grid with Clickable Interactive Cards */
         .grid-4 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -270,18 +264,44 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
             text-align: left;
             border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(15, 76, 58, 0.12);
+            border-color: var(--accent-gold);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
 
         .card h3 {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--rcda-dark-green);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .card p {
             color: var(--text-light);
             font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .card-link-text {
+            color: var(--rcda-green);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* Model Section */
@@ -308,7 +328,7 @@
             color: var(--text-light);
         }
 
-        /* Partnerships Section */
+        /* Partnerships */
         .partners-list {
             display: flex;
             flex-wrap: wrap;
@@ -325,7 +345,7 @@
             border: 1px solid #E5E5E5;
         }
 
-        /* Footer / Contact Section */
+        /* Footer */
         footer {
             background-color: var(--rcda-dark-green);
             color: var(--white);
@@ -373,7 +393,6 @@
             font-size: 0.85rem;
         }
 
-        /* Responsive Design */
         @media (max-width: 900px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -384,8 +403,6 @@
             .hero-content h1 {
                 font-size: 2.4rem;
             }
-            
-            /* Mobile Nav Dropdown adjustments */
             .menu-toggle {
                 display: flex;
             }
@@ -426,7 +443,7 @@
 <body>
 
     <header>
-        <a href="#" class="logo">
+        <a href="index.html" class="logo">
             <div class="logo-box">R</div> RCDA Nigeria
         </a>
         <div class="menu-toggle" id="mobile-menu">
@@ -437,20 +454,20 @@
         <nav>
             <ul id="nav-list">
                 <li class="dropdown">
-                    <a href="#who-we-are">About Us ▾</a>
+                    <a href="index.html#who-we-are">About Us ▾</a>
                     <ul class="dropdown-content">
-                        <li><a href="#who-we-are">Who We Are</a></li>
-                        <li><a href="#what-we-do">What We Do</a></li>
-                        <li><a href="#who-we-serve">Who We Serve</a></li>
+                        <li><a href="index.html#who-we-are">Who We Are</a></li>
+                        <li><a href="index.html#what-we-do">What We Do</a></li>
+                        <li><a href="index.html#who-we-serve">Who We Serve</a></li>
                     </ul>
                 </li>
-                <li><a href="#thematic">Thematic Focus</a></li>
-                <li><a href="#model">Our Model</a></li>
-                <li><a href="#partnerships">Partnerships</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html#thematic">Thematic Focus</a></li>
+                <li><a href="index.html#model">Our Model</a></li>
+                <li><a href="index.html#partnerships">Partnerships</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
             </ul>
         </nav>
-        <a href="#contact" class="btn-action header-cta">Support Our Work</a>
+        <a href="index.html#contact" class="btn-action header-cta">Support Our Work</a>
     </header>
 
     <section class="hero">
@@ -458,7 +475,7 @@
             <h1>Compassion in Action, <span>Health in Every Community.</span></h1>
             <p>Rahama Community Development Association (RCDA) works at the grassroots intersection of public health, disease case-finding, and sustainable socioeconomic empowerment across Kano State.</p>
             <div class="hero-buttons">
-                <a href="#contact" class="btn-action">Get Involved</a>
+                <a href="index.html#contact" class="btn-action">Get Involved</a>
                 <a href="#who-we-are" class="btn-secondary">Learn More</a>
             </div>
         </div>
@@ -517,41 +534,80 @@
     <section id="thematic" class="content-section alt-bg">
         <div class="alt-bg-inner" style="padding: 0 5%;">
             <h2>Our Eight Thematic Focus Areas</h2>
-            <p style="color: var(--text-light); margin-bottom: 30px;">Delivered through a community-centered service model linking households directly to primary healthcare systems.</p>
+            <p style="color: var(--text-light); margin-bottom: 30px;">Click any thematic focus area below to explore detailed activities, field reports, and captioned photo galleries.</p>
             
             <div class="grid-4">
-                <div class="card">
-                    <h3>Reproductive Health & Child Spacing</h3>
-                    <p>Community-based provision of family planning information, dispelling myths, and reducing barriers to maternal care.</p>
-                </div>
-                <div class="card">
-                    <h3>Nutrition Services</h3>
-                    <p>MUAC screening, growth monitoring, maternal nutrition counseling, and timely referral of malnourished children.</p>
-                </div>
-                <div class="card">
-                    <h3>Child Survival Services</h3>
-                    <p>Promoting routine immunization uptake and managing common childhood illnesses via trained volunteers.</p>
-                </div>
-                <div class="card">
-                    <h3>Malaria Interventions</h3>
-                    <p>Rapid Diagnostic Testing (RDT), Insecticide-Treated Net (ITN) distribution campaigns, and demand creation.</p>
-                </div>
-                <div class="card">
-                    <h3>HIV/AIDS Case Finding</h3>
-                    <p>Community mobilization, testing support, index testing, and active linkage to ART care facilities.</p>
-                </div>
-                <div class="card">
-                    <h3>TB Case Finding</h3>
-                    <p>Partnering on the TB C:J-SOFT project for contact tracing, presumptive screening, and preventive therapy follow-up.</p>
-                </div>
-                <div class="card">
-                    <h3>Diphtheria Contact Tracing</h3>
-                    <p>Surveillance, suspect identification, close contact tracing, and IDSR reporting in line with national protocols.</p>
-                </div>
-                <div class="card">
-                    <h3>Community Systems Strengthening</h3>
-                    <p>OVC support, multi-sectoral advocacy, and vocational skills initiatives for sustainable communities.</p>
-                </div>
+                <a href="reproductive-health.html" class="card">
+                    <div>
+                        <div class="card-icon">👶</div>
+                        <h3>Reproductive Health & Child Spacing</h3>
+                        <p>Community-based provision of family planning information, dispelling myths, and reducing barriers to maternal care.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="nutrition.html" class="card">
+                    <div>
+                        <div class="card-icon">🥗</div>
+                        <h3>Nutrition Services</h3>
+                        <p>MUAC screening, growth monitoring, maternal nutrition counseling, and timely referral of malnourished children.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="child-survival.html" class="card">
+                    <div>
+                        <div class="card-icon">🛡️</div>
+                        <h3>Child Survival Services</h3>
+                        <p>Promoting routine immunization uptake and managing common childhood illnesses via trained volunteers.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="malaria.html" class="card">
+                    <div>
+                        <div class="card-icon">🦟</div>
+                        <h3>Malaria Interventions</h3>
+                        <p>Rapid Diagnostic Testing (RDT), Insecticide-Treated Net (ITN) distribution campaigns, and demand creation.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="hiv-aids.html" class="card">
+                    <div>
+                        <div class="card-icon">🎗️</div>
+                        <h3>HIV/AIDS Case Finding</h3>
+                        <p>Community mobilization, testing support, index testing, and active linkage to ART care facilities.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="tb-case.html" class="card">
+                    <div>
+                        <div class="card-icon">🫁</div>
+                        <h3>TB Case Finding</h3>
+                        <p>Partnering on the TB C:J-SOFT project for contact tracing, presumptive screening, and preventive therapy follow-up.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="diphtheria.html" class="card">
+                    <div>
+                        <div class="card-icon">🔬</div>
+                        <h3>Diphtheria Contact Tracing</h3>
+                        <p>Surveillance, suspect identification, close contact tracing, and IDSR reporting in line with national protocols.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
+
+                <a href="community-systems.html" class="card">
+                    <div>
+                        <div class="card-icon">🤝</div>
+                        <h3>Community Systems Strengthening</h3>
+                        <p>OVC support, multi-sectoral advocacy, and vocational skills initiatives for sustainable communities.</p>
+                    </div>
+                    <span class="card-link-text">Explore Area &rarr;</span>
+                </a>
             </div>
         </div>
     </section>
@@ -606,10 +662,10 @@
             <div class="footer-col">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#who-we-are">Who We Are</a></li>
-                    <li><a href="#what-we-do">What We Do</a></li>
-                    <li><a href="#who-we-serve">Who We Serve</a></li>
-                    <li><a href="#thematic">Thematic Focus</a></li>
+                    <li><a href="index.html#who-we-are">Who We Are</a></li>
+                    <li><a href="index.html#what-we-do">What We Do</a></li>
+                    <li><a href="index.html#who-we-serve">Who We Serve</a></li>
+                    <li><a href="index.html#thematic">Thematic Focus</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -636,7 +692,6 @@
             navList.classList.toggle('active');
         });
 
-        // Close menu when a link is clicked on mobile
         document.querySelectorAll('nav ul li a').forEach(link => {
             link.addEventListener('click', () => {
                 if(!link.textContent.includes('▾')) {
