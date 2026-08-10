@@ -1,1 +1,184 @@
-# RCDA
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahama Community Development Association (RCDA) Nigeria</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; scroll-behavior: smooth; }
+        :root { 
+            --primary-green: #2E7D32; 
+            --accent-gold: #F4B41A; 
+            --text-main: #222222; 
+            --text-light: #555555; 
+            --bg-light: #F9FBF9; 
+            --white: #FFFFFF; 
+        }
+        body { color: var(--text-main); background-color: var(--white); line-height: 1.7; }
+        
+        /* Navigation */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid #E5E5E5; background: var(--white); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary-green); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo-box { background: var(--primary-green); color: var(--accent-gold); padding: 6px 10px; font-weight: 900; border-radius: 4px; }
+        nav { display: flex; gap: 25px; align-items: center; }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.95rem; }
+        nav a:hover { color: var(--primary-green); }
+        .admin-link { background: var(--accent-gold); color: #222; padding: 8px 16px; border-radius: 4px; font-weight: 700; }
+
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542744094-3a31243364d0?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat; color: var(--white); padding: 100px 5%; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; font-weight: 800; }
+        .hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 30px auto; color: #E0E0E0; }
+        .cta-btn { display: inline-block; background: var(--accent-gold); color: #222; padding: 14px 28px; border-radius: 4px; font-weight: 700; text-decoration: none; font-size: 1.05rem; }
+        .cta-btn:hover { background: #dca014; }
+
+        /* Container & Section Styling */
+        .container { max-width: 1200px; margin: 80px auto; padding: 0 5%; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.3rem; color: var(--primary-green); margin-bottom: 15px; font-weight: 800; }
+        .section-title p { color: var(--text-light); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+        /* Thematic Grid (The 8 Pillars) */
+        .thematic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 30px; }
+        .theme-card { background: var(--bg-light); border-radius: 8px; border: 1px solid #E5E5E5; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .theme-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+        .theme-card-content { padding: 30px; }
+        .theme-card h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 700; }
+        .theme-card p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 20px; }
+        .theme-link { display: block; padding: 15px 30px; color: var(--white); text-decoration: none; font-weight: 700; text-align: center; }
+
+        /* Specific Theme Accent Colors for Cards */
+        .card-malaria { border-top: 5px solid #D48806; }
+        .card-malaria .theme-link { background: #D48806; }
+        .card-malaria h3 { color: #8F5B00; }
+
+        .card-nutrition { border-top: 5px solid #43A047; }
+        .card-nutrition .theme-link { background: #43A047; }
+        .card-nutrition h3 { color: #2E7D32; }
+
+        .card-reproductive { border-top: 5px solid #D81B60; }
+        .card-reproductive .theme-link { background: #D81B60; }
+        .card-reproductive h3 { color: #880E4F; }
+
+        .card-child { border-top: 5px solid #FB8C00; }
+        .card-child .theme-link { background: #FB8C00; }
+        .card-child h3 { color: #E65100; }
+
+        .card-hiv { border-top: 5px solid #E53935; }
+        .card-hiv .theme-link { background: #E53935; }
+        .card-hiv h3 { color: #B71C1C; }
+
+        .card-systems { border-top: 5px solid #3F51B5; }
+        .card-systems .theme-link { background: #3F51B5; }
+        .card-systems h3 { color: #283593; }
+
+        .card-wash { border-top: 5px solid #0288D1; }
+        .card-wash .theme-link { background: #0288D1; }
+        .card-wash h3 { color: #01579B; }
+
+        .card-community { border-top: 5px solid #00838F; }
+        .card-community .theme-link { background: #00838F; }
+        .card-community h3 { color: #004D40; }
+
+        /* Footer */
+        footer { background-color: #1B381D; color: var(--white); text-align: center; padding: 40px 5%; margin-top: 100px; font-size: 0.95rem; }
+        footer p { color: #C8D6C9; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-box">R</div> RCDA Nigeria
+        </a>
+        <nav>
+            <a href="#thematic">Thematic Focus</a>
+            <a href="admin/index.html" class="admin-link">CMS Admin</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>Rahama Community Development Association</h1>
+        <p>Empowering grassroots communities across Kano State and Nigeria through sustainable healthcare, nutrition, disease surveillance, and community-led development.</p>
+        <a href="#thematic" class="cta-btn">Explore Our 8 Thematic Pillars</a>
+    </div>
+
+    <div class="container" id="thematic">
+        <div class="section-title">
+            <h2>Our 8 Thematic Focus Areas</h2>
+            <p>Click on any thematic pillar below to explore our detailed past milestones, ongoing field projects, performance metrics, and photo galleries.</p>
+        </div>
+
+        <div class="thematic-grid">
+            <div class="theme-card card-malaria">
+                <div class="theme-card-content">
+                    <h3>Malaria Interventions</h3>
+                    <p>Active case finding, Rapid Diagnostic Testing (RDT), treatment, and community distribution networks across Kano grassroots areas.</p>
+                </div>
+                <a href="malaria.html" class="theme-link">View Malaria Pillar &rarr;</a>
+            </div>
+
+            <div class="theme-card card-nutrition">
+                <div class="theme-card-content">
+                    <h3>Nutrition Services</h3>
+                    <p>MUAC screenings, maternal infant counseling, and community-based management of acute malnutrition across Kano State.</p>
+                </div>
+                <a href="nutrition.html" class="theme-link">View Nutrition Pillar &rarr;</a>
+            </div>
+
+            <div class="theme-card card-reproductive">
+                <div class="theme-card-content">
+                    <h3>Reproductive Health & Spacing</h3>
+                    <p>Maternal mortality reduction, family planning education, and safe motherhood advocacy across Kano communities.</p>
+                </div>
+                <a href="reproductive-health.html" class="theme-link">View Reproductive Health &rarr;</a>
+            </div>
+
+            <div class="theme-card card-child">
+                <div class="theme-card-content">
+                    <h3>Child Survival Services</h3>
+                    <p>Routine immunization tracking, neonatal care advocacy, and community-based preventive health interventions.</p>
+                </div>
+                <a href="child-survival.html" class="theme-link">View Child Survival &rarr;</a>
+            </div>
+
+            <div class="theme-card card-hiv">
+                <div class="theme-card-content">
+                    <h3>HIV/AIDS & TB Integration</h3>
+                    <p>Index testing, active antiretroviral therapy (ART) linkages, and C:J-SOFT TB presumptive screening protocols.</p>
+                </div>
+                <a href="hiv-tb.html" class="theme-link">View HIV/TB Pillar &rarr;</a>
+            </div>
+
+            <div class="theme-card card-systems">
+                <div class="theme-card-content">
+                    <h3>Systems & Surveillance</h3>
+                    <p>Community-based early warning networks, health facility data validation, and epidemic preparedness training.</p>
+                </div>
+                <a href="systems-surveillance.html" class="theme-link">View Systems & Surveillance &rarr;</a>
+            </div>
+
+            <div class="theme-card card-wash">
+                <div class="theme-card-content">
+                    <h3>WASH Interventions</h3>
+                    <p>Safe water access, community-led total sanitation (CLTS), and hygiene promotion campaigns across rural settlements.</p>
+                </div>
+                <a href="wash.html" class="theme-link">View WASH Pillar &rarr;</a>
+            </div>
+
+            <div class="theme-card card-community">
+                <div class="theme-card-content">
+                    <h3>Community Engagement & Advocacy</h3>
+                    <p>Traditional and religious leader mobilization, stakeholder policy dialogues, and grassroots advocacy frameworks.</p>
+                </div>
+                <a href="community-engagement.html" class="theme-link">View Community Engagement &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Rahama Community Development Association (RCDA). All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
