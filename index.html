@@ -448,14 +448,56 @@
                 display: none; 
             }
         }
-    </style>
+    <style>
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+    }
+    .logo-emblem {
+        width: 44px;
+        height: 44px;
+        background: var(--rcda-green);
+        border: 2px solid var(--accent-gold);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-gold);
+        font-weight: 900;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 6px rgba(15, 76, 58, 0.2);
+    }
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+    .logo-text span:first-child {
+        font-size: 1.1rem;
+        color: var(--rcda-dark-green);
+        font-weight: 900;
+    }
+    .logo-text span:last-child {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+</style>
 </head>
 <body>
 
     <header>
         <a href="index.html" class="logo">
-            <div class="logo-box">R</div> RCDA Nigeria
-        </a>
+    <div class="logo-emblem">R</div>
+    <div class="logo-text">
+        <span>RCDA</span>
+        <span>Nigeria</span>
+    </div>
+</a>
+    
         <div class="menu-toggle" id="mobile-menu">
             <span></span>
             <span></span>
@@ -475,7 +517,6 @@
                 <li><a href="index.html#model">Our Model</a></li>
                 <li><a href="index.html#partnerships">Partnerships</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="admin/index.html" style="color: var(--rcda-green); font-weight: 700;">CMS Admin</a></li>
             </ul>
         </nav>
         <a href="index.html#contact" class="btn-action header-cta">Support Our Work</a>
