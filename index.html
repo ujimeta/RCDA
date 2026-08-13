@@ -7,7 +7,6 @@
     <title>Rahama Community Development Association (RCDA) | Kano State</title>
 
     <style>
-
         /* =========================================================
            GLOBAL RESET & VARIABLES
         ========================================================= */
@@ -25,96 +24,80 @@
             --rcda-green: #0F4C3A;
             --rcda-dark-green: #082E22;
             --accent-gold: #F4B41A;
-
             --text-main: #222222;
             --text-light: #555555;
-
             --bg-light: #F7F9F8;
             --white: #FFFFFF;
         }
 
         body {
             color: var(--text-main);
-            background-color: var(--white);
+            background: var(--white);
             line-height: 1.6;
         }
 
+        a {
+            text-decoration: none;
+        }
 
         /* =========================================================
-           HEADER / NAVIGATION
+           HEADER
         ========================================================= */
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            padding: 15px 5%;
-
+            padding: 12px 5%;
             border-bottom: 1px solid #E5E5E5;
-
             position: sticky;
             top: 0;
-
             background: var(--white);
-
             z-index: 1000;
         }
 
-
-        /* Official RCDA Logo */
+        /* Official RCDA logo */
 
         .logo {
             display: flex;
             align-items: center;
-
-            text-decoration: none;
-
             flex-shrink: 0;
         }
 
         .logo img {
             display: block;
-
             width: auto;
-            height: 58px;
-
-            max-width: 180px;
-
+            height: 62px;
+            max-width: 190px;
             object-fit: contain;
         }
-
 
         /* =========================================================
            NAVIGATION
         ========================================================= */
 
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
         nav ul {
             display: flex;
-
             list-style: none;
-
             gap: 25px;
-
             align-items: center;
         }
 
         nav a {
-            text-decoration: none;
-
             color: var(--text-main);
-
             font-weight: 600;
-
             font-size: 0.95rem;
-
             transition: color 0.2s ease;
         }
 
         nav a:hover {
             color: var(--rcda-green);
         }
-
 
         /* =========================================================
            ABOUT US DROPDOWN
@@ -124,55 +107,28 @@
             position: relative;
         }
 
-
-        /*
-           Invisible bridge between the About Us button
-           and the dropdown.
-
-           This prevents the menu from disappearing when
-           the cursor moves downward into the submenu.
-        */
-
-        .dropdown::after {
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-            top: 100%;
-
-            width: 100%;
-            height: 10px;
+        .dropdown > a {
+            display: block;
+            padding: 12px 0;
         }
-
 
         .dropdown-content {
             display: none;
-
             position: absolute;
-
-            top: calc(100% + 8px);
-            left: 0;
-
-            background-color: var(--white);
-
-            min-width: 190px;
-
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
-
-            border-radius: 6px;
-
-            padding: 8px 0;
-
-            z-index: 1100;
-
+            top: 100%;
+            left: -10px;
+            min-width: 200px;
+            background: var(--white);
             border: 1px solid #E5E5E5;
+            border-radius: 6px;
+            padding: 8px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+            z-index: 1100;
         }
 
-
         /*
-           Dropdown stays open when cursor is anywhere
-           over the About Us area or when focused.
+           Keep dropdown open while the cursor moves
+           from About Us into the submenu.
         */
 
         .dropdown:hover .dropdown-content,
@@ -180,114 +136,104 @@
             display: block;
         }
 
+        .dropdown-content li {
+            width: 100%;
+        }
 
         .dropdown-content a {
-            color: var(--text-main);
-
-            padding: 11px 20px;
-
             display: block;
-
+            width: 100%;
+            padding: 11px 20px;
             font-size: 0.9rem;
-
             font-weight: 500;
-
             white-space: nowrap;
-
-            text-decoration: none;
         }
 
         .dropdown-content a:hover {
-            background-color: var(--bg-light);
-
+            background: var(--bg-light);
             color: var(--rcda-green);
         }
 
-
         /* =========================================================
-           ACTION BUTTON
+           BUTTONS
         ========================================================= */
 
         .btn-action {
-            background-color: var(--accent-gold);
-
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--accent-gold);
             color: var(--rcda-dark-green);
-
             padding: 12px 22px;
-
             font-weight: 700;
-
-            text-decoration: none;
-
             border-radius: 4px;
-
-            transition: background-color 0.2s ease;
+            transition: background 0.2s ease, transform 0.2s ease;
         }
 
         .btn-action:hover {
-            background-color: #DDA212;
+            background: #DDA212;
+            transform: translateY(-1px);
         }
 
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 10px 22px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--rcda-green);
+        }
 
         /* =========================================================
-           MOBILE MENU BUTTON
+           MOBILE MENU
         ========================================================= */
 
         .menu-toggle {
             display: none;
-
             flex-direction: column;
-
             cursor: pointer;
-
             gap: 5px;
         }
 
         .menu-toggle span {
             width: 25px;
             height: 3px;
-
-            background-color: var(--rcda-green);
-
+            background: var(--rcda-green);
             border-radius: 2px;
-
-            transition: 0.3s;
         }
 
-
         /* =========================================================
-           HERO SECTION
+           HERO
         ========================================================= */
 
         .hero {
             display: grid;
-
             grid-template-columns: 1.2fr 0.8fr;
-
             min-height: 75vh;
-
-            background-color: var(--rcda-green);
-
+            background: var(--rcda-green);
             color: var(--white);
         }
 
         .hero-content {
             padding: 80px 10%;
-
             display: flex;
-
             flex-direction: column;
-
             justify-content: center;
         }
 
         .hero-content h1 {
             font-size: 3.2rem;
-
             line-height: 1.15;
-
             margin-bottom: 20px;
-
             font-weight: 800;
         }
 
@@ -297,85 +243,45 @@
 
         .hero-content p {
             font-size: 1.15rem;
-
             color: #E2ECE9;
-
             margin-bottom: 30px;
-
             max-width: 700px;
         }
 
         .hero-buttons {
             display: flex;
-
             gap: 15px;
-
             flex-wrap: wrap;
         }
 
-
-        /* Secondary Button */
-
-        .btn-secondary {
-            border: 2px solid var(--white);
-
-            color: var(--white);
-
-            padding: 10px 22px;
-
-            text-decoration: none;
-
-            font-weight: 600;
-
-            border-radius: 4px;
-
-            transition: background 0.2s ease,
-                        color 0.2s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--white);
-
-            color: var(--rcda-green);
-        }
-
-
-        /* Hero Image */
-
         .hero-image {
             background:
+                linear-gradient(
+                    rgba(8, 46, 34, 0.12),
+                    rgba(8, 46, 34, 0.12)
+                ),
                 url("https://images.unsplash.com/photo-1532629345422-7515f3d16bb9?auto=format&fit=crop&q=80&w=1000")
                 center / cover no-repeat;
         }
-
 
         /* =========================================================
            INFORMATION BAR
         ========================================================= */
 
         .info-bar {
-            background-color: var(--accent-gold);
-
+            background: var(--accent-gold);
             color: var(--rcda-dark-green);
-
             padding: 20px 5%;
-
             display: flex;
-
             justify-content: space-around;
-
             text-align: center;
-
             font-weight: 700;
-
             flex-wrap: wrap;
-
             gap: 20px;
         }
 
-
         /* =========================================================
-           GENERAL SECTION SETTINGS
+           GENERAL SECTIONS
         ========================================================= */
 
         section {
@@ -384,42 +290,32 @@
 
         .content-section {
             padding: 90px 5%;
-
             max-width: 1200px;
-
             margin: 0 auto;
         }
 
         .content-section h2 {
             font-size: 2.3rem;
-
             color: var(--rcda-dark-green);
-
             margin-bottom: 20px;
-
             font-weight: 800;
         }
 
         .content-section p {
             color: var(--text-light);
-
             font-size: 1.05rem;
-
             margin-bottom: 15px;
         }
 
         .alt-bg {
-            background-color: var(--bg-light);
-
+            background: var(--bg-light);
             max-width: 100%;
         }
 
         .alt-bg-inner {
             max-width: 1200px;
-
             margin: 0 auto;
         }
-
 
         /* =========================================================
            FOUNDER'S WELCOME
@@ -427,89 +323,59 @@
 
         .founder-section {
             background: var(--white);
-
             padding: 85px 5%;
         }
 
         .founder-inner {
-            max-width: 1000px;
-
+            max-width: 950px;
             margin: 0 auto;
-
             text-align: center;
         }
 
         .founder-inner h2 {
             color: var(--rcda-dark-green);
-
             font-size: 2.2rem;
-
             margin-bottom: 25px;
-
             font-weight: 800;
         }
 
         .founder-message {
             max-width: 850px;
-
             margin: 0 auto;
-
             color: var(--text-light);
-
             font-size: 1.08rem;
-
             line-height: 1.8;
         }
 
         .founder-signature {
             margin-top: 25px;
-
             color: var(--rcda-green);
-
             font-weight: 700;
-
             font-size: 1rem;
         }
 
-
         /* =========================================================
-           THEMATIC FOCUS AREAS
+           THEMATIC FOCUS
         ========================================================= */
 
         .grid-4 {
             display: grid;
-
-            grid-template-columns:
-                repeat(auto-fit, minmax(260px, 1fr));
-
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
-
             margin-top: 30px;
         }
 
         .card {
             background: var(--white);
-
             padding: 35px 25px;
-
             border-top: 4px solid var(--rcda-green);
-
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-
             text-align: left;
-
             border-radius: 4px;
-
             display: flex;
-
             flex-direction: column;
-
             justify-content: space-between;
-
-            text-decoration: none;
-
             color: inherit;
-
             transition:
                 transform 0.2s ease,
                 box-shadow 0.2s ease,
@@ -518,68 +384,55 @@
 
         .card:hover {
             transform: translateY(-4px);
-
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-
             border-color: var(--accent-gold);
         }
 
         .card-icon {
             font-size: 2.4rem;
-
             margin-bottom: 15px;
-
             line-height: 1;
         }
 
         .card h3 {
             font-size: 1.25rem;
-
             font-weight: 700;
-
             color: var(--rcda-dark-green);
-
             margin-bottom: 12px;
         }
 
         .card p {
             color: var(--text-light);
-
             font-size: 0.95rem;
-
             margin-bottom: 20px;
         }
 
         .card-link {
             font-weight: 700;
-
             color: var(--rcda-green);
-
             font-size: 0.9rem;
-
             display: inline-flex;
-
             align-items: center;
-
             gap: 5px;
         }
 
-
         /* =========================================================
-           OUR COMMUNITY-CENTERED MODEL
+           COMMUNITY-CENTERED MODEL
         ========================================================= */
 
         .model-section {
-            position: relative;
+            background: var(--white);
+            max-width: 100%;
+        }
 
-            overflow: hidden;
+        .model-inner {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .model-intro {
             max-width: 850px;
-
             margin: 0 auto 45px;
-
             text-align: center;
         }
 
@@ -589,55 +442,30 @@
 
         .model-intro p {
             color: var(--text-light);
-
             font-size: 1.05rem;
-
             line-height: 1.7;
-
             margin: 0;
         }
 
-
-        /* Model cards */
-
         .model-pathway {
             display: grid;
-
-            grid-template-columns:
-                repeat(5, 1fr);
-
+            grid-template-columns: repeat(5, 1fr);
             gap: 18px;
-
-            position: relative;
-
             max-width: 1200px;
-
             margin: 0 auto;
         }
 
         .model-step {
             position: relative;
-
-            background: #FFFFFF;
-
+            background: var(--white);
             border-radius: 14px;
-
             padding: 28px 22px;
-
-            min-height: 220px;
-
-            border: 1px solid rgba(0,0,0,0.06);
-
+            min-height: 270px;
+            border: 1px solid rgba(0,0,0,0.07);
             box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-
-            text-decoration: none;
-
             color: inherit;
-
             display: flex;
-
             flex-direction: column;
-
             transition:
                 transform 0.25s ease,
                 box-shadow 0.25s ease,
@@ -646,36 +474,24 @@
 
         .model-step:hover {
             transform: translateY(-6px);
-
             box-shadow: 0 14px 32px rgba(0,0,0,0.10);
-
             border-color: var(--accent-gold);
         }
 
-
-        /* Representative pictorial symbols */
+        /* Representative pictorial symbol */
 
         .model-icon {
-            width: 58px;
-
-            height: 58px;
-
+            width: 62px;
+            height: 62px;
+            flex-shrink: 0;
             border-radius: 50%;
-
             background: var(--bg-light);
-
             border: 2px solid var(--accent-gold);
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
-            font-size: 1.8rem;
-
+            font-size: 1.9rem;
             margin-bottom: 18px;
-
             transition:
                 transform 0.25s ease,
                 background 0.25s ease;
@@ -683,9 +499,1024 @@
 
         .model-step:hover .model-icon {
             transform: scale(1.08);
-
             background: #FFF8E5;
         }
 
+        .model-step h3 {
+            color: var(--rcda-dark-green);
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
 
-       
+        .model-step p {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .model-link {
+            margin-top: auto;
+            padding-top: 18px;
+            color: var(--rcda-green);
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           PARTNERSHIPS
+        ========================================================= */
+
+        .partners-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .partner-badge {
+            background: var(--white);
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--rcda-dark-green);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #E5E5E5;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            background: var(--rcda-dark-green);
+            color: var(--white);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col p,
+        .footer-col ul li a {
+            color: #CCCCCC;
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #999999;
+            font-size: 0.85rem;
+        }
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .model-pathway {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .model-step:last-child {
+                grid-column: 1 / -1;
+                max-width: 370px;
+                width: 100%;
+                justify-self: center;
+            }
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            header {
+                padding: 10px 5%;
+            }
+
+            .logo img {
+                height: 52px;
+                max-width: 160px;
+            }
+
+            .menu-toggle {
+                display: flex;
+                order: 2;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 15px 0 20px;
+                border-bottom: 1px solid #E5E5E5;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                text-align: center;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul li > a {
+                display: block;
+                padding: 10px 20px;
+            }
+
+            .dropdown-content {
+                position: static;
+                display: block;
+                width: 100%;
+                min-width: 0;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                background: var(--bg-light);
+                padding: 0;
+            }
+
+            .dropdown-content a {
+                padding: 9px 20px;
+            }
+
+            .header-cta {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image {
+                min-height: 300px;
+                order: 2;
+            }
+
+            .hero-content {
+                padding: 70px 7%;
+            }
+
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 70px 5%;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-buttons a {
+                text-align: center;
+            }
+
+            .founder-section {
+                padding: 65px 6%;
+            }
+
+            .founder-inner h2 {
+                font-size: 1.8rem;
+            }
+
+            .founder-message {
+                font-size: 1rem;
+            }
+
+            .model-pathway {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .model-step {
+                min-height: auto;
+                padding: 24px 20px;
+            }
+
+            .model-step:last-child {
+                max-width: none;
+            }
+
+            .model-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 1.7rem;
+            }
+
+            .partners-list {
+                flex-direction: column;
+            }
+
+            .partner-badge {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <header>
+
+        <!-- OFFICIAL RCDA LOGO -->
+        <a href="index.html" class="logo" aria-label="RCDA Home">
+            <img
+                src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
+                alt="Rahama Community Development Association (RCDA) logo"
+            >
+        </a>
+
+        <!-- MOBILE MENU -->
+        <div class="menu-toggle" id="mobile-menu" aria-label="Open navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav>
+            <ul id="nav-list">
+
+                <li class="dropdown">
+
+                    <a href="#" aria-haspopup="true">
+                        About Us ▼
+                    </a>
+
+                    <ul class="dropdown-content">
+
+                        <li>
+                            <a href="who-we-are.html">
+                                Who We Are
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="what-we-do.html">
+                                What We Do
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="who-we-serve.html">
+                                Who We Serve
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li>
+                    <a href="#thematic">
+                        Thematic Focus
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#partnerships">
+                        Partnerships
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#contact">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <a href="#contact" class="btn-action header-cta">
+            Support Our Work
+        </a>
+
+    </header>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Compassion in Action,
+                <span>Health in Every Community.</span>
+            </h1>
+
+            <p>
+                Rahama Community Development Association (RCDA) works
+                at the grassroots intersection of public health,
+                disease case-finding, and sustainable socioeconomic
+                empowerment across Kano State.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#contact" class="btn-action">
+                    Get Involved
+                </a>
+
+                <!-- THIS IS THE ONLY PUBLIC-FACING MODEL CTA -->
+                <a href="our-model.html" class="btn-secondary">
+                    Explore Our Model →
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image"></div>
+
+    </section>
+
+
+    <!-- =========================================================
+         INFORMATION BAR
+    ========================================================= -->
+
+    <div class="info-bar">
+
+        <div>
+            Founded: 2014
+        </div>
+
+        <div>
+            CAC Registered: 2016
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         FOUNDER'S WELCOME
+    ========================================================= -->
+
+    <section class="founder-section">
+
+        <div class="founder-inner">
+
+            <h2>
+                A Welcome from the Founder
+            </h2>
+
+            <p class="founder-message">
+                At Rahama Community Development Association, we believe
+                that lasting change begins with communities themselves.
+                Our work is rooted in compassion, partnership and practical
+                action, connecting people with the health services,
+                knowledge and opportunities they need to thrive. Through
+                collaboration with communities, government institutions,
+                development partners and other stakeholders, RCDA remains
+                committed to strengthening healthier, more resilient and
+                empowered communities across Kano State and beyond.
+            </p>
+
+            <p class="founder-signature">
+                Haj. Hajara Muhammad Argungu<br>
+                Founder / Executive Director, RCDA
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         THEMATIC FOCUS AREAS
+    ========================================================= -->
+
+    <section id="thematic" class="content-section alt-bg">
+
+        <div class="alt-bg-inner">
+
+            <h2>
+                Our Eight Thematic Focus Areas
+            </h2>
+
+            <p>
+                Delivered through a community-centered service model
+                linking households directly to primary healthcare systems.
+                Click any card to explore dedicated activities, data,
+                and galleries.
+            </p>
+
+            <div class="grid-4">
+
+                <a href="reproductive-health.html" class="card">
+
+                    <div>
+                        <div class="card-icon">👩‍🍼</div>
+
+                        <h3>
+                            Reproductive Health & Child Spacing
+                        </h3>
+
+                        <p>
+                            Community-based provision of family planning
+                            information, dispelling myths, and reducing
+                            barriers to maternal care.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="nutrition.html" class="card">
+
+                    <div>
+                        <div class="card-icon">🥗</div>
+
+                        <h3>
+                            Nutrition Services
+                        </h3>
+
+                        <p>
+                            MUAC screening, growth monitoring, maternal
+                            nutrition counseling, and timely referral of
+                            malnourished children.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="child-survival.html" class="card">
+
+                    <div>
+                        <div class="card-icon">👶</div>
+
+                        <h3>
+                            Child Survival Services
+                        </h3>
+
+                        <p>
+                            Promoting routine immunization uptake and
+                            managing common childhood illnesses via
+                            trained volunteers.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="malaria.html" class="card">
+
+                    <div>
+                        <div class="card-icon">🦟</div>
+
+                        <h3>
+                            Malaria Interventions
+                        </h3>
+
+                        <p>
+                            Rapid Diagnostic Testing (RDT),
+                            Insecticide-Treated Net (ITN) distribution
+                            campaigns, and demand creation.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="hiv-tb.html" class="card">
+
+                    <div>
+                        <div class="card-icon">🎗️</div>
+
+                        <h3>
+                            HIV/AIDS Case Finding
+                        </h3>
+
+                        <p>
+                            Community mobilization, testing support,
+                            index testing, and active linkage to ART
+                            care facilities.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="hiv-tb.html" class="card">
+
+                    <div>
+                        <div class="card-icon">🫁</div>
+
+                        <h3>
+                            TB Case Finding
+                        </h3>
+
+                        <p>
+                            Partnering on the TB C-J-SOFT project for
+                            contact tracing, presumptive screening,
+                            and preventive therapy follow-up.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="systems-surveillance.html" class="card">
+
+                    <div>
+                        <div class="card-icon">🛡️</div>
+
+                        <h3>
+                            Diphtheria Contact Tracing
+                        </h3>
+
+                        <p>
+                            Surveillance, suspect identification,
+                            close contact tracing, and IDSR reporting
+                            in line with national protocols.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+
+                <a href="community-engagement.html" class="card">
+
+                    <div>
+                        <div class="card-icon">🤝</div>
+
+                        <h3>
+                            Community Systems Strengthening
+                        </h3>
+
+                        <p>
+                            OVC support, multi-sectoral advocacy,
+                            and vocational skills initiatives for
+                            sustainable communities.
+                        </p>
+                    </div>
+
+                    <span class="card-link">
+                        View Activities →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         COMMUNITY-CENTERED MODEL
+         
+         NOTE:
+         No "Our Model" item appears in the top navigation.
+         These cards are the visual teaser/entry points.
+         The main Explore Our Model button leads to our-model.html.
+    ========================================================= -->
+
+    <section class="content-section model-section">
+
+        <div class="model-inner">
+
+            <div class="model-intro">
+
+                <h2>
+                    Our Community-Centered Model
+                </h2>
+
+                <p>
+                    RCDA uses a practical community-centered pathway
+                    that connects awareness, identification, testing,
+                    referral and follow-up to strengthen health outcomes.
+                </p>
+
+            </div>
+
+
+            <div class="model-pathway">
+
+
+                <!-- MODEL 01 -->
+
+                <a href="model-sensitize.html" class="model-step">
+
+                    <div class="model-icon">
+                        📣
+                    </div>
+
+                    <h3>
+                        Sensitize
+                    </h3>
+
+                    <p>
+                        Engage households and communities through
+                        awareness, dialogue and targeted health education.
+                    </p>
+
+                    <span class="model-link">
+                        Explore →
+                    </span>
+
+                </a>
+
+
+                <!-- MODEL 02 -->
+
+                <a href="model-screen.html" class="model-step">
+
+                    <div class="model-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        Screen
+                    </h3>
+
+                    <p>
+                        Identify presumptive and at-risk cases through
+                        community-level screening and assessment.
+                    </p>
+
+                    <span class="model-link">
+                        Explore →
+                    </span>
+
+                </a>
+
+
+                <!-- MODEL 03 -->
+
+                <a href="model-investigate-test.html" class="model-step">
+
+                    <div class="model-icon">
+                        🧪
+                    </div>
+
+                    <h3>
+                        Investigate & Test
+                    </h3>
+
+                    <p>
+                        Connect identified individuals to appropriate
+                        testing, diagnostic and contact-tracing pathways.
+                    </p>
+
+                    <span class="model-link">
+                        Explore →
+                    </span>
+
+                </a>
+
+
+                <!-- MODEL 04 -->
+
+                <a href="model-link-refer.html" class="model-step">
+
+                    <div class="model-icon">
+                        🏥
+                    </div>
+
+                    <h3>
+                        Link & Refer
+                    </h3>
+
+                    <p>
+                        Connect confirmed and eligible cases to
+                        appropriate health facilities and services.
+                    </p>
+
+                    <span class="model-link">
+                        Explore →
+                    </span>
+
+                </a>
+
+
+                <!-- MODEL 05 -->
+
+                <a href="model-follow-up.html" class="model-step">
+
+                    <div class="model-icon">
+                        🔄
+                    </div>
+
+                    <h3>
+                        Follow Up & Learn
+                    </h3>
+
+                    <p>
+                        Support continuity of care, capture data and
+                        use learning to strengthen future implementation.
+                    </p>
+
+                    <span class="model-link">
+                        Explore →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         PARTNERSHIPS
+    ========================================================= -->
+
+    <section id="partnerships" class="content-section alt-bg">
+
+        <div class="alt-bg-inner">
+
+            <h2>
+                Partnerships & Affiliations
+            </h2>
+
+            <p>
+                Collaborating with leading technical networks and
+                coordination bodies across Nigeria.
+            </p>
+
+            <div class="partners-list">
+
+                <div class="partner-badge">
+                    Society for Family Health (SFH)
+                </div>
+
+                <div class="partner-badge">
+                    KNCV Tuberculosis Foundation
+                </div>
+
+                <div class="partner-badge">
+                    Nigeria Network of NGOs
+                </div>
+
+                <div class="partner-badge">
+                    KANET (Coalition of NGOs in Kano State)
+                </div>
+
+                <div class="partner-badge">
+                    New HIV Vaccine & Microbicide Advocacy Society (NHVMAS)
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer id="contact">
+
+        <div class="footer-content">
+
+            <div class="footer-col">
+
+                <h4>
+                    RCDA Nigeria
+                </h4>
+
+                <p>
+                    Suite 57, Buhari Shopping Complex,
+                    Hadejia Road, Nassarawa LGA,
+                    Kano State, Nigeria.
+                </p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+                <ul>
+
+                    <li>
+                        <a href="who-we-are.html">
+                            Who We Are
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="what-we-do.html">
+                            What We Do
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="who-we-serve.html">
+                            Who We Serve
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#thematic">
+                            Thematic Focus
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Executive Leadership
+                </h4>
+
+                <p>
+                    <strong>Executive Director:</strong>
+                    Haj. Hajara Muhammad Argungu
+                </p>
+
+                <p>
+                    <strong>CAC Reg:</strong>
+                    CAC/IT/NO. 92853
+                </p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Contact Info
+                </h4>
+
+                <p>
+                    Tel: 08037257176
+                </p>
+
+                <p>
+                    Email: rahamacda4@gmail.com
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 Rahama Community Development Association (RCDA).
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         MOBILE MENU SCRIPT
+    ========================================================= -->
+
+    <script>
+
+        const mobileMenu = document.getElementById("mobile-menu");
+        const navList = document.getElementById("nav-list");
+
+        if (mobileMenu && navList) {
+
+            mobileMenu.addEventListener("click", function () {
+
+                navList.classList.toggle("active");
+
+            });
+
+        }
+
+
+        /* Close mobile navigation after selecting a link */
+
+        document.querySelectorAll("nav a").forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                /*
+                   Do not close the mobile menu when clicking
+                   the About Us parent itself.
+                */
+
+                if (
+                    !this.parentElement.classList.contains("dropdown")
+                ) {
+
+                    navList.classList.remove("active");
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
