@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rahama Community Development Association (RCDA) | Kano State</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Rahama Community Development Association (RCDA) | Kano State
+    </title>
 
     <style>
+
         /* =========================================================
-           RCDA WEBSITE — GLOBAL STYLES
+           RCDA GLOBAL STYLES
         ========================================================= */
 
         * {
@@ -39,7 +48,7 @@
 
         body {
             color: var(--text-main);
-            background-color: var(--white);
+            background: var(--white);
             line-height: 1.6;
         }
 
@@ -49,36 +58,43 @@
 
 
         /* =========================================================
-           HEADER / NAVIGATION
+           HEADER
         ========================================================= */
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 5%;
+
+            padding: 14px 5%;
+
             border-bottom: 1px solid var(--border-light);
+
             position: sticky;
             top: 0;
+
             background: var(--white);
+
             z-index: 1000;
         }
 
 
-        /* RCDA ACTUAL LOGO */
+        /* OFFICIAL RCDA LOGO */
 
         .logo {
             display: flex;
             align-items: center;
-            text-decoration: none;
+
             flex-shrink: 0;
         }
 
         .logo img {
             width: 245px;
-            height: 70px;
+            height: 72px;
+
             object-fit: contain;
             object-position: left center;
+
             display: block;
         }
 
@@ -89,15 +105,21 @@
 
         nav ul {
             display: flex;
+
             list-style: none;
+
             gap: 25px;
+
             align-items: center;
         }
 
         nav a {
             color: var(--text-main);
+
             font-weight: 600;
+
             font-size: 0.95rem;
+
             transition: color 0.2s ease;
         }
 
@@ -116,33 +138,45 @@
 
         .dropdown-content {
             display: none;
+
             position: absolute;
+
             top: 100%;
             left: 0;
-            background-color: var(--white);
-            min-width: 190px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-            border-radius: 4px;
-            padding: 10px 0;
-            z-index: 1100;
-            border: 1px solid var(--border-light);
-        }
 
-        .dropdown-content li {
-            width: 100%;
+            background: var(--white);
+
+            min-width: 190px;
+
+            box-shadow:
+                0 8px 16px rgba(0, 0, 0, 0.08);
+
+            border-radius: 4px;
+
+            padding: 10px 0;
+
+            border: 1px solid var(--border-light);
+
+            z-index: 1100;
         }
 
         .dropdown-content a {
-            color: var(--text-main);
-            padding: 10px 20px;
             display: block;
+
+            color: var(--text-main);
+
+            padding: 10px 20px;
+
             font-size: 0.9rem;
+
             font-weight: 500;
+
             white-space: nowrap;
         }
 
         .dropdown-content a:hover {
-            background-color: var(--bg-light);
+            background: var(--bg-light);
+
             color: var(--rcda-green);
         }
 
@@ -156,42 +190,56 @@
         ========================================================= */
 
         .btn-action {
-            background-color: var(--accent-gold);
-            color: var(--rcda-dark-green);
-            padding: 12px 22px;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 4px;
-            transition:
-                background-color 0.2s ease,
-                transform 0.2s ease;
             display: inline-flex;
+
             align-items: center;
             justify-content: center;
+
+            background: var(--accent-gold);
+
+            color: var(--rcda-dark-green);
+
+            padding: 12px 22px;
+
+            font-weight: 700;
+
+            border-radius: 4px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .btn-action:hover {
-            background-color: #dda212;
+            background: #dda212;
+
             transform: translateY(-1px);
         }
 
         .btn-secondary {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
             border: 2px solid var(--white);
+
             color: var(--white);
+
             padding: 10px 22px;
-            text-decoration: none;
+
             font-weight: 600;
+
             border-radius: 4px;
+
             transition:
                 background 0.2s ease,
                 color 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .btn-secondary:hover {
             background: var(--white);
+
             color: var(--rcda-green);
         }
 
@@ -202,43 +250,59 @@
 
         .menu-toggle {
             display: none;
+
             flex-direction: column;
+
             cursor: pointer;
+
             gap: 5px;
         }
 
         .menu-toggle span {
             width: 25px;
+
             height: 3px;
-            background-color: var(--rcda-green);
+
+            background: var(--rcda-green);
+
             border-radius: 2px;
-            transition: 0.3s;
         }
 
 
         /* =========================================================
-           HERO SECTION
+           HERO
         ========================================================= */
 
         .hero {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+
+            grid-template-columns:
+                1.2fr 0.8fr;
+
             min-height: 75vh;
-            background-color: var(--rcda-green);
+
+            background: var(--rcda-green);
+
             color: var(--white);
         }
 
         .hero-content {
             padding: 80px 10%;
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
         }
 
         .hero-content h1 {
             font-size: 3.2rem;
+
             line-height: 1.15;
+
             margin-bottom: 20px;
+
             font-weight: 800;
         }
 
@@ -248,14 +312,19 @@
 
         .hero-content p {
             font-size: 1.15rem;
+
             color: #E2ECE9;
+
             margin-bottom: 30px;
+
             max-width: 760px;
         }
 
         .hero-buttons {
             display: flex;
+
             gap: 15px;
+
             flex-wrap: wrap;
         }
 
@@ -268,18 +337,26 @@
 
 
         /* =========================================================
-           QUICK INFORMATION BAR
+           INFORMATION BAR
         ========================================================= */
 
         .info-bar {
-            background-color: var(--accent-gold);
+            background: var(--accent-gold);
+
             color: var(--rcda-dark-green);
+
             padding: 20px 5%;
+
             display: flex;
+
             justify-content: space-around;
+
             text-align: center;
+
             font-weight: 700;
+
             flex-wrap: wrap;
+
             gap: 20px;
         }
 
@@ -294,58 +371,78 @@
 
         .content-section {
             padding: 90px 5%;
+
             max-width: 1200px;
+
             margin: 0 auto;
         }
 
         .content-section h2 {
             font-size: 2.3rem;
+
             color: var(--rcda-dark-green);
+
             margin-bottom: 20px;
+
             font-weight: 800;
         }
 
         .content-section p {
             color: var(--text-light);
+
             font-size: 1.05rem;
+
             margin-bottom: 15px;
         }
 
         .alt-bg {
-            background-color: var(--bg-light);
+            background: var(--bg-light);
+
             max-width: 100%;
         }
 
         .alt-bg-inner {
             max-width: 1200px;
+
             margin: 0 auto;
         }
 
 
         /* =========================================================
-           THEMATIC FOCUS AREAS
+           THEMATIC FOCUS CARDS
         ========================================================= */
 
         .grid-4 {
             display: grid;
+
             grid-template-columns:
                 repeat(auto-fit, minmax(260px, 1fr));
+
             gap: 25px;
+
             margin-top: 30px;
         }
 
         .card {
             background: var(--white);
+
             padding: 35px 25px;
+
             border-top: 4px solid var(--rcda-green);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-            text-align: left;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.04);
+
             border-radius: 4px;
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: space-between;
-            text-decoration: none;
+
             color: inherit;
+
             transition:
                 transform 0.2s ease,
                 box-shadow 0.2s ease,
@@ -354,132 +451,201 @@
 
         .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.08);
+
             border-color: var(--accent-gold);
         }
 
         .card-icon {
             font-size: 2.4rem;
+
             margin-bottom: 15px;
+
             line-height: 1;
         }
 
         .card h3 {
             font-size: 1.25rem;
+
             font-weight: 700;
+
             color: var(--rcda-dark-green);
+
             margin-bottom: 12px;
         }
 
         .card p {
             color: var(--text-light);
+
             font-size: 0.95rem;
+
             margin-bottom: 20px;
         }
 
         .card-link {
             font-weight: 700;
+
             color: var(--rcda-green);
+
             font-size: 0.9rem;
+
             display: inline-flex;
+
             align-items: center;
+
             gap: 5px;
         }
 
 
         /* =========================================================
-           RCDA MODEL SECTION
+           RCDA MODEL
         ========================================================= */
 
         .model-section {
-            position: relative;
-            overflow: hidden;
+            background: var(--white);
         }
 
-        .model-intro {
+        .model-header {
             max-width: 850px;
+
             margin: 0 auto 45px;
+
             text-align: center;
         }
 
-        .model-intro h2 {
+        .model-header h2 {
             margin-bottom: 12px;
         }
 
-        .model-intro p {
+        .model-header p {
             color: var(--text-light);
+
             font-size: 1.05rem;
+
             line-height: 1.7;
+
             margin: 0;
         }
 
-        .model-pathway {
+
+        /* FIVE MODEL CARDS */
+
+        .model-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 18px;
-            position: relative;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 20px;
+
             max-width: 1200px;
+
             margin: 0 auto;
         }
 
-        .model-step {
-            position: relative;
+        .model-card {
             background: var(--white);
-            border-radius: 14px;
-            padding: 28px 22px;
-            min-height: 220px;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+            border: 1px solid var(--border-light);
+
+            border-top: 4px solid var(--accent-gold);
+
+            border-radius: 8px;
+
+            padding: 30px 22px;
+
+            min-height: 260px;
+
+            display: flex;
+
+            flex-direction: column;
+
             transition:
                 transform 0.25s ease,
                 box-shadow 0.25s ease,
                 border-color 0.25s ease;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.05);
         }
 
-        .model-step:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.10);
-            border-color: var(--accent-gold);
+        .model-card:hover {
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 14px 30px rgba(0, 0, 0, 0.10);
+
+            border-color: var(--rcda-green);
         }
 
-        .step-number {
-            font-size: 0.85rem;
-            font-weight: 800;
+
+        /* REPRESENTATIVE MODEL SYMBOL */
+
+        .model-icon {
+            width: 58px;
+
+            height: 58px;
+
+            border-radius: 50%;
+
+            background: var(--rcda-green);
+
             color: var(--accent-gold);
-            letter-spacing: 0.08em;
-            margin-bottom: 18px;
-        }
 
-        .step-content h3 {
-            margin: 0 0 12px;
-            color: var(--text-main);
-            font-size: 1.15rem;
-        }
+            display: flex;
 
-        .step-content p {
-            margin: 0;
-            color: var(--text-light);
-            font-size: 0.94rem;
-            line-height: 1.65;
-        }
-
-        .model-cta {
-            text-align: center;
-            margin-top: 42px;
-        }
-
-        .model-cta .btn-action {
-            display: inline-flex;
             align-items: center;
-            gap: 10px;
+
+            justify-content: center;
+
+            font-size: 1.8rem;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 4px 10px rgba(15, 76, 58, 0.18);
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
         }
 
-        .model-cta .btn-action span {
-            transition: transform 0.2s ease;
+        .model-card:hover .model-icon {
+            transform: scale(1.08);
+
+            background: var(--rcda-dark-green);
         }
 
-        .model-cta .btn-action:hover span {
-            transform: translateX(4px);
+        .model-number {
+            font-size: 0.75rem;
+
+            font-weight: 800;
+
+            color: var(--accent-gold);
+
+            letter-spacing: 0.1em;
+
+            margin-bottom: 7px;
+        }
+
+        .model-card h3 {
+            color: var(--rcda-dark-green);
+
+            font-size: 1.1rem;
+
+            margin-bottom: 10px;
+        }
+
+        .model-card p {
+            color: var(--text-light);
+
+            font-size: 0.9rem;
+
+            line-height: 1.6;
+
+            margin: 0;
         }
 
 
@@ -489,18 +655,28 @@
 
         .partners-list {
             display: flex;
+
             flex-wrap: wrap;
+
             gap: 15px;
+
             margin-top: 25px;
         }
 
         .partner-badge {
             background: var(--white);
+
             padding: 12px 20px;
+
             border-radius: 4px;
+
             font-weight: 600;
+
             color: var(--rcda-dark-green);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.03);
+
             border: 1px solid var(--border-light);
         }
 
@@ -510,32 +686,45 @@
         ========================================================= */
 
         footer {
-            background-color: var(--rcda-dark-green);
+            background: var(--rcda-dark-green);
+
             color: var(--white);
+
             padding: 60px 5% 30px;
         }
 
         .footer-content {
             max-width: 1200px;
+
             margin: 0 auto 40px;
+
             display: grid;
+
             grid-template-columns:
                 repeat(auto-fit, minmax(220px, 1fr));
+
             gap: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.1);
+
             padding-bottom: 40px;
         }
 
         .footer-col h4 {
             color: var(--accent-gold);
+
             margin-bottom: 20px;
+
             font-size: 1.1rem;
         }
 
         .footer-col p,
         .footer-col ul li a {
             color: #CCCCCC;
+
             font-size: 0.95rem;
+
             text-decoration: none;
         }
 
@@ -553,7 +742,9 @@
 
         .footer-bottom {
             text-align: center;
+
             color: #999999;
+
             font-size: 0.85rem;
         }
 
@@ -562,24 +753,17 @@
            TABLET
         ========================================================= */
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
 
-            .model-pathway {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 760px;
-            }
-
-            .model-step:last-child {
-                grid-column: 1 / -1;
-                max-width: 370px;
-                width: 100%;
-                justify-self: center;
+            .model-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
             }
         }
 
 
         /* =========================================================
-           MOBILE / TABLET NAVIGATION
+           MOBILE NAVIGATION
         ========================================================= */
 
         @media (max-width: 900px) {
@@ -590,7 +774,68 @@
 
             .logo img {
                 width: 210px;
-                height: 60px;
+
+                height: 62px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+
+                flex-direction: column;
+
+                position: absolute;
+
+                top: 86px;
+
+                left: 0;
+
+                width: 100%;
+
+                background: var(--white);
+
+                padding: 20px 0;
+
+                border-bottom:
+                    1px solid var(--border-light);
+
+                box-shadow:
+                    0 10px 20px rgba(0,0,0,0.05);
+
+                text-align: center;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+
+                padding: 5px 0;
+            }
+
+            .dropdown-content {
+                position: static;
+
+                box-shadow: none;
+
+                border: none;
+
+                display: block;
+
+                background: var(--bg-light);
+
+                margin-top: 5px;
+
+                width: 100%;
+            }
+
+            .header-cta {
+                display: none;
             }
 
             .hero {
@@ -605,57 +850,22 @@
                 font-size: 2.4rem;
             }
 
-            .menu-toggle {
-                display: flex;
-            }
-
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 84px;
-                left: 0;
-                width: 100%;
-                background: var(--white);
-                padding: 20px 0;
-                border-bottom: 1px solid var(--border-light);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-                text-align: center;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            nav ul li {
-                width: 100%;
-                padding: 5px 0;
-            }
-
-            .dropdown-content {
-                position: static;
-                box-shadow: none;
-                border: none;
-                display: block;
-                background: var(--bg-light);
-                margin-top: 5px;
-                width: 100%;
-            }
-
-            .header-cta {
-                display: none;
+            .model-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
         }
 
 
         /* =========================================================
-           MOBILE
+           SMALL MOBILE
         ========================================================= */
 
         @media (max-width: 600px) {
 
             .logo img {
                 width: 175px;
+
                 height: 52px;
             }
 
@@ -673,6 +883,7 @@
 
             .hero-buttons {
                 flex-direction: column;
+
                 align-items: flex-start;
             }
 
@@ -684,51 +895,26 @@
                 font-size: 1.9rem;
             }
 
-            .model-intro {
-                margin-bottom: 30px;
+            .model-grid {
+                grid-template-columns: 1fr;
             }
 
-            .model-intro p {
-                font-size: 0.98rem;
-            }
-
-            .model-pathway {
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
-                padding-left: 0;
-            }
-
-            .model-step {
+            .model-card {
                 min-height: auto;
-                padding: 22px 20px;
-            }
-
-            .step-number {
-                margin-bottom: 10px;
-            }
-
-            .step-content h3 {
-                font-size: 1.08rem;
-            }
-
-            .step-content p {
-                font-size: 0.92rem;
-            }
-
-            .model-cta {
-                margin-top: 30px;
             }
 
             .info-bar {
                 padding: 18px 5%;
             }
         }
+
     </style>
+
 </head>
 
 
 <body>
+
 
     <!-- =========================================================
          HEADER
@@ -736,62 +922,96 @@
 
     <header>
 
-        <!-- ACTUAL RCDA LOGO -->
-        <a href="index.html" class="logo" aria-label="RCDA Nigeria Home">
+        <a
+            href="index.html"
+            class="logo"
+            aria-label="RCDA Nigeria Home"
+        >
+
             <img
-                src="admin/RCDA%20logo.png"
-                alt="Rahama Community Development Association (RCDA)"
+                src="admin/rcda-logo.png"
+                alt="Rahama Community Development Association"
             >
+
         </a>
 
 
-        <!-- MOBILE MENU BUTTON -->
-        <div class="menu-toggle" id="mobile-menu" aria-label="Open navigation menu">
+        <div
+            class="menu-toggle"
+            id="mobile-menu"
+            aria-label="Open navigation menu"
+        >
+
             <span></span>
             <span></span>
             <span></span>
+
         </div>
 
 
-        <!-- MAIN NAVIGATION -->
         <nav>
+
             <ul id="nav-list">
 
                 <li class="dropdown">
-                    <a href="#">About Us ▼</a>
+
+                    <a href="#">
+                        About Us ▼
+                    </a>
 
                     <div class="dropdown-content">
-                        <a href="who-we-are.html">Who We Are</a>
-                        <a href="what-we-do.html">What We Do</a>
-                        <a href="who-we-serve.html">Who We Serve</a>
+
+                        <a href="who-we-are.html">
+                            Who We Are
+                        </a>
+
+                        <a href="what-we-do.html">
+                            What We Do
+                        </a>
+
+                        <a href="who-we-serve.html">
+                            Who We Serve
+                        </a>
+
                     </div>
+
                 </li>
 
+
                 <li>
-                    <a href="index.html#thematic">
+                    <a href="#thematic">
                         Thematic Focus
                     </a>
                 </li>
 
+
                 <li>
-                    <a href="index.html#partnerships">
+                    <a href="#model">
+                        Our Model
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="#partnerships">
                         Partnerships
                     </a>
                 </li>
 
+
                 <li>
-                    <a href="index.html#contact">
+                    <a href="#contact">
                         Contact
                     </a>
                 </li>
 
             </ul>
+
         </nav>
 
 
-        <!-- HEADER CTA -->
         <a
-            href="index.html#contact"
+            href="#contact"
             class="btn-action header-cta"
         >
             Support Our Work
@@ -809,25 +1029,42 @@
         <div class="hero-content">
 
             <h1>
+
                 Compassion in Action,
-                <span>Health in Every Community.</span>
+
+                <span>
+                    Health in Every Community.
+                </span>
+
             </h1>
 
+
             <p>
-                Rahama Community Development Association (RCDA) works
-                at the grassroots intersection of public health,
-                disease case-finding, and sustainable socioeconomic
-                empowerment across Kano State.
+
+                Rahama Community Development Association (RCDA)
+                works at the grassroots intersection of public
+                health, disease case-finding, and sustainable
+                socioeconomic empowerment across Kano State.
+
             </p>
+
 
             <div class="hero-buttons">
 
-                <a href="#contact" class="btn-action">
+                <a
+                    href="#contact"
+                    class="btn-action"
+                >
                     Get Involved
                 </a>
 
-                <!-- EXPLORE OUR MODEL -->
-                <a href="#model" class="btn-secondary">
+
+                <!-- THIS NOW SCROLLS DIRECTLY TO THE FIVE MODEL CARDS -->
+
+                <a
+                    href="#model"
+                    class="btn-secondary"
+                >
                     Explore Our Model
                 </a>
 
@@ -842,7 +1079,7 @@
 
 
     <!-- =========================================================
-         QUICK INFORMATION BAR
+         INFORMATION BAR
     ========================================================== -->
 
     <div class="info-bar">
@@ -876,6 +1113,7 @@
                 Our Eight Thematic Focus Areas
             </h2>
 
+
             <p
                 style="
                     color: var(--text-light);
@@ -892,8 +1130,6 @@
             <div class="grid-4">
 
 
-                <!-- 01 REPRODUCTIVE HEALTH -->
-
                 <a
                     href="reproductive-health.html"
                     class="card"
@@ -906,7 +1142,7 @@
                         </div>
 
                         <h3>
-                            Reproductive Health & Child Spacing
+                            Reproductive Health &amp; Child Spacing
                         </h3>
 
                         <p>
@@ -923,8 +1159,6 @@
 
                 </a>
 
-
-                <!-- 02 NUTRITION -->
 
                 <a
                     href="nutrition.html"
@@ -956,8 +1190,6 @@
                 </a>
 
 
-                <!-- 03 CHILD SURVIVAL -->
-
                 <a
                     href="child-survival.html"
                     class="card"
@@ -987,8 +1219,6 @@
 
                 </a>
 
-
-                <!-- 04 MALARIA -->
 
                 <a
                     href="malaria.html"
@@ -1020,8 +1250,6 @@
                 </a>
 
 
-                <!-- 05 HIV -->
-
                 <a
                     href="hiv-tb.html"
                     class="card"
@@ -1051,8 +1279,6 @@
 
                 </a>
 
-
-                <!-- 06 TB -->
 
                 <a
                     href="hiv-tb.html"
@@ -1084,8 +1310,6 @@
                 </a>
 
 
-                <!-- 07 DIPHTHERIA -->
-
                 <a
                     href="systems-surveillance.html"
                     class="card"
@@ -1115,8 +1339,6 @@
 
                 </a>
 
-
-                <!-- 08 COMMUNITY SYSTEMS -->
 
                 <a
                     href="community-engagement.html"
@@ -1155,7 +1377,7 @@
 
 
     <!-- =========================================================
-         HOW RCDA WORKS / MODEL
+         RCDA MODEL — FIVE CARDS ONLY
     ========================================================== -->
 
     <section
@@ -1163,160 +1385,142 @@
         class="content-section model-section"
     >
 
-        <div class="model-intro">
+        <div class="model-header">
 
             <h2>
-                How RCDA Works
+                Our Community-Centred Model
             </h2>
 
             <p>
-                A community-centred pathway connecting identification,
-                referral, follow-up and learning to improve health
-                outcomes.
+                RCDA connects community engagement, identification,
+                testing, referral and follow-up through an integrated
+                pathway designed to improve health outcomes.
             </p>
 
         </div>
 
 
-        <div class="model-pathway">
+        <div class="model-grid">
 
 
-            <!-- STEP 01 -->
+            <!-- 01 -->
 
-            <div class="model-step">
+            <div class="model-card">
 
-                <div class="step-number">
+                <div class="model-icon">
+                    🗣️
+                </div>
+
+                <div class="model-number">
                     01
                 </div>
 
-                <div class="step-content">
+                <h3>
+                    Sensitize
+                </h3>
 
-                    <h3>
-                        Sensitize
-                    </h3>
-
-                    <p>
-                        Engage households and communities through
-                        awareness, dialogue and targeted health
-                        education.
-                    </p>
-
-                </div>
+                <p>
+                    Engage households and communities through
+                    awareness, dialogue and targeted health education.
+                </p>
 
             </div>
 
 
-            <!-- STEP 02 -->
+            <!-- 02 -->
 
-            <div class="model-step">
+            <div class="model-card">
 
-                <div class="step-number">
+                <div class="model-icon">
+                    🔎
+                </div>
+
+                <div class="model-number">
                     02
                 </div>
 
-                <div class="step-content">
+                <h3>
+                    Screen
+                </h3>
 
-                    <h3>
-                        Screen
-                    </h3>
-
-                    <p>
-                        Identify presumptive and at-risk cases through
-                        community-level screening and assessment.
-                    </p>
-
-                </div>
+                <p>
+                    Identify presumptive and at-risk cases through
+                    community-level screening and assessment.
+                </p>
 
             </div>
 
 
-            <!-- STEP 03 -->
+            <!-- 03 -->
 
-            <div class="model-step">
+            <div class="model-card">
 
-                <div class="step-number">
+                <div class="model-icon">
+                    🧪
+                </div>
+
+                <div class="model-number">
                     03
                 </div>
 
-                <div class="step-content">
+                <h3>
+                    Investigate &amp; Test
+                </h3>
 
-                    <h3>
-                        Investigate &amp; Test
-                    </h3>
-
-                    <p>
-                        Connect identified individuals to appropriate
-                        testing, diagnostic and contact-tracing
-                        pathways.
-                    </p>
-
-                </div>
+                <p>
+                    Connect identified individuals to appropriate
+                    testing, diagnostic and contact-tracing pathways.
+                </p>
 
             </div>
 
 
-            <!-- STEP 04 -->
+            <!-- 04 -->
 
-            <div class="model-step">
+            <div class="model-card">
 
-                <div class="step-number">
+                <div class="model-icon">
+                    🔗
+                </div>
+
+                <div class="model-number">
                     04
                 </div>
 
-                <div class="step-content">
+                <h3>
+                    Link &amp; Refer
+                </h3>
 
-                    <h3>
-                        Link &amp; Refer
-                    </h3>
-
-                    <p>
-                        Connect confirmed and eligible cases to
-                        appropriate health facilities and services.
-                    </p>
-
-                </div>
+                <p>
+                    Connect confirmed and eligible cases to appropriate
+                    health facilities and services.
+                </p>
 
             </div>
 
 
-            <!-- STEP 05 -->
+            <!-- 05 -->
 
-            <div class="model-step">
+            <div class="model-card">
 
-                <div class="step-number">
+                <div class="model-icon">
+                    📊
+                </div>
+
+                <div class="model-number">
                     05
                 </div>
 
-                <div class="step-content">
+                <h3>
+                    Follow Up &amp; Learn
+                </h3>
 
-                    <h3>
-                        Follow Up &amp; Learn
-                    </h3>
-
-                    <p>
-                        Support continuity of care, capture data and
-                        use learning to strengthen future
-                        implementation.
-                    </p>
-
-                </div>
+                <p>
+                    Support continuity of care, capture data and use
+                    learning to strengthen future implementation.
+                </p>
 
             </div>
-
-        </div>
-
-
-        <!-- MODEL CTA -->
-
-        <div class="model-cta">
-
-            <a
-                href="our-model.html"
-                class="btn-action"
-            >
-                Explore Our Model
-                <span>→</span>
-            </a>
 
         </div>
 
@@ -1388,8 +1592,6 @@
         <div class="footer-content">
 
 
-            <!-- RCDA -->
-
             <div class="footer-col">
 
                 <h4>
@@ -1404,8 +1606,6 @@
 
             </div>
 
-
-            <!-- QUICK LINKS -->
 
             <div class="footer-col">
 
@@ -1434,8 +1634,14 @@
                     </li>
 
                     <li>
-                        <a href="index.html#thematic">
+                        <a href="#thematic">
                             Thematic Focus
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#model">
+                            Our Model
                         </a>
                     </li>
 
@@ -1443,8 +1649,6 @@
 
             </div>
 
-
-            <!-- EXECUTIVE LEADERSHIP -->
 
             <div class="footer-col">
 
@@ -1456,6 +1660,7 @@
                     <strong>
                         Executive Director:
                     </strong>
+
                     Haj. Hajara Muhammad Argungu
                 </p>
 
@@ -1463,13 +1668,12 @@
                     <strong>
                         CAC Reg:
                     </strong>
+
                     CAC/IT/NO. 92853
                 </p>
 
             </div>
 
-
-            <!-- CONTACT -->
 
             <div class="footer-col">
 
@@ -1490,8 +1694,6 @@
         </div>
 
 
-        <!-- COPYRIGHT -->
-
         <div class="footer-bottom">
 
             <p>
@@ -1505,39 +1707,37 @@
 
 
     <!-- =========================================================
-         JAVASCRIPT
+         MOBILE MENU JAVASCRIPT
     ========================================================== -->
 
     <script>
 
         const mobileMenu =
-            document.getElementById('mobile-menu');
+            document.getElementById("mobile-menu");
 
         const navList =
-            document.getElementById('nav-list');
+            document.getElementById("nav-list");
 
 
-        /* MOBILE MENU TOGGLE */
+        mobileMenu.addEventListener("click", () => {
 
-        mobileMenu.addEventListener('click', () => {
-
-            navList.classList.toggle('active');
+            navList.classList.toggle("active");
 
         });
 
 
-        /* CLOSE MOBILE MENU AFTER CLICKING A LINK */
-
         document
-            .querySelectorAll('nav ul li a')
+            .querySelectorAll("nav ul li a")
             .forEach(link => {
 
-                link.addEventListener('click', () => {
+                link.addEventListener("click", () => {
 
                     if (
-                        !link.textContent.includes('▼')
+                        !link.textContent.includes("▼")
                     ) {
-                        navList.classList.remove('active');
+
+                        navList.classList.remove("active");
+
                     }
 
                 });
@@ -1547,4 +1747,5 @@
     </script>
 
 </body>
+
 </html>
