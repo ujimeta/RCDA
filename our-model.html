@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Model | Rahama Community Development Association (RCDA)</title>
+
+    <style>
+        /* =========================================
+           RCDA GLOBAL VARIABLES
+        ========================================= */
+
+        :root {
+            --rcda-green: #0F4C3A;
+            --rcda-dark-green: #082E22;
+            --accent-gold: #F4B41A;
+            --text-main: #222222;
+            --text-light: #555555;
+            --bg-light: #F7F9F8;
+            --white: #FFFFFF;
+            --border: #E5E5E5;
+        }
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-main);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================================
+           HEADER / NAVIGATION
+        ========================================= */
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 5%;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 245px;
+            height: 72px;
+            object-fit: contain;
+            object-position: left center;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--rcda-green);
+        }
+
+        /* =========================================
+           ABOUT US DROPDOWN
+        ========================================= */
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 190px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+            border-radius: 5px;
+            padding: 10px 0;
+            border: 1px solid var(--border);
+            z-index: 1100;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--bg-light);
+            color: var(--rcda-green);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* =========================================
+           SUPPORT BUTTON
+        ========================================= */
+
+        .btn-action {
+            background: var(--accent-gold);
+            color: var(--rcda-dark-green);
+            padding: 12px 22px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: #dda212;
+            transform: translateY(-1px);
+        }
+
+        .header-cta {
+            margin-left: 15px;
+            white-space: nowrap;
+        }
+
+        /* =========================================
+           MOBILE MENU
+        ========================================= */
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--rcda-green);
+            border-radius: 2px;
+        }
+
+        /* =========================================
+           PAGE HERO
+        ========================================= */
+
+        .page-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--rcda-green),
+                    var(--rcda-dark-green)
+                );
+
+            color: var(--white);
+            padding: 90px 5% 85px;
+            text-align: center;
+        }
+
+        .page-hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .page-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #E2ECE9;
+            font-size: 1.12rem;
+        }
+
+        /* =========================================
+           INTRODUCTION
+        ========================================= */
+
+        .intro-section {
+            padding: 75px 5% 45px;
+        }
+
+        .intro-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .intro-inner h2 {
+            color: var(--rcda-dark-green);
+            font-size: 2.2rem;
+            margin-bottom: 18px;
+        }
+
+        .intro-inner p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           MODEL PATHWAY
+        ========================================= */
+
+        .model-section {
+            background: var(--bg-light);
+            padding: 65px 5% 90px;
+        }
+
+        .model-section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 45px;
+        }
+
+        .model-section-header h2 {
+            color: var(--rcda-dark-green);
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .model-section-header p {
+            color: var(--text-light);
+        }
+
+        .model-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        /* =========================================
+           MODEL CARD
+        ========================================= */
+
+        .model-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 7px 22px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .model-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        /* =========================================
+           PICTORIAL REPRESENTATION
+        ========================================= */
+
+        .model-visual {
+            min-height: 175px;
+            background: var(--rcda-green);
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .model-symbol {
+            width: 92px;
+            height: 92px;
+            border: 3px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.7rem;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .model-content {
+            padding: 25px 22px 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .model-number {
+            color: var(--accent-gold);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .model-content h3 {
+            color: var(--rcda-dark-green);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .model-content p {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .model-link {
+            margin-top: auto;
+            color: var(--rcda-green);
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .model-link span {
+            transition: transform 0.2s ease;
+        }
+
+        .model-card:hover .model-link span {
+            transform: translateX(5px);
+        }
+
+        /* =========================================
+           CLOSING CTA
+        ========================================= */
+
+        .closing-section {
+            padding: 75px 5%;
+            text-align: center;
+        }
+
+        .closing-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .closing-inner h2 {
+            color: var(--rcda-dark-green);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .closing-inner p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            background: var(--rcda-dark-green);
+            color: var(--white);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent-gold);
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+
+        .footer-col p,
+        .footer-col ul li a {
+            color: #CCCCCC;
+            font-size: 0.93rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 9px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #999999;
+            font-size: 0.84rem;
+        }
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media (max-width: 1100px) {
+
+            .model-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 800px;
+            }
+
+            .model-card:last-child {
+                grid-column: 1 / -1;
+                max-width: 390px;
+                width: 100%;
+                justify-self: center;
+            }
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            header {
+                padding: 12px 5%;
+            }
+
+            .logo img {
+                width: 190px;
+                height: 60px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 84px;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 20px 0;
+                border-bottom: 1px solid var(--border);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                text-align: center;
+                gap: 0;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+                padding: 6px 0;
+            }
+
+            .dropdown-content {
+                position: static;
+                display: block;
+                box-shadow: none;
+                border: none;
+                background: var(--bg-light);
+                margin-top: 6px;
+                width: 100%;
+            }
+
+            .header-cta {
+                display: none;
+            }
+
+            .page-hero {
+                padding: 70px 5%;
+            }
+
+            .page-hero h1 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .logo img {
+                width: 165px;
+                height: 52px;
+            }
+
+            .page-hero {
+                padding: 60px 5%;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .page-hero p {
+                font-size: 1rem;
+            }
+
+            .intro-section {
+                padding: 55px 5% 35px;
+            }
+
+            .intro-inner h2,
+            .model-section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .model-section {
+                padding: 50px 5% 65px;
+            }
+
+            .model-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+
+            .model-card:last-child {
+                max-width: none;
+            }
+
+            .model-visual {
+                min-height: 150px;
+            }
+
+            .closing-section {
+                padding: 60px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header>
+
+        <a href="index.html"
+           class="logo"
+           aria-label="RCDA Nigeria Home">
+
+            <img
+                src="rcda-logo.png"
+                alt="Rahama Community Development Association"
+            >
+
+        </a>
+
+        <div class="menu-toggle" id="mobile-menu"
+             aria-label="Open navigation menu">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+        <nav>
+            <ul id="nav-list">
+
+                <li class="dropdown">
+
+                    <a href="#">
+                        About Us ▼
+                    </a>
+
+                    <div class="dropdown-content">
+
+                        <a href="who-we-are.html">
+                            Who We Are
+                        </a>
+
+                        <a href="what-we-do.html">
+                            What We Do
+                        </a>
+
+                        <a href="who-we-serve.html">
+                            Who We Serve
+                        </a>
+
+                    </div>
+
+                </li>
+
+                <li>
+                    <a href="index.html#thematic">
+                        Thematic Focus
+                    </a>
+                </li>
+
+                <li>
+                    <a href="index.html#partnerships">
+                        Partnerships
+                    </a>
+                </li>
+
+                <li>
+                    <a href="index.html#contact">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <a href="index.html#contact"
+           class="btn-action header-cta">
+            Support Our Work
+        </a>
+
+    </header>
+
+
+    <!-- =========================================
+         PAGE HERO
+    ========================================= -->
+
+    <section class="page-hero">
+
+        <div class="page-hero-inner">
+
+            <div class="eyebrow">
+                How We Work
+            </div>
+
+            <h1>
+                Our Community-Centred Model
+            </h1>
+
+            <p>
+                A practical pathway connecting communities to identification,
+                testing, referral, follow-up and continuous learning to
+                improve health and development outcomes.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         INTRODUCTION
+    ========================================= -->
+
+    <section class="intro-section">
+
+        <div class="intro-inner">
+
+            <h2>
+                From Community Engagement to Lasting Impact
+            </h2>
+
+            <p>
+                RCDA works at the community level to identify needs,
+                connect people with appropriate services and strengthen
+                the systems that support healthier communities. Our model
+                brings these activities together as a connected pathway,
+                allowing community engagement, service delivery, referral,
+                follow-up and learning to reinforce one another.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FIVE-STAGE MODEL
+    ========================================= -->
+
+    <section class="model-section">
+
+        <div class="model-section-header">
+
+            <h2>
+                The RCDA Five-Stage Pathway
+            </h2>
+
+            <p>
+                Explore each stage to understand how the approach is
+                translated into community-level action.
+            </p>
+
+        </div>
+
+
+        <div class="model-grid">
+
+
+            <!-- 01 SENSITIZE -->
+
+            <a href="model-sensitize.html"
+               class="model-card">
+
+                <div class="model-visual">
+
+                    <div class="model-symbol">
+                        🗣️
+                    </div>
+
+                </div>
+
+                <div class="model-content">
+
+                    <div class="model-number">
+                        STAGE 01
+                    </div>
+
+                    <h3>
+                        Sensitize
+                    </h3>
+
+                    <p>
+                        Engage households and communities through
+                        awareness, dialogue and targeted health education.
+                    </p>
+
+                    <span class="model-link">
+                        Explore Stage
+                        <span>→</span>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- 02 SCREEN -->
+
+            <a href="model-screen.html"
+               class="model-card">
+
+                <div class="model-visual">
+
+                    <div class="model-symbol">
+                        🔎
+                    </div>
+
+                </div>
+
+                <div class="model-content">
+
+                    <div class="model-number">
+                        STAGE 02
+                    </div>
+
+                    <h3>
+                        Screen
+                    </h3>
+
+                    <p>
+                        Identify presumptive and at-risk cases through
+                        community-level screening and assessment.
+                    </p>
+
+                    <span class="model-link">
+                        Explore Stage
+                        <span>→</span>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- 03 INVESTIGATE & TEST -->
+
+            <a href="model-investigate-test.html"
+               class="model-card">
+
+                <div class="model-visual">
+
+                    <div class="model-symbol">
+                        🧪
+                    </div>
+
+                </div>
+
+                <div class="model-content">
+
+                    <div class="model-number">
+                        STAGE 03
+                    </div>
+
+                    <h3>
+                        Investigate &amp; Test
+                    </h3>
+
+                    <p>
+                        Connect identified individuals to appropriate
+                        testing, diagnostic and contact-tracing pathways.
+                    </p>
+
+                    <span class="model-link">
+                        Explore Stage
+                        <span>→</span>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- 04 LINK & REFER -->
+
+            <a href="model-link-refer.html"
+               class="model-card">
+
+                <div class="model-visual">
+
+                    <div class="model-symbol">
+                        🔗
+                    </div>
+
+                </div>
+
+                <div class="model-content">
+
+                    <div class="model-number">
+                        STAGE 04
+                    </div>
+
+                    <h3>
+                        Link &amp; Refer
+                    </h3>
+
+                    <p>
+                        Connect confirmed and eligible cases to
+                        appropriate health facilities and services.
+                    </p>
+
+                    <span class="model-link">
+                        Explore Stage
+                        <span>→</span>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- 05 FOLLOW UP & LEARN -->
+
+            <a href="model-follow-up-learn.html"
+               class="model-card">
+
+                <div class="model-visual">
+
+                    <div class="model-symbol">
+                        📊
+                    </div>
+
+                </div>
+
+                <div class="model-content">
+
+                    <div class="model-number">
+                        STAGE 05
+                    </div>
+
+                    <h3>
+                        Follow Up &amp; Learn
+                    </h3>
+
+                    <p>
+                        Support continuity of care, capture data and use
+                        learning to strengthen future implementation.
+                    </p>
+
+                    <span class="model-link">
+                        Explore Stage
+                        <span>→</span>
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CLOSING CTA
+    ========================================= -->
+
+    <section class="closing-section">
+
+        <div class="closing-inner">
+
+            <h2>
+                A Model Built Around Communities
+            </h2>
+
+            <p>
+                RCDA's approach is designed to connect people,
+                communities and health systems through practical,
+                evidence-informed implementation.
+            </p>
+
+            <a href="index.html"
+               class="btn-action">
+                Return to Homepage
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer id="contact">
+
+        <div class="footer-content">
+
+
+            <div class="footer-col">
+
+                <h4>
+                    RCDA Nigeria
+                </h4>
+
+                <p>
+                    Suite 57, Buhari Shopping Complex,
+                    Hadejia Road, Nassarawa LGA,
+                    Kano State, Nigeria.
+                </p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+                <ul>
+
+                    <li>
+                        <a href="who-we-are.html">
+                            Who We Are
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="what-we-do.html">
+                            What We Do
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="who-we-serve.html">
+                            Who We Serve
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="index.html#thematic">
+                            Thematic Focus
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Executive Leadership
+                </h4>
+
+                <p>
+                    <strong>
+                        Executive Director:
+                    </strong>
+                    Haj. Hajara Muhammad Argungu
+                </p>
+
+                <p>
+                    <strong>
+                        CAC Reg:
+                    </strong>
+                    CAC/IT/NO. 92853
+                </p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Contact Info
+                </h4>
+
+                <p>
+                    Tel: 08037257176
+                </p>
+
+                <p>
+                    Email: rahamacda4@gmail.com
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 Rahama Community Development Association
+                (RCDA). All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================
+         MOBILE MENU SCRIPT
+    ========================================= -->
+
+    <script>
+
+        const mobileMenu =
+            document.getElementById('mobile-menu');
+
+        const navList =
+            document.getElementById('nav-list');
+
+
+        mobileMenu.addEventListener('click', () => {
+
+            navList.classList.toggle('active');
+
+        });
+
+
+        document
+            .querySelectorAll('nav ul li a')
+            .forEach(link => {
+
+                link.addEventListener('click', () => {
+
+                    if (!link.textContent.includes('▼')) {
+
+                        navList.classList.remove('active');
+
+                    }
+
+                });
+
+            });
+
+    </script>
+
+</body>
+</html>
