@@ -907,7 +907,116 @@
                 padding: 18px 5%;
             }
         }
+            /* =========================================
+   MODEL TEASER
+========================================= */
 
+.model-teaser {
+    background: var(--bg-light);
+    max-width: 100%;
+}
+
+.model-teaser-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.model-teaser-content {
+    max-width: 700px;
+}
+
+.model-teaser .eyebrow {
+    color: var(--rcda-green);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+}
+
+.model-teaser h2 {
+    color: var(--rcda-dark-green);
+    font-size: 2.3rem;
+    margin-bottom: 18px;
+}
+
+.model-teaser p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 25px;
+}
+
+.model-teaser .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.model-teaser .btn-action span {
+    transition: transform 0.2s ease;
+}
+
+.model-teaser .btn-action:hover span {
+    transform: translateX(5px);
+}
+
+.model-teaser-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.teaser-circle {
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: var(--rcda-green);
+    border: 10px solid var(--accent-gold);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--white);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+
+    box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+}
+
+@media (max-width: 700px) {
+
+    .model-teaser-inner {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        text-align: center;
+    }
+
+    .model-teaser-content {
+        margin: 0 auto;
+    }
+
+    .model-teaser-visual {
+        order: -1;
+    }
+
+    .teaser-circle {
+        width: 145px;
+        height: 145px;
+        font-size: 1.5rem;
+    }
+
+    .model-teaser h2 {
+        font-size: 1.9rem;
+    }
+}
     </style>
 
 </head>
