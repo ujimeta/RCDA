@@ -448,7 +448,164 @@
                 display: none; 
             }
         }
-    <style>
+   /* =========================================
+   RCDA OUR MODEL SECTION
+   ========================================= */
+
+.model-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.model-intro {
+    max-width: 850px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.model-intro h2 {
+    margin-bottom: 12px;
+}
+
+.model-intro p {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.model-pathway {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.model-step {
+    position: relative;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px 22px;
+    min-height: 220px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transition: transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+}
+
+.model-step:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.10);
+    border-color: var(--accent);
+}
+
+.step-number {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 18px;
+}
+
+.step-content h3 {
+    margin: 0 0 12px;
+    color: var(--text-dark);
+    font-size: 1.15rem;
+}
+
+.step-content p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.94rem;
+    line-height: 1.65;
+}
+
+.model-cta {
+    text-align: center;
+    margin-top: 42px;
+}
+
+.model-cta .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.model-cta .btn-action span {
+    transition: transform 0.2s ease;
+}
+
+.model-cta .btn-action:hover span {
+    transform: translateX(4px);
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+    .model-pathway {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 760px;
+    }
+
+    .model-step:last-child {
+        grid-column: 1 / -1;
+        max-width: 370px;
+        width: 100%;
+        justify-self: center;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .model-intro {
+        margin-bottom: 30px;
+    }
+
+    .model-intro p {
+        font-size: 0.98rem;
+    }
+
+    .model-pathway {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding-left: 10px;
+    }
+
+    .model-step {
+        min-height: auto;
+        padding: 22px 20px;
+    }
+
+    .step-number {
+        margin-bottom: 10px;
+    }
+
+    .step-content h3 {
+        font-size: 1.08rem;
+    }
+
+    .step-content p {
+        font-size: 0.92rem;
+    }
+
+    .model-cta {
+        margin-top: 30px;
+    }
+}
+        <style>
     .logo {
         display: flex;
         align-items: center;
@@ -515,7 +672,6 @@
         </li>
 
         <li><a href="index.html#thematic">Thematic Focus</a></li>
-        <li><a href="index.html#model">Our Model</a></li>
         <li><a href="index.html#partnerships">Partnerships</a></li>
         <li><a href="index.html#contact">Contact</a></li>
     </ul>
@@ -529,7 +685,7 @@
             <p>Rahama Community Development Association (RCDA) works at the grassroots intersection of public health, disease case-finding, and sustainable socioeconomic empowerment across Kano State.</p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn-action">Get Involved</a>
-                <a href="#who-we-are" class="btn-secondary">Learn More</a>
+                <a href="our-model.html" class="btn-secondary">Explore Our Model</a>
             </div>
         </div>
         <div class="hero-image"></div>
@@ -621,32 +777,80 @@
         </div>
     </section>
 
-    <section id="model" class="content-section">
-        <h2>Our Community Case-Finding & Referral Pathway</h2>
-        <p style="color: var(--text-light); margin-bottom: 20px;">A standardized 5-step framework ensuring consistent community sensitization, screening, testing, and follow-up.</p>
-        <div class="model-grid">
-            <div class="model-card">
-                <h4>01. Sensitization</h4>
-                <p>Household & community awareness drives on malaria, HIV, TB, and diphtheria.</p>
-            </div>
-            <div class="model-card">
-                <h4>02. Screening</h4>
-                <p>Community volunteers & CORPs identify presumptive and at-risk cases at the household level.</p>
-            </div>
-            <div class="model-card">
-                <h4>03. Testing / Tracing</h4>
-                <p>Malaria RDT, HIV testing, TB presumptive screening, and diphtheria contact listing.</p>
-            </div>
-            <div class="model-card">
-                <h4>04. Referral Linkage</h4>
-                <p>Confirmed cases linked directly to health facilities for treatment, ART, or preventive therapy.</p>
-            </div>
-            <div class="model-card">
-                <h4>05. Follow-up & M&E</h4>
-                <p>Treatment adherence support, data capture, and reporting to LGA/State surveillance.</p>
+    <section id="model" class="content-section model-section">
+    <div class="model-intro">
+        <h2>How RCDA Works</h2>
+        <p>
+            A community-centred pathway connecting identification, referral,
+            follow-up and learning to improve health outcomes.
+        </p>
+    </div>
+
+    <div class="model-pathway">
+
+        <div class="model-step">
+            <div class="step-number">01</div>
+            <div class="step-content">
+                <h3>Sensitize</h3>
+                <p>
+                    Engage households and communities through awareness,
+                    dialogue and targeted health education.
+                </p>
             </div>
         </div>
-    </section>
+
+        <div class="model-step">
+            <div class="step-number">02</div>
+            <div class="step-content">
+                <h3>Screen</h3>
+                <p>
+                    Identify presumptive and at-risk cases through
+                    community-level screening and assessment.
+                </p>
+            </div>
+        </div>
+
+        <div class="model-step">
+            <div class="step-number">03</div>
+            <div class="step-content">
+                <h3>Investigate &amp; Test</h3>
+                <p>
+                    Connect identified individuals to appropriate testing,
+                    diagnostic and contact-tracing pathways.
+                </p>
+            </div>
+        </div>
+
+        <div class="model-step">
+            <div class="step-number">04</div>
+            <div class="step-content">
+                <h3>Link &amp; Refer</h3>
+                <p>
+                    Connect confirmed and eligible cases to appropriate
+                    health facilities and services.
+                </p>
+            </div>
+        </div>
+
+        <div class="model-step">
+            <div class="step-number">05</div>
+            <div class="step-content">
+                <h3>Follow Up &amp; Learn</h3>
+                <p>
+                    Support continuity of care, capture data and use
+                    learning to strengthen future implementation.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="model-cta">
+        <a href="our-model.html" class="btn-action">
+            Explore Our Model <span>→</span>
+        </a>
+    </div>
+</section>
 
     <section id="partnerships" class="content-section alt-bg">
         <div class="alt-bg-inner" style="padding: 0 5%;">
