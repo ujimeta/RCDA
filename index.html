@@ -7,6 +7,7 @@
     <title>Rahama Community Development Association (RCDA) | Kano State</title>
 
     <style>
+
         /* =========================================================
            GLOBAL RESET & VARIABLES
         ========================================================= */
@@ -40,6 +41,7 @@
             text-decoration: none;
         }
 
+
         /* =========================================================
            HEADER
         ========================================================= */
@@ -56,7 +58,8 @@
             z-index: 1000;
         }
 
-        /* Official RCDA logo */
+
+        /* Official RCDA Logo */
 
         .logo {
             display: flex;
@@ -71,6 +74,7 @@
             max-width: 190px;
             object-fit: contain;
         }
+
 
         /* =========================================================
            NAVIGATION
@@ -98,6 +102,7 @@
         nav a:hover {
             color: var(--rcda-green);
         }
+
 
         /* =========================================================
            ABOUT US DROPDOWN
@@ -127,8 +132,8 @@
         }
 
         /*
-           Keep dropdown open while the cursor moves
-           from About Us into the submenu.
+           Keeps the dropdown open while the cursor
+           moves from About Us into the submenu.
         */
 
         .dropdown:hover .dropdown-content,
@@ -153,6 +158,7 @@
             background: var(--bg-light);
             color: var(--rcda-green);
         }
+
 
         /* =========================================================
            BUTTONS
@@ -193,6 +199,7 @@
             color: var(--rcda-green);
         }
 
+
         /* =========================================================
            MOBILE MENU
         ========================================================= */
@@ -210,6 +217,7 @@
             background: var(--rcda-green);
             border-radius: 2px;
         }
+
 
         /* =========================================================
            HERO
@@ -264,6 +272,7 @@
                 center / cover no-repeat;
         }
 
+
         /* =========================================================
            INFORMATION BAR
         ========================================================= */
@@ -279,6 +288,7 @@
             flex-wrap: wrap;
             gap: 20px;
         }
+
 
         /* =========================================================
            GENERAL SECTIONS
@@ -317,6 +327,7 @@
             margin: 0 auto;
         }
 
+
         /* =========================================================
            FOUNDER'S WELCOME
         ========================================================= */
@@ -353,6 +364,7 @@
             font-weight: 700;
             font-size: 1rem;
         }
+
 
         /* =========================================================
            THEMATIC FOCUS
@@ -416,133 +428,74 @@
             gap: 5px;
         }
 
-        /* =========================================================
-           COMMUNITY-CENTERED MODEL
-        ========================================================= */
-
-        .model-section {
-            background: var(--white);
-            max-width: 100%;
-        }
-
-        .model-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .model-intro {
-            max-width: 850px;
-            margin: 0 auto 45px;
-            text-align: center;
-        }
-
-        .model-intro h2 {
-            margin-bottom: 12px;
-        }
-
-        .model-intro p {
-            color: var(--text-light);
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin: 0;
-        }
-
-        .model-pathway {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 18px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .model-step {
-            position: relative;
-            background: var(--white);
-            border-radius: 14px;
-            padding: 28px 22px;
-            min-height: 270px;
-            border: 1px solid rgba(0,0,0,0.07);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease,
-                border-color 0.25s ease;
-        }
-
-        .model-step:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 14px 32px rgba(0,0,0,0.10);
-            border-color: var(--accent-gold);
-        }
-
-        /* Representative pictorial symbol */
-
-        .model-icon {
-            width: 62px;
-            height: 62px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: var(--bg-light);
-            border: 2px solid var(--accent-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.9rem;
-            margin-bottom: 18px;
-            transition:
-                transform 0.25s ease,
-                background 0.25s ease;
-        }
-
-        .model-step:hover .model-icon {
-            transform: scale(1.08);
-            background: #FFF8E5;
-        }
-
-        .model-step h3 {
-            color: var(--rcda-dark-green);
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-        }
-
-        .model-step p {
-            color: var(--text-light);
-            font-size: 0.92rem;
-            line-height: 1.65;
-            margin: 0;
-        }
-
-        .model-link {
-            margin-top: auto;
-            padding-top: 18px;
-            color: var(--rcda-green);
-            font-size: 0.88rem;
-            font-weight: 700;
-        }
 
         /* =========================================================
            PARTNERSHIPS
+           LOGO BACKDROP
         ========================================================= */
 
-        .partners-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 25px;
+        .partnership-section {
+            position: relative;
+            overflow: hidden;
         }
 
-        .partner-badge {
-            background: var(--white);
-            padding: 12px 20px;
-            border-radius: 4px;
-            font-weight: 600;
-            color: var(--rcda-dark-green);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            border: 1px solid #E5E5E5;
+        .partnership-intro {
+            max-width: 800px;
+            margin-bottom: 40px;
         }
+
+        .partners-logo-wall {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            padding: 25px 0;
+        }
+
+        .partner-logo {
+            min-height: 150px;
+            background: rgba(255,255,255,0.90);
+            border: 1px solid rgba(15,76,58,0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            background: var(--white);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .partner-logo img {
+            display: block;
+            width: 100%;
+            max-width: 170px;
+            max-height: 90px;
+            object-fit: contain;
+        }
+
+        /*
+           Temporary placeholder appearance.
+
+           Replace the placeholder text with the actual partner
+           logo image when the logo files are added to GitHub.
+        */
+
+        .partner-placeholder {
+            color: var(--rcda-dark-green);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+            opacity: 0.75;
+        }
+
 
         /* =========================================================
            FOOTER
@@ -594,27 +547,18 @@
             font-size: 0.85rem;
         }
 
+
         /* =========================================================
            TABLET
         ========================================================= */
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
 
-            .model-pathway {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .model-step:last-child {
-                grid-column: 1 / -1;
-                max-width: 370px;
-                width: 100%;
-                justify-self: center;
+            .partners-logo-wall {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        /* =========================================================
-           MOBILE
-        ========================================================= */
 
         @media (max-width: 900px) {
 
@@ -712,7 +656,16 @@
             .content-section h2 {
                 font-size: 2rem;
             }
+
+            .partners-logo-wall {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
 
         @media (max-width: 600px) {
 
@@ -741,39 +694,22 @@
                 font-size: 1rem;
             }
 
-            .model-pathway {
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
+            .partners-logo-wall {
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
 
-            .model-step {
-                min-height: auto;
-                padding: 24px 20px;
-            }
-
-            .model-step:last-child {
-                max-width: none;
-            }
-
-            .model-icon {
-                width: 56px;
-                height: 56px;
-                font-size: 1.7rem;
-            }
-
-            .partners-list {
-                flex-direction: column;
-            }
-
-            .partner-badge {
-                width: 100%;
+            .partner-logo {
+                min-height: 130px;
             }
         }
+
     </style>
 </head>
 
+
 <body>
+
 
     <!-- =========================================================
          HEADER
@@ -782,23 +718,42 @@
     <header>
 
         <!-- OFFICIAL RCDA LOGO -->
+
         <a href="index.html" class="logo" aria-label="RCDA Home">
+
             <img
                 src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
                 alt="Rahama Community Development Association (RCDA) logo"
             >
+
         </a>
 
+
         <!-- MOBILE MENU -->
-        <div class="menu-toggle" id="mobile-menu" aria-label="Open navigation menu">
+
+        <div
+            class="menu-toggle"
+            id="mobile-menu"
+            aria-label="Open navigation menu"
+            role="button"
+            tabindex="0"
+        >
+
             <span></span>
             <span></span>
             <span></span>
+
         </div>
 
+
         <!-- NAVIGATION -->
+
         <nav>
+
             <ul id="nav-list">
+
+
+                <!-- ABOUT US -->
 
                 <li class="dropdown">
 
@@ -830,11 +785,17 @@
 
                 </li>
 
+
+                <!-- THEMATIC FOCUS -->
+
                 <li>
                     <a href="#thematic">
                         Thematic Focus
                     </a>
                 </li>
+
+
+                <!-- PARTNERSHIPS -->
 
                 <li>
                     <a href="#partnerships">
@@ -842,14 +803,22 @@
                     </a>
                 </li>
 
+
+                <!-- CONTACT -->
+
                 <li>
                     <a href="#contact">
                         Contact
                     </a>
                 </li>
 
+
             </ul>
+
         </nav>
+
+
+        <!-- HEADER CTA -->
 
         <a href="#contact" class="btn-action header-cta">
             Support Our Work
@@ -864,12 +833,14 @@
 
     <section class="hero">
 
+
         <div class="hero-content">
 
             <h1>
                 Compassion in Action,
                 <span>Health in Every Community.</span>
             </h1>
+
 
             <p>
                 Rahama Community Development Association (RCDA) works
@@ -878,13 +849,19 @@
                 empowerment across Kano State.
             </p>
 
+
             <div class="hero-buttons">
 
                 <a href="#contact" class="btn-action">
                     Get Involved
                 </a>
 
-                <!-- THIS IS THE ONLY PUBLIC-FACING MODEL CTA -->
+
+                <!--
+                    THIS IS THE ONLY PUBLIC-FACING
+                    ENTRY POINT TO THE RCDA MODEL.
+                -->
+
                 <a href="our-model.html" class="btn-secondary">
                     Explore Our Model →
                 </a>
@@ -893,7 +870,9 @@
 
         </div>
 
+
         <div class="hero-image"></div>
+
 
     </section>
 
@@ -927,7 +906,9 @@
                 A Welcome from the Founder
             </h2>
 
+
             <p class="founder-message">
+
                 At Rahama Community Development Association, we believe
                 that lasting change begins with communities themselves.
                 Our work is rooted in compassion, partnership and practical
@@ -937,11 +918,16 @@
                 development partners and other stakeholders, RCDA remains
                 committed to strengthening healthier, more resilient and
                 empowered communities across Kano State and beyond.
+
             </p>
 
+
             <p class="founder-signature">
+
                 Haj. Hajara Muhammad Argungu<br>
+
                 Founder / Executive Director, RCDA
+
             </p>
 
         </div>
@@ -957,23 +943,34 @@
 
         <div class="alt-bg-inner">
 
+
             <h2>
                 Our Eight Thematic Focus Areas
             </h2>
 
+
             <p>
+
                 Delivered through a community-centered service model
                 linking households directly to primary healthcare systems.
                 Click any card to explore dedicated activities, data,
                 and galleries.
+
             </p>
 
+
             <div class="grid-4">
+
+
+                <!-- 01 -->
 
                 <a href="reproductive-health.html" class="card">
 
                     <div>
-                        <div class="card-icon">👩‍🍼</div>
+
+                        <div class="card-icon">
+                            👩‍🍼
+                        </div>
 
                         <h3>
                             Reproductive Health & Child Spacing
@@ -984,6 +981,7 @@
                             information, dispelling myths, and reducing
                             barriers to maternal care.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -993,10 +991,15 @@
                 </a>
 
 
+                <!-- 02 -->
+
                 <a href="nutrition.html" class="card">
 
                     <div>
-                        <div class="card-icon">🥗</div>
+
+                        <div class="card-icon">
+                            🥗
+                        </div>
 
                         <h3>
                             Nutrition Services
@@ -1007,6 +1010,7 @@
                             nutrition counseling, and timely referral of
                             malnourished children.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1016,10 +1020,15 @@
                 </a>
 
 
+                <!-- 03 -->
+
                 <a href="child-survival.html" class="card">
 
                     <div>
-                        <div class="card-icon">👶</div>
+
+                        <div class="card-icon">
+                            👶
+                        </div>
 
                         <h3>
                             Child Survival Services
@@ -1030,6 +1039,7 @@
                             managing common childhood illnesses via
                             trained volunteers.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1039,10 +1049,15 @@
                 </a>
 
 
+                <!-- 04 -->
+
                 <a href="malaria.html" class="card">
 
                     <div>
-                        <div class="card-icon">🦟</div>
+
+                        <div class="card-icon">
+                            🦟
+                        </div>
 
                         <h3>
                             Malaria Interventions
@@ -1053,6 +1068,7 @@
                             Insecticide-Treated Net (ITN) distribution
                             campaigns, and demand creation.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1062,10 +1078,15 @@
                 </a>
 
 
+                <!-- 05 -->
+
                 <a href="hiv-tb.html" class="card">
 
                     <div>
-                        <div class="card-icon">🎗️</div>
+
+                        <div class="card-icon">
+                            🎗️
+                        </div>
 
                         <h3>
                             HIV/AIDS Case Finding
@@ -1076,6 +1097,7 @@
                             index testing, and active linkage to ART
                             care facilities.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1085,10 +1107,15 @@
                 </a>
 
 
+                <!-- 06 -->
+
                 <a href="hiv-tb.html" class="card">
 
                     <div>
-                        <div class="card-icon">🫁</div>
+
+                        <div class="card-icon">
+                            🫁
+                        </div>
 
                         <h3>
                             TB Case Finding
@@ -1099,6 +1126,7 @@
                             contact tracing, presumptive screening,
                             and preventive therapy follow-up.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1108,10 +1136,15 @@
                 </a>
 
 
+                <!-- 07 -->
+
                 <a href="systems-surveillance.html" class="card">
 
                     <div>
-                        <div class="card-icon">🛡️</div>
+
+                        <div class="card-icon">
+                            🛡️
+                        </div>
 
                         <h3>
                             Diphtheria Contact Tracing
@@ -1122,6 +1155,7 @@
                             close contact tracing, and IDSR reporting
                             in line with national protocols.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1131,10 +1165,15 @@
                 </a>
 
 
+                <!-- 08 -->
+
                 <a href="community-engagement.html" class="card">
 
                     <div>
-                        <div class="card-icon">🤝</div>
+
+                        <div class="card-icon">
+                            🤝
+                        </div>
 
                         <h3>
                             Community Systems Strengthening
@@ -1145,6 +1184,7 @@
                             and vocational skills initiatives for
                             sustainable communities.
                         </p>
+
                     </div>
 
                     <span class="card-link">
@@ -1153,6 +1193,7 @@
 
                 </a>
 
+
             </div>
 
         </div>
@@ -1161,200 +1202,109 @@
 
 
     <!-- =========================================================
-         COMMUNITY-CENTERED MODEL
+         PARTNERSHIPS & AFFILIATIONS
          
-         NOTE:
-         No "Our Model" item appears in the top navigation.
-         These cards are the visual teaser/entry points.
-         The main Explore Our Model button leads to our-model.html.
+         IMPORTANT:
+         The homepage no longer contains the Community-Centered
+         Model cards. The Model is now exclusively accessed through
+         our-model.html.
     ========================================================= -->
 
-    <section class="content-section model-section">
+    <section
+        id="partnerships"
+        class="content-section alt-bg partnership-section"
+    >
 
-        <div class="model-inner">
+        <div class="alt-bg-inner">
 
-            <div class="model-intro">
+
+            <div class="partnership-intro">
 
                 <h2>
-                    Our Community-Centered Model
+                    Partnerships & Affiliations
                 </h2>
 
                 <p>
-                    RCDA uses a practical community-centered pathway
-                    that connects awareness, identification, testing,
-                    referral and follow-up to strengthen health outcomes.
+                    RCDA works collaboratively with development,
+                    health, technical and community-focused partners
+                    to strengthen the reach, quality and sustainability
+                    of community-based interventions.
                 </p>
 
             </div>
 
 
-            <div class="model-pathway">
+            <!-- =====================================================
+                 PARTNER LOGO WALL
+
+                 These are structured as image containers so that
+                 actual partner logos can be inserted later.
+
+                 Replace each placeholder with:
+
+                 <img src="partners/partner-name.png"
+                      alt="Partner Name">
+
+                 once the official logo files are added.
+            ====================================================== -->
+
+            <div class="partners-logo-wall">
 
 
-                <!-- MODEL 01 -->
+                <!-- PARTNER 01 -->
 
-                <a href="model-sensitize.html" class="model-step">
+                <div class="partner-logo">
 
-                    <div class="model-icon">
-                        📣
+                    <div class="partner-placeholder">
+                        Society for Family Health (SFH)
                     </div>
 
-                    <h3>
-                        Sensitize
-                    </h3>
-
-                    <p>
-                        Engage households and communities through
-                        awareness, dialogue and targeted health education.
-                    </p>
-
-                    <span class="model-link">
-                        Explore →
-                    </span>
-
-                </a>
+                </div>
 
 
-                <!-- MODEL 02 -->
+                <!-- PARTNER 02 -->
 
-                <a href="model-screen.html" class="model-step">
+                <div class="partner-logo">
 
-                    <div class="model-icon">
-                        🔎
+                    <div class="partner-placeholder">
+                        KNCV Tuberculosis Foundation
                     </div>
 
-                    <h3>
-                        Screen
-                    </h3>
-
-                    <p>
-                        Identify presumptive and at-risk cases through
-                        community-level screening and assessment.
-                    </p>
-
-                    <span class="model-link">
-                        Explore →
-                    </span>
-
-                </a>
+                </div>
 
 
-                <!-- MODEL 03 -->
+                <!-- PARTNER 03 -->
 
-                <a href="model-investigate-test.html" class="model-step">
+                <div class="partner-logo">
 
-                    <div class="model-icon">
-                        🧪
+                    <div class="partner-placeholder">
+                        Nigeria Network of NGOs
                     </div>
 
-                    <h3>
-                        Investigate & Test
-                    </h3>
-
-                    <p>
-                        Connect identified individuals to appropriate
-                        testing, diagnostic and contact-tracing pathways.
-                    </p>
-
-                    <span class="model-link">
-                        Explore →
-                    </span>
-
-                </a>
+                </div>
 
 
-                <!-- MODEL 04 -->
+                <!-- PARTNER 04 -->
 
-                <a href="model-link-refer.html" class="model-step">
+                <div class="partner-logo">
 
-                    <div class="model-icon">
-                        🏥
+                    <div class="partner-placeholder">
+                        KANET
                     </div>
 
-                    <h3>
-                        Link & Refer
-                    </h3>
-
-                    <p>
-                        Connect confirmed and eligible cases to
-                        appropriate health facilities and services.
-                    </p>
-
-                    <span class="model-link">
-                        Explore →
-                    </span>
-
-                </a>
+                </div>
 
 
-                <!-- MODEL 05 -->
+                <!-- PARTNER 05 -->
 
-                <a href="model-follow-up.html" class="model-step">
+                <div class="partner-logo">
 
-                    <div class="model-icon">
-                        🔄
+                    <div class="partner-placeholder">
+                        NHVMAS
                     </div>
 
-                    <h3>
-                        Follow Up & Learn
-                    </h3>
-
-                    <p>
-                        Support continuity of care, capture data and
-                        use learning to strengthen future implementation.
-                    </p>
-
-                    <span class="model-link">
-                        Explore →
-                    </span>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================================
-         PARTNERSHIPS
-    ========================================================= -->
-
-    <section id="partnerships" class="content-section alt-bg">
-
-        <div class="alt-bg-inner">
-
-            <h2>
-                Partnerships & Affiliations
-            </h2>
-
-            <p>
-                Collaborating with leading technical networks and
-                coordination bodies across Nigeria.
-            </p>
-
-            <div class="partners-list">
-
-                <div class="partner-badge">
-                    Society for Family Health (SFH)
                 </div>
 
-                <div class="partner-badge">
-                    KNCV Tuberculosis Foundation
-                </div>
-
-                <div class="partner-badge">
-                    Nigeria Network of NGOs
-                </div>
-
-                <div class="partner-badge">
-                    KANET (Coalition of NGOs in Kano State)
-                </div>
-
-                <div class="partner-badge">
-                    New HIV Vaccine & Microbicide Advocacy Society (NHVMAS)
-                </div>
 
             </div>
 
@@ -1369,7 +1319,11 @@
 
     <footer id="contact">
 
+
         <div class="footer-content">
+
+
+            <!-- ORGANIZATION -->
 
             <div class="footer-col">
 
@@ -1385,6 +1339,8 @@
 
             </div>
 
+
+            <!-- QUICK LINKS -->
 
             <div class="footer-col">
 
@@ -1418,10 +1374,18 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="our-model.html">
+                            Our Community-Centered Model
+                        </a>
+                    </li>
+
                 </ul>
 
             </div>
 
+
+            <!-- LEADERSHIP -->
 
             <div class="footer-col">
 
@@ -1442,6 +1406,8 @@
             </div>
 
 
+            <!-- CONTACT -->
+
             <div class="footer-col">
 
                 <h4>
@@ -1458,17 +1424,19 @@
 
             </div>
 
+
         </div>
 
 
         <div class="footer-bottom">
 
             <p>
-                &copy; 2026 Rahama Community Development Association (RCDA).
-                All rights reserved.
+                &copy; 2026 Rahama Community Development Association
+                (RCDA). All rights reserved.
             </p>
 
         </div>
+
 
     </footer>
 
@@ -1479,8 +1447,12 @@
 
     <script>
 
-        const mobileMenu = document.getElementById("mobile-menu");
-        const navList = document.getElementById("nav-list");
+        const mobileMenu =
+            document.getElementById("mobile-menu");
+
+        const navList =
+            document.getElementById("nav-list");
+
 
         if (mobileMenu && navList) {
 
@@ -1490,33 +1462,56 @@
 
             });
 
-        }
 
+            /* Keyboard accessibility */
 
-        /* Close mobile navigation after selecting a link */
-
-        document.querySelectorAll("nav a").forEach(function(link) {
-
-            link.addEventListener("click", function() {
-
-                /*
-                   Do not close the mobile menu when clicking
-                   the About Us parent itself.
-                */
+            mobileMenu.addEventListener("keydown", function (event) {
 
                 if (
-                    !this.parentElement.classList.contains("dropdown")
+                    event.key === "Enter" ||
+                    event.key === " "
                 ) {
 
-                    navList.classList.remove("active");
+                    event.preventDefault();
+
+                    navList.classList.toggle("active");
 
                 }
 
             });
 
-        });
+        }
+
+
+        /* =====================================================
+           CLOSE MOBILE NAVIGATION AFTER LINK SELECTION
+        ===================================================== */
+
+        document
+            .querySelectorAll("nav a")
+            .forEach(function(link) {
+
+                link.addEventListener("click", function() {
+
+                    /*
+                       Do not close the mobile menu when
+                       clicking the About Us parent itself.
+                    */
+
+                    if (
+                        !this.parentElement.classList.contains("dropdown")
+                    ) {
+
+                        navList.classList.remove("active");
+
+                    }
+
+                });
+
+            });
 
     </script>
+
 
 </body>
 </html>
