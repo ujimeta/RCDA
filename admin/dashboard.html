@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RCDA Administration Dashboard</title>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rcda-green: #0F4C3A;
+            --rcda-dark-green: #082E22;
+            --rcda-gold: #F4B41A;
+
+            --bg: #F5F7F6;
+            --white: #FFFFFF;
+
+            --text: #222222;
+            --muted: #667085;
+
+            --border: #E4E7EC;
+
+            --success: #027A48;
+            --danger: #B42318;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        button,
+        a {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           LOADING SCREEN
+        ========================================================= */
+
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--rcda-dark-green),
+                    var(--rcda-green)
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 99999;
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .loading-box {
+            max-width: 420px;
+            padding: 30px;
+        }
+
+        .loading-logo {
+            width: 130px;
+            max-height: 90px;
+            object-fit: contain;
+            margin-bottom: 25px;
+        }
+
+        .loading-box h2 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .loading-box p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .spinner {
+            width: 38px;
+            height: 38px;
+
+            margin: 25px auto 0;
+
+            border: 4px solid rgba(255,255,255,0.25);
+            border-top-color: var(--rcda-gold);
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =========================================================
+           APPLICATION
+        ========================================================= */
+
+        #app {
+            display: none;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 260px;
+
+            background: var(--rcda-dark-green);
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 25px 22px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            width: 110px;
+            max-height: 70px;
+            object-fit: contain;
+
+            margin-bottom: 12px;
+        }
+
+        .sidebar-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .sidebar-subtitle {
+            margin-top: 4px;
+
+            font-size: 0.72rem;
+
+            color:
+                rgba(255,255,255,0.65);
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        .sidebar-nav {
+            flex: 1;
+
+            padding: 22px 12px;
+
+            overflow-y: auto;
+        }
+
+        .nav-label {
+            color:
+                rgba(255,255,255,0.45);
+
+            font-size: 0.68rem;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            padding: 0 12px;
+
+            margin:
+                12px 0 8px;
+        }
+
+        .nav-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            width: 100%;
+
+            padding:
+                11px 13px;
+
+            margin-bottom: 4px;
+
+            border-radius: 7px;
+
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 0.88rem;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background:
+                rgba(255,255,255,0.08);
+
+            color: white;
+        }
+
+        .nav-item.active {
+            background: var(--rcda-gold);
+
+            color:
+                var(--rcda-dark-green);
+
+            font-weight: 700;
+        }
+
+        .nav-icon {
+            width: 24px;
+
+            text-align: center;
+
+            font-size: 1.05rem;
+        }
+
+
+        /* =========================================================
+           SIDEBAR FOOTER
+        ========================================================= */
+
+        .sidebar-footer {
+            padding: 15px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.10);
+        }
+
+        .user-mini {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            background: var(--rcda-gold);
+
+            color:
+                var(--rcda-dark-green);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+
+            font-size: 0.85rem;
+        }
+
+        .user-mini-info {
+            min-width: 0;
+        }
+
+        .user-mini-email {
+            color: white;
+
+            font-size: 0.72rem;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .user-mini-role {
+            color:
+                rgba(255,255,255,0.55);
+
+            font-size: 0.68rem;
+
+            text-transform: capitalize;
+        }
+
+
+        /* =========================================================
+           MAIN CONTENT
+        ========================================================= */
+
+        .main {
+            margin-left: 260px;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .topbar {
+            height: 72px;
+
+            background: var(--white);
+
+            border-bottom:
+                1px solid
+                var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 35px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 500;
+        }
+
+        .page-title h1 {
+            font-size: 1.25rem;
+
+            color:
+                var(--rcda-dark-green);
+        }
+
+        .page-title p {
+            font-size: 0.78rem;
+
+            color: var(--muted);
+
+            margin-top: 2px;
+        }
+
+        .topbar-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .view-site {
+            padding:
+                9px 14px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 6px;
+
+            color:
+                var(--rcda-green);
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+
+            background: white;
+        }
+
+        .view-site:hover {
+            background: var(--bg);
+        }
+
+        .logout-button {
+            border: none;
+
+            background:
+                #FEF3F2;
+
+            color:
+                var(--danger);
+
+            padding:
+                9px 14px;
+
+            border-radius: 6px;
+
+            font-weight: 700;
+
+            font-size: 0.82rem;
+
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background: #FEE4E2;
+        }
+
+
+        /* =========================================================
+           CONTENT
+        ========================================================= */
+
+        .content {
+            padding: 35px;
+        }
+
+
+        /* =========================================================
+           WELCOME
+        ========================================================= */
+
+        .welcome {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--rcda-green),
+                    var(--rcda-dark-green)
+                );
+
+            border-radius: 12px;
+
+            padding: 30px;
+
+            color: white;
+
+            margin-bottom: 28px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .welcome::after {
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+            height: 260px;
+
+            right: -90px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            border:
+                45px solid
+                rgba(244,180,26,0.10);
+        }
+
+        .welcome h2 {
+            font-size: 1.55rem;
+
+            margin-bottom: 7px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .welcome p {
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 0.9rem;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =========================================================
+           ROLE BADGE
+        ========================================================= */
+
+        .role-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            margin-top: 18px;
+
+            background:
+                rgba(244,180,26,0.18);
+
+            border:
+                1px solid
+                rgba(244,180,26,0.45);
+
+            color:
+                var(--rcda-gold);
+
+            border-radius: 30px;
+
+            padding:
+                6px 12px;
+
+            font-size: 0.75rem;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =========================================================
+           STAT CARDS
+        ========================================================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.025);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 9px;
+
+            background:
+                var(--bg);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1.35rem;
+        }
+
+        .stat-number {
+            color:
+                var(--rcda-dark-green);
+
+            font-size: 1.45rem;
+
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color:
+                var(--muted);
+
+            font-size: 0.75rem;
+
+            margin-top: 2px;
+        }
+
+
+        /* =========================================================
+           DASHBOARD GRID
+        ========================================================= */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr;
+
+            gap: 22px;
+        }
+
+        .panel {
+            background: white;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 10px;
+
+            padding: 24px;
+
+            margin-bottom: 22px;
+        }
+
+        .panel-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 14px;
+
+            border-bottom:
+                1px solid
+                var(--border);
+        }
+
+        .panel-header h3 {
+            color:
+                var(--rcda-dark-green);
+
+            font-size: 1rem;
+        }
+
+        .panel-header span {
+            color:
+                var(--muted);
+
+            font-size: 0.72rem;
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .quick-actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+        }
+
+        .action-card {
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 8px;
+
+            padding: 18px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .action-card:hover {
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--rcda-gold);
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,0.06);
+        }
+
+        .action-icon {
+            font-size: 1.4rem;
+
+            margin-bottom: 10px;
+        }
+
+        .action-card h4 {
+            color:
+                var(--rcda-dark-green);
+
+            font-size: 0.9rem;
+
+            margin-bottom: 5px;
+        }
+
+        .action-card p {
+            color:
+                var(--muted);
+
+            font-size: 0.75rem;
+
+            line-height: 1.5;
+        }
+
+        .coming-soon {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            font-size: 0.65rem;
+
+            color:
+                var(--rcda-green);
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           SECURITY PANEL
+        ========================================================= */
+
+        .security-status {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 14px;
+
+            background:
+                #ECFDF3;
+
+            border:
+                1px solid
+                #ABEFC6;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+        }
+
+        .security-check {
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+
+            background:
+                #D1FADF;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .security-status strong {
+            display: block;
+
+            color:
+                var(--success);
+
+            font-size: 0.82rem;
+        }
+
+        .security-status span {
+            display: block;
+
+            color:
+                #4B6358;
+
+            font-size: 0.7rem;
+
+            margin-top: 2px;
+        }
+
+        .security-list {
+            list-style: none;
+        }
+
+        .security-list li {
+            padding: 9px 0;
+
+            border-bottom:
+                1px solid
+                var(--border);
+
+            color:
+                var(--muted);
+
+            font-size: 0.75rem;
+        }
+
+        .security-list li:last-child {
+            border-bottom: none;
+        }
+
+        .security-list strong {
+            color:
+                var(--text);
+        }
+
+
+        /* =========================================================
+           SYSTEM NOTICE
+        ========================================================= */
+
+        .notice {
+            padding: 14px 16px;
+
+            background:
+                #FFFAEB;
+
+            border:
+                1px solid
+                #FEDF89;
+
+            color:
+                #7A5A00;
+
+            border-radius: 8px;
+
+            font-size: 0.75rem;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        .mobile-menu {
+            display: none;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 1.5rem;
+
+            color:
+                var(--rcda-green);
+
+            cursor: pointer;
+        }
+
+
+        @media (max-width: 1100px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform 0.25s ease;
+            }
+
+            .sidebar.open {
+                transform:
+                    translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .topbar {
+                padding:
+                    0 18px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
+            .view-site {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         LOADING SCREEN
+    ========================================================= -->
+
+    <div id="loading-screen">
+
+        <div class="loading-box">
+
+            <img
+                class="loading-logo"
+                src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
+                alt="RCDA"
+            >
+
+            <h2>
+                Verifying Administration Access
+            </h2>
+
+            <p>
+                Please wait while your secure RCDA session is verified.
+            </p>
+
+            <div class="spinner"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         APPLICATION
+    ========================================================= -->
+
+    <div id="app">
+
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside class="sidebar" id="sidebar">
+
+
+            <div class="sidebar-header">
+
+                <img
+                    class="sidebar-logo"
+                    src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
+                    alt="RCDA Logo"
+                >
+
+                <div class="sidebar-title">
+                    RCDA Administration
+                </div>
+
+                <div class="sidebar-subtitle">
+                    Privileged Management Portal
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+
+                <div class="nav-label">
+                    Dashboard
+                </div>
+
+
+                <a
+                    href="dashboard.html"
+                    class="nav-item active"
+                >
+
+                    <span class="nav-icon">
+                        🏠
+                    </span>
+
+                    Dashboard
+
+                </a>
+
+
+                <div class="nav-label">
+                    Website Content
+                </div>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-feature="content"
+                >
+
+                    <span class="nav-icon">
+                        📝
+                    </span>
+
+                    Page Content
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-feature="content"
+                >
+
+                    <span class="nav-icon">
+                        🎯
+                    </span>
+
+                    Thematic Focus
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-feature="content"
+                >
+
+                    <span class="nav-icon">
+                        🤝
+                    </span>
+
+                    Partnerships
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-feature="content"
+                >
+
+                    <span class="nav-icon">
+                        🖼️
+                    </span>
+
+                    Gallery & Media
+
+                </a>
+
+
+                <div class="nav-label">
+                    Administration
+                </div>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-feature="users"
+                >
+
+                    <span class="nav-icon">
+                        👥
+                    </span>
+
+                    User Management
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    data-feature="settings"
+                >
+
+                    <span class="nav-icon">
+                        ⚙️
+                    </span>
+
+                    Settings
+
+                </a>
+
+
+            </nav>
+
+
+            <div class="sidebar-footer">
+
+                <div class="user-mini">
+
+                    <div
+                        class="user-avatar"
+                        id="user-avatar"
+                    >
+                        R
+                    </div>
+
+                    <div class="user-mini-info">
+
+                        <div
+                            class="user-mini-email"
+                            id="sidebar-email"
+                        >
+                            Loading...
+                        </div>
+
+                        <div
+                            class="user-mini-role"
+                            id="sidebar-role"
+                        >
+                            Verifying...
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
+
+        <main class="main">
+
+
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header class="topbar">
+
+
+                <div
+                    class="page-title"
+                >
+
+                    <button
+                        class="mobile-menu"
+                        id="mobile-menu"
+                        aria-label="Open menu"
+                    >
+                        ☰
+                    </button>
+
+                    <h1>
+                        Administration Dashboard
+                    </h1>
+
+                    <p>
+                        Rahama Community Development Association
+                    </p>
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+                    <a
+                        href="../index.html"
+                        target="_blank"
+                        class="view-site"
+                    >
+                        View Website ↗
+                    </a>
+
+                    <button
+                        id="logout-button"
+                        class="logout-button"
+                    >
+                        Sign Out
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <div class="content">
+
+
+                <!-- =============================================
+                     WELCOME
+                ============================================== -->
+
+                <section class="welcome">
+
+                    <h2 id="welcome-title">
+                        Welcome to the RCDA Administration Portal
+                    </h2>
+
+                    <p id="welcome-message">
+                        Your authenticated administration session is active.
+                    </p>
+
+                    <div
+                        class="role-badge"
+                        id="role-badge"
+                    >
+                        Authorized User
+                    </div>
+
+                </section>
+
+
+
+                <!-- =============================================
+                     STATISTICS
+                ============================================== -->
+
+                <section class="stats-grid">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            📄
+                        </div>
+
+                        <div>
+
+                            <div class="stat-number">
+                                8
+                            </div>
+
+                            <div class="stat-label">
+                                Thematic Focus Areas
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            🤝
+                        </div>
+
+                        <div>
+
+                            <div
+                                class="stat-number"
+                                id="partner-count"
+                            >
+                                —
+                            </div>
+
+                            <div class="stat-label">
+                                Partnerships
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            🖼️
+                        </div>
+
+                        <div>
+
+                            <div
+                                class="stat-number"
+                                id="gallery-count"
+                            >
+                                —
+                            </div>
+
+                            <div class="stat-label">
+                                Media Items
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            👤
+                        </div>
+
+                        <div>
+
+                            <div
+                                class="stat-number"
+                                id="role-stat"
+                            >
+                                —
+                            </div>
+
+                            <div class="stat-label">
+                                Access Level
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =============================================
+                     DASHBOARD COLUMNS
+                ============================================== -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- =========================================
+                         LEFT COLUMN
+                    ========================================== -->
+
+                    <div>
+
+
+                        <!-- QUICK ACTIONS -->
+
+                        <section class="panel">
+
+                            <div class="panel-header">
+
+                                <h3>
+                                    Website Management
+                                </h3>
+
+                                <span>
+                                    Content tools
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-actions">
+
+
+                                <a
+                                    href="#"
+                                    class="action-card"
+                                >
+
+                                    <div class="action-icon">
+                                        📝
+                                    </div>
+
+                                    <h4>
+                                        Manage Page Content
+                                    </h4>
+
+                                    <p>
+                                        Update approved RCDA website
+                                        information and institutional content.
+                                    </p>
+
+                                    <span class="coming-soon">
+                                        Management module
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="#"
+                                    class="action-card"
+                                >
+
+                                    <div class="action-icon">
+                                        🎯
+                                    </div>
+
+                                    <h4>
+                                        Manage Thematic Areas
+                                    </h4>
+
+                                    <p>
+                                        Maintain programme areas,
+                                        activities and implementation information.
+                                    </p>
+
+                                    <span class="coming-soon">
+                                        Management module
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="#"
+                                    class="action-card"
+                                >
+
+                                    <div class="action-icon">
+                                        🤝
+                                    </div>
+
+                                    <h4>
+                                        Manage Partnerships
+                                    </h4>
+
+                                    <p>
+                                        Maintain partner and affiliation
+                                        information displayed on the website.
+                                    </p>
+
+                                    <span class="coming-soon">
+                                        Management module
+                                    </span>
+
+                                </a>
+
+
+                                <a
+                                    href="#"
+                                    class="action-card"
+                                >
+
+                                    <div class="action-icon">
+                                        🖼️
+                                    </div>
+
+                                    <h4>
+                                        Manage Gallery
+                                    </h4>
+
+                                    <p>
+                                        Upload and manage approved
+                                        programme photographs and media.
+                                    </p>
+
+                                    <span class="coming-soon">
+                                        Management module
+                                    </span>
+
+                                </a>
+
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- NOTICE -->
+
+                        <section class="panel">
+
+                            <div class="panel-header">
+
+                                <h3>
+                                    Administration Notice
+                                </h3>
+
+                                <span>
+                                    RCDA
+                                </span>
+
+                            </div>
+
+
+                            <div class="notice">
+
+                                <strong>
+                                    Important:
+                                </strong>
+
+                                This administration portal is being
+                                developed as a controlled management
+                                environment. Website changes should only
+                                be published by authorized RCDA personnel
+                                and should follow the organization's
+                                content approval and safeguarding procedures.
+
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         RIGHT COLUMN
+                    ========================================== -->
+
+                    <div>
+
+
+                        <!-- SECURITY -->
+
+                        <section class="panel">
+
+                            <div class="panel-header">
+
+                                <h3>
+                                    Security Status
+                                </h3>
+
+                                <span>
+                                    Current session
+                                </span>
+
+                            </div>
+
+
+                            <div class="security-status">
+
+                                <div class="security-check">
+                                    ✓
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Authenticated
+                                    </strong>
+
+                                    <span>
+                                        Supabase session verified
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <ul class="security-list">
+
+
+                                <li>
+
+                                    <strong>
+                                        Account:
+                                    </strong>
+
+                                    <span id="security-email">
+                                        —
+                                    </span>
+
+                                </li>
+
+
+                                <li>
+
+                                    <strong>
+                                        Role:
+                                    </strong>
+
+                                    <span id="security-role">
+                                        —
+                                    </span>
+
+                                </li>
+
+
+                                <li>
+
+                                    <strong>
+                                        User ID:
+                                    </strong>
+
+                                    <span
+                                        id="security-id"
+                                        style="word-break:break-all;"
+                                    >
+                                        —
+                                    </span>
+
+                                </li>
+
+
+                                <li>
+
+                                    <strong>
+                                        Authorization:
+                                    </strong>
+
+                                    <span>
+                                        RCDA profile verified
+                                    </span>
+
+                                </li>
+
+
+                            </ul>
+
+                        </section>
+
+
+
+                        <!-- ACCOUNT -->
+
+                        <section class="panel">
+
+                            <div class="panel-header">
+
+                                <h3>
+                                    My Account
+                                </h3>
+
+                                <span>
+                                    Profile
+                                </span>
+
+                            </div>
+
+
+                            <p
+                                style="
+                                    color:#667085;
+                                    font-size:0.78rem;
+                                    line-height:1.6;
+                                    margin-bottom:15px;
+                                "
+                            >
+
+                                You are currently signed in as an
+                                authorized RCDA administrator.
+
+                            </p>
+
+
+                            <button
+                                id="account-logout"
+                                class="logout-button"
+                                style="width:100%;"
+                            >
+                                Sign Out Securely
+                            </button>
+
+
+                        </section>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+
+    <!-- =========================================================
+         SUPABASE
+    ========================================================== -->
+
+    <script>
+
+        /* =========================================================
+           RCDA SUPABASE CONFIGURATION
+        ========================================================= */
+
+        const SUPABASE_URL =
+            "https://ttuiljvtnfimzcgqogme.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_nZYzfjOw8p5eVX_44n3rcw_ioi-IGXA";
+
+
+        const {
+            createClient
+        } = supabase;
+
+
+        const supabaseClient =
+            createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
+
+
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================= */
+
+        const loadingScreen =
+            document.getElementById(
+                "loading-screen"
+            );
+
+        const app =
+            document.getElementById(
+                "app"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logout-button"
+            );
+
+        const accountLogout =
+            document.getElementById(
+                "account-logout"
+            );
+
+        const mobileMenu =
+            document.getElementById(
+                "mobile-menu"
+            );
+
+        const sidebar =
+            document.getElementById(
+                "sidebar"
+            );
+
+
+
+        /* =========================================================
+           REDIRECT TO LOGIN
+        ========================================================= */
+
+        function redirectToLogin() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        /* =========================================================
+           SHOW APPLICATION
+        ========================================================= */
+
+        function showApplication() {
+
+            loadingScreen.style.display =
+                "none";
+
+            app.style.display =
+                "block";
+
+        }
+
+
+
+        /* =========================================================
+           FORMAT ROLE
+        ========================================================= */
+
+        function formatRole(role) {
+
+            if (!role) {
+                return "Unknown";
+            }
+
+            return role
+                .replace(/_/g, " ")
+                .replace(/\b\w/g, function(letter) {
+                    return letter.toUpperCase();
+                });
+
+        }
+
+
+
+        /* =========================================================
+           INITIALS
+        ========================================================= */
+
+        function getInitials(email) {
+
+            if (!email) {
+                return "R";
+            }
+
+            return email
+                .charAt(0)
+                .toUpperCase();
+
+        }
+
+
+
+        /* =========================================================
+           APPLY USER INFORMATION
+        ========================================================= */
+
+        function populateUserInterface(
+            user,
+            profile
+        ) {
+
+            const email =
+                user.email ||
+                profile.email ||
+                "RCDA Administrator";
+
+            const role =
+                profile.role ||
+                "unknown";
+
+
+            document.getElementById(
+                "sidebar-email"
+            ).textContent =
+                email;
+
+
+            document.getElementById(
+                "sidebar-role"
+            ).textContent =
+                formatRole(role);
+
+
+            document.getElementById(
+                "user-avatar"
+            ).textContent =
+                getInitials(email);
+
+
+            document.getElementById(
+                "role-badge"
+            ).textContent =
+                formatRole(role);
+
+
+            document.getElementById(
+                "role-stat"
+            ).textContent =
+                formatRole(role);
+
+
+            document.getElementById(
+                "security-email"
+            ).textContent =
+                email;
+
+
+            document.getElementById(
+                "security-role"
+            ).textContent =
+                formatRole(role);
+
+
+            document.getElementById(
+                "security-id"
+            ).textContent =
+                user.id;
+
+
+            document.getElementById(
+                "welcome-message"
+            ).textContent =
+                "You are signed in as " +
+                email +
+                ". Your RCDA administrative permissions have been verified.";
+
+
+            document.getElementById(
+                "welcome-title"
+            ).textContent =
+                "Welcome to the RCDA Administration Portal";
+
+        }
+
+
+
+        /* =========================================================
+           AUTHORIZATION
+        ========================================================= */
+
+        async function verifyAdministrator() {
+
+            try {
+
+                /* -----------------------------------------------
+                   1. GET CURRENT SESSION
+                ------------------------------------------------ */
+
+                const {
+                    data: sessionData,
+                    error: sessionError
+                } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
+
+
+                if (
+                    sessionError ||
+                    !sessionData ||
+                    !sessionData.session ||
+                    !sessionData.session.user
+                ) {
+
+                    redirectToLogin();
+
+                    return;
+
+                }
+
+
+                const user =
+                    sessionData.session.user;
+
+
+                /* -----------------------------------------------
+                   2. GET RCDA PROFILE
+                ------------------------------------------------ */
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select(
+                            "id,email,role"
+                        )
+                        .eq(
+                            "id",
+                            user.id
+                        )
+                        .maybeSingle();
+
+
+                if (profileError) {
+
+                    console.error(
+                        "Profile authorization error:",
+                        profileError
+                    );
+
+                    alert(
+                        "Unable to verify your RCDA administrator profile."
+                    );
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+                    redirectToLogin();
+
+                    return;
+
+                }
+
+
+                if (!profile) {
+
+                    console.error(
+                        "No RCDA profile found for authenticated user."
+                    );
+
+                    alert(
+                        "Access denied. Your account is not registered as an RCDA administrator."
+                    );
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+                    redirectToLogin();
+
+                    return;
+
+                }
+
+
+                /* -----------------------------------------------
+                   3. CHECK ROLE
+                ------------------------------------------------ */
+
+                const role =
+                    String(
+                        profile.role || ""
+                    ).toLowerCase();
+
+
+                const allowedRoles = [
+                    "super_admin",
+                    "admin",
+                    "editor"
+                ];
+
+
+                if (
+                    !allowedRoles.includes(
+                        role
+                    )
+                ) {
+
+                    alert(
+                        "Access denied. Your RCDA account does not have an authorized administration role."
+                    );
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+                    redirectToLogin();
+
+                    return;
+
+                }
+
+
+                /* -----------------------------------------------
+                   4. POPULATE DASHBOARD
+                ------------------------------------------------ */
+
+                populateUserInterface(
+                    user,
+                    profile
+                );
+
+
+                /* -----------------------------------------------
+                   5. APPLY ROLE PERMISSIONS
+                ------------------------------------------------ */
+
+                applyRolePermissions(
+                    role
+                );
+
+
+                /* -----------------------------------------------
+                   6. LOAD BASIC COUNTS
+                ------------------------------------------------ */
+
+                await loadDashboardCounts();
+
+
+                /* -----------------------------------------------
+                   7. SHOW APPLICATION
+                ------------------------------------------------ */
+
+                showApplication();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Authorization error:",
+                    error
+                );
+
+                alert(
+                    "An unexpected security error occurred. Please sign in again."
+                );
+
+                redirectToLogin();
+
+            }
+
+        }
+
+
+
+        /* =========================================================
+           ROLE PERMISSIONS
+        ========================================================== */
+
+        function applyRolePermissions(
+            role
+        ) {
+
+            const userManagementItems =
+                document.querySelectorAll(
+                    '[data-feature="users"]'
+                );
+
+            const settingsItems =
+                document.querySelectorAll(
+                    '[data-feature="settings"]'
+                );
+
+
+            /*
+             * Editors can manage content but should not
+             * manage users or system settings.
+             */
+
+            if (
+                role === "editor"
+            ) {
+
+                userManagementItems.forEach(
+                    function(item) {
+
+                        item.style.display =
+                            "none";
+
+                    }
+                );
+
+
+                settingsItems.forEach(
+                    function(item) {
+
+                        item.style.display =
+                            "none";
+
+                    }
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================================================
+           LOAD DASHBOARD COUNTS
+        ========================================================== */
+
+        async function loadDashboardCounts() {
+
+            /*
+             * These counts are intentionally read-only.
+             *
+             * If RLS prevents anonymous/public access,
+             * Supabase will simply return no count and the
+             * dashboard will retain the "—" placeholder.
+             */
+
+
+            try {
+
+                const {
+                    count: partnerCount,
+                    error: partnerError
+                } =
+                    await supabaseClient
+                        .from("partners")
+                        .select(
+                            "*",
+                            {
+                                count: "exact",
+                                head: true
+                            }
+                        );
+
+
+                if (
+                    !partnerError &&
+                    typeof partnerCount === "number"
+                ) {
+
+                    document.getElementById(
+                        "partner-count"
+                    ).textContent =
+                        partnerCount;
+
+                }
+
+
+            } catch (error) {
+
+                console.log(
+                    "Partner count unavailable."
+                );
+
+            }
+
+
+            try {
+
+                const {
+                    count: galleryCount,
+                    error: galleryError
+                } =
+                    await supabaseClient
+                        .from("gallery")
+                        .select(
+                            "*",
+                            {
+                                count: "exact",
+                                head: true
+                            }
+                        );
+
+
+                if (
+                    !galleryError &&
+                    typeof galleryCount === "number"
+                ) {
+
+                    document.getElementById(
+                        "gallery-count"
+                    ).textContent =
+                        galleryCount;
+
+                }
+
+
+            } catch (error) {
+
+                console.log(
+                    "Gallery count unavailable."
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================================================
+           SIGN OUT
+        ========================================================== */
+
+        async function signOut() {
+
+            logoutButton.disabled =
+                true;
+
+            accountLogout.disabled =
+                true;
+
+
+            try {
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+
+                if (error) {
+
+                    console.error(
+                        "Sign out error:",
+                        error
+                    );
+
+                    alert(
+                        "Unable to sign out completely. Please try again."
+                    );
+
+                    logoutButton.disabled =
+                        false;
+
+                    accountLogout.disabled =
+                        false;
+
+                    return;
+
+                }
+
+
+                window.location.href =
+                    "index.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Unexpected sign out error:",
+                    error
+                );
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        }
+
+
+
+        logoutButton.addEventListener(
+            "click",
+            signOut
+        );
+
+
+        accountLogout.addEventListener(
+            "click",
+            signOut
+        );
+
+
+
+        /* =========================================================
+           MOBILE MENU
+        ========================================================== */
+
+        mobileMenu.addEventListener(
+            "click",
+            function() {
+
+                sidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+
+        /* =========================================================
+           CLOSE MOBILE SIDEBAR AFTER LINK
+        ========================================================== */
+
+        document
+            .querySelectorAll(
+                ".nav-item"
+            )
+            .forEach(
+                function(item) {
+
+                    item.addEventListener(
+                        "click",
+                        function() {
+
+                            sidebar.classList.remove(
+                                "open"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =========================================================
+           AUTH STATE MONITOR
+        ========================================================== */
+
+        supabaseClient
+            .auth
+            .onAuthStateChange(
+                function(
+                    event,
+                    session
+                ) {
+
+                    console.log(
+                        "RCDA dashboard auth event:",
+                        event
+                    );
+
+
+                    /*
+                     * If the session disappears while the
+                     * administrator is using the dashboard,
+                     * return them to the secure login page.
+                     */
+
+                    if (
+                        event ===
+                        "SIGNED_OUT"
+                    ) {
+
+                        redirectToLogin();
+
+                    }
+
+                }
+            );
+
+
+
+        /* =========================================================
+           START AUTHORIZATION
+        ========================================================== */
+
+        verifyAdministrator();
+
+    </script>
+
+</body>
+</html>
