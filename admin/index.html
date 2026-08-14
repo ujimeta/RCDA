@@ -1,12 +1,1059 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RCDA Content Manager</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RCDA Administration Portal</title>
+
+    <!-- Supabase JavaScript Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --rcda-green: #0F4C3A;
+            --rcda-dark-green: #082E22;
+            --rcda-gold: #F4B41A;
+            --rcda-light: #F7F9F8;
+            --white: #FFFFFF;
+            --text: #222222;
+            --muted: #666666;
+            --danger: #B42318;
+            --success: #027A48;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--rcda-dark-green),
+                    var(--rcda-green)
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card {
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .login-header {
+            background: var(--white);
+            padding: 35px 35px 20px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            max-height: 90px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .login-header h1 {
+            color: var(--rcda-dark-green);
+            font-size: 1.65rem;
+            margin-bottom: 7px;
+        }
+
+        .login-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .gold-line {
+            width: 55px;
+            height: 4px;
+            background: var(--rcda-gold);
+            margin: 18px auto 0;
+            border-radius: 10px;
+        }
+
+        .login-body {
+            padding: 30px 35px 35px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #D0D5DD;
+            border-radius: 7px;
+            font-size: 1rem;
+            outline: none;
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--rcda-green);
+            box-shadow:
+                0 0 0 3px rgba(15, 76, 58, 0.10);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 70px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: var(--rcda-green);
+            font-weight: 600;
+            font-size: 0.8rem;
+
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -8px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password button {
+            border: none;
+            background: transparent;
+            color: var(--rcda-green);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .forgot-password button:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+
+            border: none;
+            border-radius: 7px;
+
+            background: var(--rcda-gold);
+            color: var(--rcda-dark-green);
+
+            font-size: 1rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .login-button:hover {
+            background: #DDA212;
+            transform: translateY(-1px);
+        }
+
+        .login-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            display: none;
+
+            padding: 12px 14px;
+            margin-bottom: 20px;
+
+            border-radius: 7px;
+
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .message.error {
+            display: block;
+            background: #FEF3F2;
+            color: var(--danger);
+            border: 1px solid #FECDCA;
+        }
+
+        .message.success {
+            display: block;
+            background: #ECFDF3;
+            color: var(--success);
+            border: 1px solid #ABEFC6;
+        }
+
+        .security-note {
+            margin-top: 25px;
+            padding-top: 20px;
+
+            border-top: 1px solid #EAECF0;
+
+            text-align: center;
+            color: #777777;
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .security-icon {
+            font-size: 1rem;
+            margin-right: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.78rem;
+            margin-top: 18px;
+        }
+
+        /* =========================================================
+           FORGOT PASSWORD MODAL
+        ========================================================= */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,0.55);
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 9999;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 430px;
+
+            background: var(--white);
+
+            border-radius: 12px;
+
+            padding: 30px;
+
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .modal-card h2 {
+            color: var(--rcda-dark-green);
+            margin-bottom: 10px;
+        }
+
+        .modal-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .cancel-button {
+            background: var(--white);
+            border: 1px solid #D0D5DD;
+            color: var(--text);
+        }
+
+        .reset-button {
+            background: var(--rcda-green);
+            border: 1px solid var(--rcda-green);
+            color: var(--white);
+        }
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .login-header {
+                padding: 28px 25px 18px;
+            }
+
+            .login-body {
+                padding: 25px;
+            }
+
+            .login-header h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+    </style>
 </head>
+
 <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <div class="login-wrapper">
+
+        <div class="login-card">
+
+            <!-- =====================================================
+                 HEADER
+            ====================================================== -->
+
+            <div class="login-header">
+
+                <img
+                    class="logo"
+                    src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
+                    alt="Rahama Community Development Association logo"
+                >
+
+                <h1>
+                    RCDA Administration Portal
+                </h1>
+
+                <p>
+                    Secure access for authorized RCDA personnel
+                </p>
+
+                <div class="gold-line"></div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 LOGIN FORM
+            ====================================================== -->
+
+            <div class="login-body">
+
+                <div
+                    id="message"
+                    class="message"
+                    role="alert"
+                ></div>
+
+
+                <form id="login-form">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="toggle-password"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="forgot-password">
+
+                        <button
+                            type="button"
+                            id="forgot-password"
+                        >
+                            Forgot password?
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="login-button"
+                    >
+                        Sign In
+                    </button>
+
+                </form>
+
+
+                <div class="security-note">
+
+                    <span class="security-icon">🔒</span>
+
+                    This is a restricted administration area.
+                    Access is limited to authorized RCDA personnel.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+
+            &copy; 2026 Rahama Community Development Association (RCDA)
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         PASSWORD RESET MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="reset-modal"
+    >
+
+        <div class="modal-card">
+
+            <h2>
+                Reset Password
+            </h2>
+
+            <p>
+                Enter your RCDA administrator email address.
+                Supabase will send you a secure password-reset link.
+            </p>
+
+            <div
+                id="reset-message"
+                class="message"
+            ></div>
+
+            <input
+                type="email"
+                id="reset-email"
+                placeholder="Email address"
+                autocomplete="email"
+            >
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    id="cancel-reset"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="reset-button"
+                    id="send-reset"
+                >
+                    Send Reset Link
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SUPABASE CONFIGURATION
+    ====================================================== -->
+
+    <script>
+
+        /*
+         * =========================================================
+         * RCDA SUPABASE CONNECTION
+         * =========================================================
+         *
+         * IMPORTANT:
+         * This uses the PUBLIC / PUBLISHABLE Supabase key.
+         *
+         * NEVER place a Supabase secret/service-role key here.
+         */
+
+        const SUPABASE_URL =
+            "https://ttuiljvtnfimzcgqogme.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_nZYzfjOw8p5eVX_44n3rcw_ioi-IGXA";
+
+
+        const {
+            createClient
+        } = supabase;
+
+
+        const supabaseClient =
+            createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
+
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================= */
+
+        const loginForm =
+            document.getElementById("login-form");
+
+        const emailInput =
+            document.getElementById("email");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const loginButton =
+            document.getElementById("login-button");
+
+        const message =
+            document.getElementById("message");
+
+        const togglePassword =
+            document.getElementById("toggle-password");
+
+        const forgotPassword =
+            document.getElementById("forgot-password");
+
+        const resetModal =
+            document.getElementById("reset-modal");
+
+        const resetEmail =
+            document.getElementById("reset-email");
+
+        const resetMessage =
+            document.getElementById("reset-message");
+
+        const cancelReset =
+            document.getElementById("cancel-reset");
+
+        const sendReset =
+            document.getElementById("send-reset");
+
+
+        /* =========================================================
+           MESSAGE HELPER
+        ========================================================= */
+
+        function showMessage(
+            text,
+            type = "error"
+        ) {
+
+            message.textContent = text;
+
+            message.className =
+                "message " + type;
+
+        }
+
+
+        function clearMessage() {
+
+            message.textContent = "";
+
+            message.className =
+                "message";
+
+        }
+
+
+        function showResetMessage(
+            text,
+            type = "error"
+        ) {
+
+            resetMessage.textContent = text;
+
+            resetMessage.className =
+                "message " + type;
+
+        }
+
+
+        /* =========================================================
+           SHOW / HIDE PASSWORD
+        ========================================================= */
+
+        togglePassword.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    passwordInput.type === "password"
+                ) {
+
+                    passwordInput.type =
+                        "text";
+
+                    togglePassword.textContent =
+                        "Hide";
+
+                } else {
+
+                    passwordInput.type =
+                        "password";
+
+                    togglePassword.textContent =
+                        "Show";
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           CHECK EXISTING SESSION
+        ========================================================= */
+
+        async function checkExistingSession() {
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
+
+
+                if (error) {
+
+                    console.error(
+                        "Session error:",
+                        error
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    data &&
+                    data.session &&
+                    data.session.user
+                ) {
+
+                    /*
+                     * For now, successful authentication
+                     * takes the user to the RCDA dashboard.
+                     *
+                     * We will build the dashboard in the
+                     * next stage.
+                     */
+
+                    window.location.href =
+                        "dashboard.html";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to check session:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        checkExistingSession();
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================= */
+
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                clearMessage();
+
+                const email =
+                    emailInput.value.trim();
+
+                const password =
+                    passwordInput.value;
+
+
+                if (!email || !password) {
+
+                    showMessage(
+                        "Please enter your email address and password."
+                    );
+
+                    return;
+                }
+
+
+                loginButton.disabled = true;
+
+                loginButton.textContent =
+                    "Signing in...";
+
+
+                try {
+
+                    const {
+                        data,
+                        error
+                    } =
+                        await supabaseClient
+                            .auth
+                            .signInWithPassword({
+                                email: email,
+                                password: password
+                            });
+
+
+                    if (error) {
+
+                        console.error(
+                            "Login error:",
+                            error
+                        );
+
+                        showMessage(
+                            error.message ||
+                            "Unable to sign in. Please check your credentials."
+                        );
+
+                        return;
+                    }
+
+
+                    if (
+                        data &&
+                        data.user
+                    ) {
+
+                        showMessage(
+                            "Authentication successful. Opening the administration portal...",
+                            "success"
+                        );
+
+
+                        /*
+                         * Short delay gives the user visual
+                         * confirmation before redirect.
+                         */
+
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "dashboard.html";
+
+                            },
+                            700
+                        );
+
+                    } else {
+
+                        showMessage(
+                            "Authentication was not completed. Please try again."
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Unexpected login error:",
+                        error
+                    );
+
+                    showMessage(
+                        "An unexpected error occurred. Please try again."
+                    );
+
+                } finally {
+
+                    loginButton.disabled = false;
+
+                    loginButton.textContent =
+                        "Sign In";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           FORGOT PASSWORD
+        ========================================================= */
+
+        forgotPassword.addEventListener(
+            "click",
+            function () {
+
+                resetEmail.value =
+                    emailInput.value.trim();
+
+                resetMessage.textContent = "";
+
+                resetMessage.className =
+                    "message";
+
+                resetModal.classList.add("active");
+
+            }
+        );
+
+
+        /* =========================================================
+           CLOSE RESET MODAL
+        ========================================================= */
+
+        cancelReset.addEventListener(
+            "click",
+            function () {
+
+                resetModal.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        /* Close modal by clicking outside */
+
+        resetModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === resetModal
+                ) {
+
+                    resetModal.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           SEND PASSWORD RESET
+        ========================================================= */
+
+        sendReset.addEventListener(
+            "click",
+            async function () {
+
+                const email =
+                    resetEmail.value.trim();
+
+
+                if (!email) {
+
+                    showResetMessage(
+                        "Please enter your email address."
+                    );
+
+                    return;
+                }
+
+
+                sendReset.disabled = true;
+
+                sendReset.textContent =
+                    "Sending...";
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .auth
+                            .resetPasswordForEmail(
+                                email,
+                                {
+                                    redirectTo:
+                                        window.location.origin +
+                                        window.location.pathname
+                                }
+                            );
+
+
+                    if (error) {
+
+                        console.error(
+                            "Password reset error:",
+                            error
+                        );
+
+                        showResetMessage(
+                            error.message ||
+                            "Unable to send the password reset email."
+                        );
+
+                        return;
+                    }
+
+
+                    showResetMessage(
+                        "If an account exists for this email, a password reset link has been sent.",
+                        "success"
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Unexpected reset error:",
+                        error
+                    );
+
+                    showResetMessage(
+                        "An unexpected error occurred. Please try again."
+                    );
+
+                } finally {
+
+                    sendReset.disabled = false;
+
+                    sendReset.textContent =
+                        "Send Reset Link";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           AUTH STATE LISTENER
+        ========================================================= */
+
+        supabaseClient
+            .auth
+            .onAuthStateChange(
+                function (
+                    event,
+                    session
+                ) {
+
+                    console.log(
+                        "RCDA Auth Event:",
+                        event
+                    );
+
+                }
+            );
+
+    </script>
+
 </body>
 </html>
