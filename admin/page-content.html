@@ -1,1 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>RCDA Page Content Management</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green: #0F4C3A;
+            --dark-green: #082E22;
+            --gold: #F4B41A;
+            --bg: #F5F7F6;
+            --white: #FFFFFF;
+            --text: #222222;
+            --muted: #667085;
+            --border: #E4E7EC;
+            --success: #027A48;
+            --danger: #B42318;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* HEADER */
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 70px;
+            max-height: 48px;
+            object-fit: contain;
+        }
+
+        .brand h1 {
+            font-size: 1.1rem;
+            color: var(--dark-green);
+        }
+
+        .brand p {
+            color: var(--muted);
+            font-size: 0.72rem;
+            margin-top: 2px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            border: none;
+            border-radius: 7px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .back-button {
+            background: #F2F4F7;
+            color: var(--green);
+        }
+
+        .logout-button {
+            background: #FEF3F2;
+            color: var(--danger);
+        }
+
+        /* PAGE */
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            color: var(--dark-green);
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+
+        .page-heading p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* EDITOR */
+
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 22px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.025);
+        }
+
+        .panel h3 {
+            color: var(--dark-green);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        /* PAGE LIST */
+
+        .page-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .page-item {
+            width: 100%;
+            text-align: left;
+
+            border: none;
+            background: transparent;
+
+            padding: 11px 12px;
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            color: var(--muted);
+            font-size: 0.82rem;
+
+            transition: 0.2s;
+        }
+
+        .page-item:hover {
+            background: #F2F4F7;
+            color: var(--green);
+        }
+
+        .page-item.active {
+            background: var(--green);
+            color: white;
+            font-weight: 700;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+
+            color: var(--dark-green);
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            padding: 11px 12px;
+
+            font-family: inherit;
+            font-size: 0.85rem;
+
+            color: var(--text);
+            background: white;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(15,76,58,0.08);
+        }
+
+        textarea {
+            min-height: 230px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* STATUS */
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 14px;
+
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+        }
+
+        .status-label {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .status-draft {
+            background: #FFF7E6;
+            color: #9A6700;
+        }
+
+        .status-published {
+            background: #ECFDF3;
+            color: var(--success);
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+
+            margin-top: 25px;
+            padding-top: 20px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .save-button {
+            background: var(--green);
+            color: white;
+        }
+
+        .publish-button {
+            background: var(--gold);
+            color: var(--dark-green);
+        }
+
+        .save-button:hover {
+            background: var(--dark-green);
+        }
+
+        .publish-button:hover {
+            filter: brightness(0.95);
+        }
+
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* MESSAGE */
+
+        #message {
+            display: none;
+
+            margin-bottom: 20px;
+
+            padding: 13px 15px;
+
+            border-radius: 7px;
+
+            font-size: 0.78rem;
+        }
+
+        .message-success {
+            display: block !important;
+            background: #ECFDF3;
+            border: 1px solid #ABEFC6;
+            color: var(--success);
+        }
+
+        .message-error {
+            display: block !important;
+            background: #FEF3F2;
+            border: 1px solid #FECDCA;
+            color: var(--danger);
+        }
+
+        /* LOADING */
+
+        #loading {
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--dark-green),
+                    var(--green)
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 9999;
+        }
+
+        .loading-box {
+            text-align: center;
+        }
+
+        .loading-box img {
+            width: 120px;
+            max-height: 80px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .spinner {
+            width: 34px;
+            height: 34px;
+
+            border: 4px solid rgba(255,255,255,0.25);
+            border-top-color: var(--gold);
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #app {
+            display: none;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 800px) {
+
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .brand p {
+                display: none;
+            }
+
+        }
+
+        @media(max-width: 550px) {
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .top-actions .back-button {
+                display: none;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+
+<div id="loading">
+
+    <div class="loading-box">
+
+        <img
+            src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
+            alt="RCDA"
+        >
+
+        <h3>
+            Verifying RCDA Administration Access
+        </h3>
+
+        <div class="spinner"></div>
+
+        <p>
+            Please wait...
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- APPLICATION -->
+
+<div id="app">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <img
+                src="https://raw.githubusercontent.com/ujimeta/RCDA/main/rcda-logo.png"
+                alt="RCDA Logo"
+            >
+
+            <div>
+
+                <h1>
+                    Page Content Management
+                </h1>
+
+                <p>
+                    RCDA Administration Portal
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button
+                class="button back-button"
+                onclick="window.location.href='dashboard.html'"
+            >
+                ← Dashboard
+            </button>
+
+            <button
+                class="button logout-button"
+                id="logoutButton"
+            >
+                Sign Out
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <main class="container">
+
+        <div class="page-heading">
+
+            <h2>
+                Website Page Content
+            </h2>
+
+            <p>
+                Manage the institutional content displayed across the RCDA website.
+            </p>
+
+        </div>
+
+
+        <div id="message"></div>
+
+
+        <div class="editor-grid">
+
+
+            <!-- PAGE SELECTOR -->
+
+            <aside class="panel">
+
+                <h3>
+                    Website Pages
+                </h3>
+
+
+                <div class="page-list" id="pageList">
+
+                    <button
+                        class="page-item active"
+                        data-page="home"
+                    >
+                        🏠 Home
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="who-we-are"
+                    >
+                        👥 Who We Are
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="what-we-do"
+                    >
+                        🎯 What We Do
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="who-we-serve"
+                    >
+                        🤝 Who We Serve
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="our-model"
+                    >
+                        🧩 Our Model
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="community-engagement"
+                    >
+                        🏘️ Community Engagement
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="hiv-tb"
+                    >
+                        🩺 HIV & TB
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="malaria"
+                    >
+                        🦟 Malaria
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="nutrition"
+                    >
+                        🥗 Nutrition
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="reproductive-health"
+                    >
+                        ❤️ Reproductive Health
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="child-survival"
+                    >
+                        👶 Child Survival
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="wash"
+                    >
+                        💧 WASH
+                    </button>
+
+                    <button
+                        class="page-item"
+                        data-page="systems-surveillance"
+                    >
+                        📊 Systems & Surveillance
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+            <!-- EDITOR -->
+
+            <section class="panel">
+
+                <div class="status-row">
+
+                    <div>
+
+                        <div class="status-label">
+                            Current Page
+                        </div>
+
+                        <strong id="currentPage">
+                            Home
+                        </strong>
+
+                    </div>
+
+
+                    <span
+                        id="statusBadge"
+                        class="status-badge status-draft"
+                    >
+                        Draft
+                    </span>
+
+                </div>
+
+
+                <form id="contentForm">
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="pageKey">
+                                Page Key
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pageKey"
+                                readonly
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="status">
+                                Publication Status
+                            </label>
+
+                            <select id="status">
+
+                                <option value="draft">
+                                    Draft
+                                </option>
+
+                                <option value="published">
+                                    Published
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="title">
+                            Page Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="Enter page title"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="subtitle">
+                            Page Subtitle
+                        </label>
+
+                        <input
+                            type="text"
+                            id="subtitle"
+                            placeholder="Enter supporting subtitle"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="content">
+                            Main Content
+                        </label>
+
+                        <textarea
+                            id="content"
+                            placeholder="Enter the main website content..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="imageUrl">
+                            Featured Image URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="imageUrl"
+                            placeholder="https://..."
+                        >
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            type="button"
+                            class="button save-button"
+                            id="saveButton"
+                        >
+                            Save Draft
+                        </button>
+
+                        <button
+                            type="button"
+                            class="button publish-button"
+                            id="publishButton"
+                        >
+                            Publish Page
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       SUPABASE
+    ========================================================= */
+
+    const SUPABASE_URL =
+        "https://ttuiljvtnfimzcgqogme.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_nZYzfjOw8p5eVX_44n3rcw_ioi-IGXA";
+
+
+    const {
+        createClient
+    } = supabase;
+
+
+    const supabaseClient =
+        createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+
+    /* =========================================================
+       VARIABLES
+    ========================================================= */
+
+    let currentPageKey = "home";
+
+    let currentUser = null;
+
+    let currentRole = null;
+
+
+    /* =========================================================
+       PAGE NAMES
+    ========================================================= */
+
+    const pageNames = {
+
+        "home":
+            "Home",
+
+        "who-we-are":
+            "Who We Are",
+
+        "what-we-do":
+            "What We Do",
+
+        "who-we-serve":
+            "Who We Serve",
+
+        "our-model":
+            "Our Model",
+
+        "community-engagement":
+            "Community Engagement",
+
+        "hiv-tb":
+            "HIV & TB",
+
+        "malaria":
+            "Malaria",
+
+        "nutrition":
+            "Nutrition",
+
+        "reproductive-health":
+            "Reproductive Health",
+
+        "child-survival":
+            "Child Survival",
+
+        "wash":
+            "WASH",
+
+        "systems-surveillance":
+            "Systems & Surveillance"
+
+    };
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const loading =
+        document.getElementById("loading");
+
+    const app =
+        document.getElementById("app");
+
+    const message =
+        document.getElementById("message");
+
+    const pageKeyInput =
+        document.getElementById("pageKey");
+
+    const titleInput =
+        document.getElementById("title");
+
+    const subtitleInput =
+        document.getElementById("subtitle");
+
+    const contentInput =
+        document.getElementById("content");
+
+    const imageUrlInput =
+        document.getElementById("imageUrl");
+
+    const statusInput =
+        document.getElementById("status");
+
+    const statusBadge =
+        document.getElementById("statusBadge");
+
+    const currentPage =
+        document.getElementById("currentPage");
+
+    const saveButton =
+        document.getElementById("saveButton");
+
+    const publishButton =
+        document.getElementById("publishButton");
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+
+    /* =========================================================
+       MESSAGE
+    ========================================================= */
+
+    function showMessage(
+        text,
+        type
+    ) {
+
+        message.textContent = text;
+
+        message.className =
+            type === "success"
+                ? "message-success"
+                : "message-error";
+
+    }
+
+
+    function clearMessage() {
+
+        message.textContent = "";
+
+        message.className = "";
+
+    }
+
+
+    /* =========================================================
+       STATUS BADGE
+    ========================================================= */
+
+    function updateStatusBadge(
+        status
+    ) {
+
+        statusBadge.textContent =
+            status || "draft";
+
+        statusBadge.className =
+            "status-badge " +
+            (
+                status === "published"
+                    ? "status-published"
+                    : "status-draft"
+            );
+
+    }
+
+
+    /* =========================================================
+       LOAD PAGE
+    ========================================================= */
+
+    async function loadPage(
+        pageKey
+    ) {
+
+        clearMessage();
+
+        currentPageKey =
+            pageKey;
+
+        pageKeyInput.value =
+            pageKey;
+
+        currentPage.textContent =
+            pageNames[pageKey] ||
+            pageKey;
+
+
+        document
+            .querySelectorAll(".page-item")
+            .forEach(function(item) {
+
+                item.classList.toggle(
+                    "active",
+                    item.dataset.page === pageKey
+                );
+
+            });
+
+
+        titleInput.value = "";
+
+        subtitleInput.value = "";
+
+        contentInput.value = "";
+
+        imageUrlInput.value = "";
+
+        statusInput.value =
+            "draft";
+
+        updateStatusBadge(
+            "draft"
+        );
+
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("site_content")
+                    .select("*")
+                    .eq(
+                        "page_key",
+                        pageKey
+                    )
+                    .maybeSingle();
+
+
+            if (error) {
+
+                console.error(
+                    "Load content error:",
+                    error
+                );
+
+                showMessage(
+                    "Unable to load this page's content.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (!data) {
+
+                return;
+
+            }
+
+
+            titleInput.value =
+                data.title || "";
+
+            subtitleInput.value =
+                data.subtitle || "";
+
+            contentInput.value =
+                data.content || "";
+
+            imageUrlInput.value =
+                data.image_url || "";
+
+            statusInput.value =
+                data.status || "draft";
+
+            updateStatusBadge(
+                data.status || "draft"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+            showMessage(
+                "An unexpected error occurred while loading the page.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SAVE CONTENT
+    ========================================================= */
+
+    async function saveContent(
+        publicationStatus
+    ) {
+
+        clearMessage();
+
+
+        if (!currentUser) {
+
+            showMessage(
+                "Your administration session has expired. Please sign in again.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        saveButton.disabled =
+            true;
+
+        publishButton.disabled =
+            true;
+
+
+        try {
+
+            const record = {
+
+                page_key:
+                    currentPageKey,
+
+                title:
+                    titleInput.value.trim(),
+
+                subtitle:
+                    subtitleInput.value.trim(),
+
+                content:
+                    contentInput.value.trim(),
+
+                image_url:
+                    imageUrlInput.value.trim(),
+
+                status:
+                    publicationStatus,
+
+                updated_by:
+                    currentUser.id,
+
+                updated_at:
+                    new Date().toISOString()
+
+            };
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("site_content")
+                    .upsert(
+                        record,
+                        {
+                            onConflict:
+                                "page_key"
+                        }
+                    )
+                    .select()
+                    .single();
+
+
+            if (error) {
+
+                console.error(
+                    "Save content error:",
+                    error
+                );
+
+                showMessage(
+                    "Unable to save this page. " +
+                    error.message,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            statusInput.value =
+                publicationStatus;
+
+            updateStatusBadge(
+                publicationStatus
+            );
+
+
+            showMessage(
+                publicationStatus === "published"
+                    ? "Page published successfully."
+                    : "Page saved as a draft successfully.",
+                "success"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+            showMessage(
+                "An unexpected error occurred while saving.",
+                "error"
+            );
+
+        } finally {
+
+            saveButton.disabled =
+                false;
+
+            publishButton.disabled =
+                false;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PAGE NAVIGATION
+    ========================================================= */
+
+    document
+        .querySelectorAll(".page-item")
+        .forEach(function(item) {
+
+            item.addEventListener(
+                "click",
+                function() {
+
+                    loadPage(
+                        item.dataset.page
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       SAVE BUTTON
+    ========================================================= */
+
+    saveButton.addEventListener(
+        "click",
+        function() {
+
+            saveContent(
+                "draft"
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       PUBLISH BUTTON
+    ========================================================= */
+
+    publishButton.addEventListener(
+        "click",
+        function() {
+
+            if (
+                !confirm(
+                    "Publish this page to the RCDA website?"
+                )
+            ) {
+
+                return;
+
+            }
+
+            saveContent(
+                "published"
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       STATUS SELECT
+    ========================================================= */
+
+    statusInput.addEventListener(
+        "change",
+        function() {
+
+            updateStatusBadge(
+                statusInput.value
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+    /* =========================================================
+       VERIFY ADMINISTRATOR
+    ========================================================= */
+
+    async function verifyAdministrator() {
+
+        try {
+
+            const {
+                data: sessionData,
+                error: sessionError
+            } =
+                await supabaseClient
+                    .auth
+                    .getSession();
+
+
+            if (
+                sessionError ||
+                !sessionData.session
+            ) {
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            currentUser =
+                sessionData.session.user;
+
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select(
+                        "id,email,role"
+                    )
+                    .eq(
+                        "id",
+                        currentUser.id
+                    )
+                    .maybeSingle();
+
+
+            if (
+                profileError ||
+                !profile
+            ) {
+
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            currentRole =
+                String(
+                    profile.role || ""
+                ).toLowerCase();
+
+
+            const allowedRoles = [
+                "super_admin",
+                "admin",
+                "editor"
+            ];
+
+
+            if (
+                !allowedRoles.includes(
+                    currentRole
+                )
+            ) {
+
+                alert(
+                    "Access denied."
+                );
+
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               Editors can edit content.
+               All three authorized roles can access
+               this page.
+            --------------------------------------------- */
+
+
+            loading.style.display =
+                "none";
+
+            app.style.display =
+                "block";
+
+
+            await loadPage(
+                "home"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Authorization error:",
+                error
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       AUTH STATE
+    ========================================================= */
+
+    supabaseClient
+        .auth
+        .onAuthStateChange(
+            function(
+                event
+            ) {
+
+                if (
+                    event === "SIGNED_OUT"
+                ) {
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            }
+        );
+
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    verifyAdministrator();
+
+</script>
+
+</body>
+</html>
