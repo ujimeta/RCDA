@@ -730,6 +730,8 @@
         }
 
         .action-card {
+            display: block;
+
             border:
                 1px solid
                 var(--border);
@@ -737,6 +739,8 @@
             border-radius: 8px;
 
             padding: 18px;
+
+            color: inherit;
 
             transition:
                 transform 0.2s ease,
@@ -1098,6 +1102,10 @@
                 </div>
 
 
+                <!-- =================================================
+                     PAGE CONTENT — CONNECTED
+                ================================================== -->
+
                 <a
                     href="page-content.html"
                     class="nav-item"
@@ -1112,6 +1120,10 @@
 
                 </a>
 
+
+                <!-- =================================================
+                     THEMATIC FOCUS — NOT CONNECTED YET
+                ================================================== -->
 
                 <a
                     href="#"
@@ -1128,6 +1140,10 @@
                 </a>
 
 
+                <!-- =================================================
+                     PARTNERSHIPS — NOT CONNECTED YET
+                ================================================== -->
+
                 <a
                     href="#"
                     class="nav-item"
@@ -1142,6 +1158,10 @@
 
                 </a>
 
+
+                <!-- =================================================
+                     GALLERY — NOT CONNECTED YET
+                ================================================== -->
 
                 <a
                     href="#"
@@ -1463,8 +1483,12 @@
                             <div class="quick-actions">
 
 
+                                <!-- =================================================
+                                     MANAGE PAGE CONTENT — CONNECTED
+                                ================================================== -->
+
                                 <a
-                                    href="#"
+                                    href="page-content.html"
                                     class="action-card"
                                 >
 
@@ -1482,14 +1506,18 @@
                                     </p>
 
                                     <span class="coming-soon">
-                                        Management module
+                                        Open Content Manager →
                                     </span>
 
                                 </a>
 
 
+                                <!-- =================================================
+                                     MANAGE THEMATIC AREAS — NOT CONNECTED YET
+                                ================================================== -->
+
                                 <a
-                                    href="page-content.html"
+                                    href="#"
                                     class="action-card"
                                 >
 
@@ -1512,6 +1540,10 @@
 
                                 </a>
 
+
+                                <!-- =================================================
+                                     MANAGE PARTNERSHIPS — NOT CONNECTED YET
+                                ================================================== -->
 
                                 <a
                                     href="#"
@@ -1538,10 +1570,14 @@
                                 </a>
 
 
+                                <!-- =================================================
+                                     MANAGE GALLERY — NOT CONNECTED YET
+                                ================================================== -->
+
                                 <a
                                     href="#"
-                                    class="action-card"
-                                >
+                                    class="action-card
+                                ">
 
                                     <div class="action-icon">
                                         🖼️
@@ -2244,15 +2280,6 @@
 
         async function loadDashboardCounts() {
 
-            /*
-             * These counts are intentionally read-only.
-             *
-             * If RLS prevents anonymous/public access,
-             * Supabase will simply return no count and the
-             * dashboard will retain the "—" placeholder.
-             */
-
-
             try {
 
                 const {
@@ -2474,12 +2501,6 @@
                     );
 
 
-                    /*
-                     * If the session disappears while the
-                     * administrator is using the dashboard,
-                     * return them to the secure login page.
-                     */
-
                     if (
                         event ===
                         "SIGNED_OUT"
@@ -2496,7 +2517,7 @@
 
         /* =========================================================
            START AUTHORIZATION
-        ========================================================== */
+        ========================================================= */
 
         verifyAdministrator();
 
