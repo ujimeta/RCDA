@@ -1,11 +1,12 @@
 /* =========================================================
-   RCDA GLOBAL SITE SCRIPT — CMS v3
+   RCDA GLOBAL SITE SCRIPT — CMS v4
    =========================================================
    Purpose:
-   1. Keep the official RCDA logo consistent across public pages.
+   1. Standardize RCDA logo.
    2. Load published content from Supabase.
-   3. Support the current RCDA page structures.
-   4. Provide explicit data-cms hooks for future section editing.
+   3. Prevent homepage CMS content from briefly showing
+      stale static content during CMS loading.
+   4. Preserve the existing page layouts.
    ========================================================= */
 
 (function () {
@@ -19,35 +20,129 @@
 
     const RCDA_LOGO = "rcda-logo.png";
 
+    const currentPath =
+        window.location.pathname.toLowerCase();
+
+    const isHomePage =
+        currentPath.endsWith("/") ||
+        currentPath.endsWith("/index.html") ||
+        currentPath === "";
+
 
     /* =========================================================
-       1. STANDARDIZE RCDA LOGO
+       1. CMS LOADING STATE
+       ========================================================= */
+
+    function activateCmsLoadingState() {
+
+        if (!isHomePage) {
+            return;
+        }
+
+        /*
+         * Immediately add a class to <html>.
+         * This allows the page to hide CMS-managed content
+         * until the published version has been retrieved.
+         */
+        document.documentElement.classList.add(
+            "rcda-cms-loading"
+        );
+
+
+        if (
+            !document.getElementById(
+                "rcda-cms-loading-style"
+            )
+        ) {
+
+            const style =
+                document.createElement("style");
+
+            style.id =
+                "rcda-cms-loading-style";
+
+            style.textContent = `
+                html.rcda-cms-loading
+                .hero-content h1,
+
+                html.rcda-cms-loading
+                .hero-content p,
+
+                html.rcda-cms-loading
+                .founder-message {
+                    visibility: hidden;
+                }
+
+                html.rcda-cms-ready
+                .hero-content h1,
+
+                html.rcda-cms-ready
+                .hero-content p,
+
+                html.rcda-cms-ready
+                .founder-message {
+                    visibility: visible;
+                }
+            `;
+
+            document.head.appendChild(style);
+        }
+    }
+
+
+    function finishCmsLoadingState() {
+
+        if (!isHomePage) {
+            return;
+        }
+
+        document.documentElement.classList.remove(
+            "rcda-cms-loading"
+        );
+
+        document.documentElement.classList.add(
+            "rcda-cms-ready"
+        );
+    }
+
+
+    /*
+     * Execute as early as possible.
+     */
+    activateCmsLoadingState();
+
+
+    /* =========================================================
+       2. STANDARDIZE RCDA LOGO
        ========================================================= */
 
     function standardizeLogo() {
 
-        document.querySelectorAll("header .logo").forEach(function (logo) {
+        document.querySelectorAll(
+            "header .logo"
+        ).forEach(function (logo) {
 
-            /*
-             * Pages that already use an image logo.
-             */
-            const existingImage = logo.querySelector("img");
+            const existingImage =
+                logo.querySelector("img");
 
             if (existingImage) {
 
-                existingImage.src = RCDA_LOGO;
+                existingImage.src =
+                    RCDA_LOGO;
 
                 existingImage.alt =
                     "Rahama Community Development Association (RCDA) logo";
 
-                existingImage.classList.add("rcda-global-logo");
+                existingImage.classList.add(
+                    "rcda-global-logo"
+                );
 
                 return;
             }
 
 
             /*
-             * Older pages using .logo-emblem or .logo-box.
+             * Older logo structures.
              */
             const oldEmblem =
                 logo.querySelector(".logo-emblem") ||
@@ -55,30 +150,40 @@
 
             if (oldEmblem) {
 
-                const img = document.createElement("img");
+                const img =
+                    document.createElement("img");
 
-                img.src = RCDA_LOGO;
+                img.src =
+                    RCDA_LOGO;
 
                 img.alt =
                     "Rahama Community Development Association (RCDA) logo";
 
-                img.className = "rcda-global-logo";
+                img.className =
+                    "rcda-global-logo";
 
                 logo.innerHTML = "";
 
                 logo.appendChild(img);
             }
+
         });
 
 
         /*
-         * Global logo sizing.
+         * Consistent logo dimensions.
          */
-        if (!document.getElementById("rcda-logo-global-style")) {
+        if (
+            !document.getElementById(
+                "rcda-logo-global-style"
+            )
+        ) {
 
-            const style = document.createElement("style");
+            const style =
+                document.createElement("style");
 
-            style.id = "rcda-logo-global-style";
+            style.id =
+                "rcda-logo-global-style";
 
             style.textContent = `
                 header .rcda-global-logo {
@@ -111,76 +216,85 @@
 
 
     /* =========================================================
-       2. DETERMINE CURRENT CMS PAGE KEY
+       3. DETERMINE CMS PAGE KEY
        ========================================================= */
 
     function getPageKey() {
 
         let filename =
-            window.location.pathname.split("/").pop();
+            window.location.pathname
+                .split("/")
+                .pop();
 
-        if (!filename || filename === "/") {
+        if (
+            !filename ||
+            filename === "/"
+        ) {
             filename = "index.html";
         }
 
-        if (filename.toLowerCase() === "index.html") {
+        if (
+            filename.toLowerCase() ===
+            "index.html"
+        ) {
             return "home";
         }
 
-        return filename.replace(/\.html$/i, "");
+        return filename.replace(
+            /\.html$/i,
+            ""
+        );
     }
 
 
     /* =========================================================
-       3. LOAD SUPABASE
+       4. LOAD SUPABASE LIBRARY
        ========================================================= */
 
     function loadSupabase(callback) {
 
         if (
             window.supabase &&
-            typeof window.supabase.createClient === "function"
+            typeof window.supabase.createClient ===
+                "function"
         ) {
             callback();
             return;
         }
 
-        const script = document.createElement("script");
+
+        const script =
+            document.createElement("script");
 
         script.src =
             "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
 
         script.async = true;
 
+
         script.onload = callback;
+
 
         script.onerror = function () {
 
             console.error(
-                "RCDA CMS: Unable to load the Supabase library."
+                "RCDA CMS: Unable to load Supabase."
             );
+
+            /*
+             * Don't leave the homepage permanently hidden
+             * if the external library fails.
+             */
+            finishCmsLoadingState();
         };
+
 
         document.head.appendChild(script);
     }
 
 
     /* =========================================================
-       4. FIND CMS TARGETS
-       =========================================================
-       Explicit data-cms attributes take priority.
-
-       Examples:
-
-       data-cms="home-title"
-       data-cms="home-subtitle"
-       data-cms="home-content"
-       data-cms="home-image"
-
-       data-cms="who-we-are-title"
-       data-cms="who-we-are-subtitle"
-       data-cms="who-we-are-content"
-       data-cms="who-we-are-image"
+       5. FIND CMS TARGETS
        ========================================================= */
 
     function getCmsTargets(pageKey) {
@@ -194,9 +308,8 @@
 
 
         /*
-         * UNIVERSAL EXPLICIT CMS HOOKS
+         * Explicit CMS hooks.
          */
-
         targets.title =
             document.querySelector(
                 `[data-cms="${pageKey}-title"]`
@@ -218,11 +331,13 @@
             );
 
 
-        /*
-         * HOMEPAGE FALLBACKS
-         */
+        /* -----------------------------------------------------
+           HOMEPAGE FALLBACKS
+           ----------------------------------------------------- */
 
-        if (pageKey === "home") {
+        if (
+            pageKey === "home"
+        ) {
 
             targets.title =
                 targets.title ||
@@ -252,11 +367,9 @@
         }
 
 
-        /*
-         * INNER PAGE FALLBACKS
-         *
-         * The thematic pages use .page-header.
-         */
+        /* -----------------------------------------------------
+           INNER PAGE FALLBACKS
+           ----------------------------------------------------- */
 
         targets.title =
             targets.title ||
@@ -271,11 +384,6 @@
             );
 
 
-        /*
-         * Pages such as Who We Are use
-         * .page-content.
-         */
-
         targets.title =
             targets.title ||
             document.querySelector(
@@ -289,39 +397,40 @@
             );
 
 
-        /*
-         * IMPORTANT:
-         *
-         * We intentionally DO NOT automatically replace an
-         * entire inner-page content area.
-         *
-         * The main content will only be replaced after we add
-         * explicit data-cms="page-key-content" hooks.
-         *
-         * This protects the existing layouts.
-         */
-
         return targets;
     }
 
 
     /* =========================================================
-       5. SAFE CONTENT WRITERS
+       6. WRITE CMS CONTENT
        ========================================================= */
 
-    function setText(element, value) {
+    function setText(
+        element,
+        value
+    ) {
 
-        if (!element || !value) {
+        if (
+            !element ||
+            !value
+        ) {
             return;
         }
 
-        element.textContent = value;
+        element.textContent =
+            value;
     }
 
 
-    function setHtmlContent(element, value) {
+    function setHtmlContent(
+        element,
+        value
+    ) {
 
-        if (!element || !value) {
+        if (
+            !element ||
+            !value
+        ) {
             return;
         }
 
@@ -333,63 +442,60 @@
     }
 
 
-    function setImage(element, url) {
+    function setImage(
+        element,
+        url
+    ) {
 
-        if (!element || !url) {
+        if (
+            !element ||
+            !url
+        ) {
             return;
         }
 
-        if (element.tagName === "IMG") {
 
-            element.src = url;
+        if (
+            element.tagName ===
+            "IMG"
+        ) {
+
+            element.src =
+                url;
 
             return;
         }
 
-
-        /*
-         * Supports background-image sections,
-         * including the homepage hero.
-         */
 
         element.style.backgroundImage =
-            `url("${String(url).replace(/"/g, '\\"')}")`;
+            `url("${String(url)
+                .replace(/"/g, '\\"')}")`;
     }
 
 
     /* =========================================================
-       6. LOAD PUBLISHED CONTENT
+       7. LOAD PUBLISHED CONTENT
        ========================================================= */
 
     async function loadPublishedContent() {
 
         if (
             !window.supabase ||
-            typeof window.supabase.createClient !== "function"
+            typeof window.supabase.createClient !==
+                "function"
         ) {
+
+            finishCmsLoadingState();
+
             return;
         }
 
 
-        const pageKey = getPageKey();
+        const pageKey =
+            getPageKey();
 
         const targets =
             getCmsTargets(pageKey);
-
-
-        /*
-         * If the page currently has no CMS targets,
-         * leave it completely untouched.
-         */
-
-        if (
-            !targets.title &&
-            !targets.subtitle &&
-            !targets.content &&
-            !targets.image
-        ) {
-            return;
-        }
 
 
         try {
@@ -418,31 +524,40 @@
                     .maybeSingle();
 
 
-            if (result.error) {
+            if (
+                result.error
+            ) {
 
                 console.error(
                     "RCDA CMS error:",
                     result.error
                 );
 
+                finishCmsLoadingState();
+
                 return;
             }
 
 
-            const data = result.data;
+            const data =
+                result.data;
 
 
             /*
-             * No published record:
-             * keep the original static page.
+             * If no CMS record exists, reveal the existing
+             * static content rather than leaving it hidden.
              */
-
             if (!data) {
+
+                finishCmsLoadingState();
+
                 return;
             }
 
 
-            /* PAGE TITLE */
+            /* -------------------------------------------------
+               TITLE
+               ------------------------------------------------- */
 
             if (
                 targets.title &&
@@ -456,7 +571,9 @@
             }
 
 
-            /* PAGE SUBTITLE */
+            /* -------------------------------------------------
+               SUBTITLE
+               ------------------------------------------------- */
 
             if (
                 targets.subtitle &&
@@ -470,7 +587,9 @@
             }
 
 
-            /* MAIN CMS CONTENT */
+            /* -------------------------------------------------
+               MAIN CONTENT
+               ------------------------------------------------- */
 
             if (
                 targets.content &&
@@ -484,7 +603,9 @@
             }
 
 
-            /* FEATURED IMAGE */
+            /* -------------------------------------------------
+               FEATURED IMAGE
+               ------------------------------------------------- */
 
             if (
                 targets.image &&
@@ -498,9 +619,9 @@
             }
 
 
-            /*
-             * Synchronize browser title on homepage.
-             */
+            /* -------------------------------------------------
+               BROWSER TITLE
+               ------------------------------------------------- */
 
             if (
                 pageKey === "home" &&
@@ -513,12 +634,8 @@
             }
 
 
-            /*
-             * Development confirmation.
-             */
-
             console.info(
-                "RCDA CMS loaded published content:",
+                "RCDA CMS loaded:",
                 pageKey
             );
 
@@ -530,41 +647,48 @@
                 "RCDA CMS unexpected error:",
                 error
             );
+
+        }
+
+        finally {
+
+            finishCmsLoadingState();
         }
     }
 
 
     /* =========================================================
-       7. INITIALIZE
+       8. INITIALIZE
        ========================================================= */
 
     function initialize() {
 
         /*
-         * Logo does not depend on Supabase.
+         * Logo works independently of Supabase.
          */
 
         standardizeLogo();
 
 
         /*
-         * CMS loading happens separately.
+         * CMS loading.
          */
 
-        loadSupabase(function () {
-
-            loadPublishedContent();
-
-        });
+        loadSupabase(
+            function () {
+                loadPublishedContent();
+            }
+        );
     }
 
 
     /* =========================================================
-       8. START
+       9. START
        ========================================================= */
 
     if (
-        document.readyState === "loading"
+        document.readyState ===
+        "loading"
     ) {
 
         document.addEventListener(
@@ -575,7 +699,6 @@
     } else {
 
         initialize();
-
     }
 
 })();
