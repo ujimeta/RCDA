@@ -26,6 +26,8 @@
             --border: #E4E7EC;
             --success: #027A48;
             --danger: #B42318;
+            --soft-green: #ECFDF3;
+            --soft-gold: #FFF7E6;
         }
 
         body {
@@ -41,19 +43,26 @@
             color: var(--text);
         }
 
-        /* HEADER */
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
 
         .topbar {
-            height: 72px;
-            background: white;
+            min-height: 72px;
+            background: var(--white);
             border-bottom: 1px solid var(--border);
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 35px;
-
+            gap: 20px;
+            padding: 12px 35px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -63,6 +72,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            min-width: 0;
         }
 
         .brand img {
@@ -85,13 +95,13 @@
         .top-actions {
             display: flex;
             gap: 10px;
+            flex-shrink: 0;
         }
 
         .button {
             border: none;
             border-radius: 7px;
             padding: 10px 15px;
-            cursor: pointer;
             font-weight: 700;
             font-size: 0.8rem;
         }
@@ -106,10 +116,8 @@
             color: var(--danger);
         }
 
-        /* PAGE */
-
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: auto;
             padding: 35px;
         }
@@ -129,20 +137,19 @@
             font-size: 0.85rem;
         }
 
-        /* EDITOR */
-
         .editor-grid {
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 280px minmax(0, 1fr);
             gap: 22px;
+            align-items: start;
         }
 
         .panel {
-            background: white;
+            background: var(--white);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.025);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
         }
 
         .panel h3 {
@@ -150,8 +157,6 @@
             font-size: 0.95rem;
             margin-bottom: 18px;
         }
-
-        /* PAGE LIST */
 
         .page-list {
             display: flex;
@@ -162,18 +167,12 @@
         .page-item {
             width: 100%;
             text-align: left;
-
             border: none;
             background: transparent;
-
             padding: 11px 12px;
             border-radius: 7px;
-
-            cursor: pointer;
-
             color: var(--muted);
             font-size: 0.82rem;
-
             transition: 0.2s;
         }
 
@@ -188,72 +187,15 @@
             font-weight: 700;
         }
 
-        /* FORM */
-
-        .form-group {
-            margin-bottom: 19px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-
-            color: var(--dark-green);
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-
-        input,
-        textarea,
-        select {
-            width: 100%;
-
-            border: 1px solid var(--border);
-            border-radius: 7px;
-
-            padding: 11px 12px;
-
-            font-family: inherit;
-            font-size: 0.85rem;
-
-            color: var(--text);
-            background: white;
-
-            outline: none;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(15,76,58,0.08);
-        }
-
-        textarea {
-            min-height: 230px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        /* STATUS */
-
         .status-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
+            gap: 15px;
             padding: 14px;
-
             background: #F8FAFC;
             border: 1px solid var(--border);
             border-radius: 8px;
-
             margin-bottom: 20px;
         }
 
@@ -268,16 +210,186 @@
             font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .status-draft {
-            background: #FFF7E6;
+            background: var(--soft-gold);
             color: #9A6700;
         }
 
         .status-published {
-            background: #ECFDF3;
+            background: var(--soft-green);
             color: var(--success);
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--dark-green);
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 11px 12px;
+            color: var(--text);
+            background: var(--white);
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(15, 76, 58, 0.08);
+        }
+
+        textarea {
+            min-height: 190px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        #content {
+            min-height: 230px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* SECTIONS */
+
+        .sections-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 28px 0 12px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .sections-header h3 {
+            margin-bottom: 4px;
+        }
+
+        .sections-header p {
+            color: var(--muted);
+            font-size: 0.76rem;
+            line-height: 1.5;
+        }
+
+        .add-section-button {
+            background: var(--green);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .add-section-button:hover {
+            background: var(--dark-green);
+        }
+
+        .sections-empty {
+            border: 1px dashed #CBD5E1;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+            background: #FAFBFC;
+        }
+
+        .section-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 17px;
+            margin-bottom: 14px;
+            background: #FCFDFC;
+        }
+
+        .section-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--green);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .section-title {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark-green);
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        .section-controls {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .mini-button {
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--green);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .mini-button:hover {
+            background: #F2F4F7;
+        }
+
+        .mini-button.delete {
+            color: var(--danger);
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .section-textarea {
+            min-height: 150px;
+        }
+
+        .help-text {
+            color: var(--muted);
+            font-size: 0.72rem;
+            margin-top: 5px;
+            line-height: 1.45;
         }
 
         /* ACTIONS */
@@ -286,10 +398,8 @@
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-
             margin-top: 25px;
             padding-top: 20px;
-
             border-top: 1px solid var(--border);
         }
 
@@ -311,7 +421,8 @@
             filter: brightness(0.95);
         }
 
-        .button:disabled {
+        .button:disabled,
+        .mini-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
@@ -320,19 +431,15 @@
 
         #message {
             display: none;
-
             margin-bottom: 20px;
-
             padding: 13px 15px;
-
             border-radius: 7px;
-
             font-size: 0.78rem;
         }
 
         .message-success {
             display: block !important;
-            background: #ECFDF3;
+            background: var(--soft-green);
             border: 1px solid #ABEFC6;
             color: var(--success);
         }
@@ -349,20 +456,16 @@
         #loading {
             position: fixed;
             inset: 0;
-
             background:
                 linear-gradient(
                     135deg,
                     var(--dark-green),
                     var(--green)
                 );
-
             color: white;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             z-index: 9999;
         }
 
@@ -380,14 +483,10 @@
         .spinner {
             width: 34px;
             height: 34px;
-
             border: 4px solid rgba(255,255,255,0.25);
             border-top-color: var(--gold);
-
             border-radius: 50%;
-
             animation: spin 0.8s linear infinite;
-
             margin: 20px auto;
         }
 
@@ -401,16 +500,14 @@
             display: none;
         }
 
-        /* MOBILE */
-
-        @media(max-width: 800px) {
+        @media (max-width: 900px) {
 
             .editor-grid {
                 grid-template-columns: 1fr;
             }
 
             .topbar {
-                padding: 0 18px;
+                padding: 12px 18px;
             }
 
             .container {
@@ -420,10 +517,9 @@
             .brand p {
                 display: none;
             }
-
         }
 
-        @media(max-width: 550px) {
+        @media (max-width: 650px) {
 
             .form-row {
                 grid-template-columns: 1fr;
@@ -441,14 +537,31 @@
                 width: 100%;
             }
 
-        }
+            .sections-header {
+                flex-direction: column;
+            }
 
+            .add-section-button {
+                width: 100%;
+            }
+
+            .section-card-head {
+                align-items: flex-start;
+            }
+
+            .section-controls {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<!-- LOADING -->
+<!-- =========================================================
+     LOADING
+     ========================================================= -->
 
 <div id="loading">
 
@@ -474,11 +587,11 @@
 </div>
 
 
-<!-- APPLICATION -->
+<!-- =========================================================
+     APPLICATION
+     ========================================================= -->
 
 <div id="app">
-
-    <!-- HEADER -->
 
     <header class="topbar">
 
@@ -508,13 +621,15 @@
 
             <button
                 class="button back-button"
-                onclick="window.location.href='dashboard.html'"
+                type="button"
+                id="dashboardButton"
             >
                 ← Dashboard
             </button>
 
             <button
                 class="button logout-button"
+                type="button"
                 id="logoutButton"
             >
                 Sign Out
@@ -525,8 +640,6 @@
     </header>
 
 
-    <!-- CONTENT -->
-
     <main class="container">
 
         <div class="page-heading">
@@ -536,7 +649,7 @@
             </h2>
 
             <p>
-                Manage the institutional content displayed across the RCDA website.
+                Manage page-level content and structured website sections across the RCDA website.
             </p>
 
         </div>
@@ -547,8 +660,9 @@
 
         <div class="editor-grid">
 
-
-            <!-- PAGE SELECTOR -->
+            <!-- =================================================
+                 PAGE SELECTOR
+                 ================================================= -->
 
             <aside class="panel">
 
@@ -556,97 +670,57 @@
                     Website Pages
                 </h3>
 
-
                 <div class="page-list" id="pageList">
 
-                    <button
-                        class="page-item active"
-                        data-page="home"
-                    >
+                    <button class="page-item active" data-page="home" type="button">
                         🏠 Home
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="who-we-are"
-                    >
+                    <button class="page-item" data-page="who-we-are" type="button">
                         👥 Who We Are
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="what-we-do"
-                    >
+                    <button class="page-item" data-page="what-we-do" type="button">
                         🎯 What We Do
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="who-we-serve"
-                    >
+                    <button class="page-item" data-page="who-we-serve" type="button">
                         🤝 Who We Serve
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="our-model"
-                    >
+                    <button class="page-item" data-page="our-model" type="button">
                         🧩 Our Model
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="community-engagement"
-                    >
+                    <button class="page-item" data-page="community-engagement" type="button">
                         🏘️ Community Engagement
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="hiv-tb"
-                    >
+                    <button class="page-item" data-page="hiv-tb" type="button">
                         🩺 HIV & TB
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="malaria"
-                    >
+                    <button class="page-item" data-page="malaria" type="button">
                         🦟 Malaria
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="nutrition"
-                    >
+                    <button class="page-item" data-page="nutrition" type="button">
                         🥗 Nutrition
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="reproductive-health"
-                    >
+                    <button class="page-item" data-page="reproductive-health" type="button">
                         ❤️ Reproductive Health
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="child-survival"
-                    >
+                    <button class="page-item" data-page="child-survival" type="button">
                         👶 Child Survival
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="wash"
-                    >
+                    <button class="page-item" data-page="wash" type="button">
                         💧 WASH
                     </button>
 
-                    <button
-                        class="page-item"
-                        data-page="systems-surveillance"
-                    >
+                    <button class="page-item" data-page="systems-surveillance" type="button">
                         📊 Systems & Surveillance
                     </button>
 
@@ -655,7 +729,9 @@
             </aside>
 
 
-            <!-- EDITOR -->
+            <!-- =================================================
+                 EDITOR
+                 ================================================= -->
 
             <section class="panel">
 
@@ -673,7 +749,6 @@
 
                     </div>
 
-
                     <span
                         id="statusBadge"
                         class="status-badge status-draft"
@@ -685,7 +760,6 @@
 
 
                 <form id="contentForm">
-
 
                     <div class="form-row">
 
@@ -765,8 +839,12 @@
 
                         <textarea
                             id="content"
-                            placeholder="Enter the main website content..."
+                            placeholder="Enter the main page content..."
                         ></textarea>
+
+                        <div class="help-text">
+                            Keep this field for the page's primary narrative. Structured content blocks can be added below.
+                        </div>
 
                     </div>
 
@@ -782,6 +860,44 @@
                             id="imageUrl"
                             placeholder="https://..."
                         >
+
+                    </div>
+
+
+                    <!-- =================================================
+                         STRUCTURED SECTIONS
+                         ================================================= -->
+
+                    <div class="sections-header">
+
+                        <div>
+
+                            <h3>
+                                Structured Page Sections
+                            </h3>
+
+                            <p>
+                                Add independent content blocks that can later be connected to specific sections of the public website.
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="button add-section-button"
+                            id="addSectionButton"
+                        >
+                            + Add Section
+                        </button>
+
+                    </div>
+
+
+                    <div id="sectionsContainer">
+
+                        <div class="sections-empty" id="sectionsEmpty">
+                            No structured sections yet. Click <strong>+ Add Section</strong> to create one.
+                        </div>
 
                     </div>
 
@@ -818,10 +934,9 @@
 
 
 <script>
-
     /* =========================================================
        SUPABASE
-    ========================================================= */
+       ========================================================= */
 
     const SUPABASE_URL =
         "https://ttuiljvtnfimzcgqogme.supabase.co";
@@ -829,11 +944,9 @@
     const SUPABASE_PUBLISHABLE_KEY =
         "sb_publishable_nZYzfjOw8p5eVX_44n3rcw_ioi-IGXA";
 
-
     const {
         createClient
     } = supabase;
-
 
     const supabaseClient =
         createClient(
@@ -843,19 +956,18 @@
 
 
     /* =========================================================
-       VARIABLES
-    ========================================================= */
+       STATE
+       ========================================================= */
 
     let currentPageKey = "home";
-
     let currentUser = null;
-
     let currentRole = null;
+    let sections = [];
 
 
     /* =========================================================
        PAGE NAMES
-    ========================================================= */
+       ========================================================= */
 
     const pageNames = {
 
@@ -903,7 +1015,7 @@
 
     /* =========================================================
        ELEMENTS
-    ========================================================= */
+       ========================================================= */
 
     const loading =
         document.getElementById("loading");
@@ -938,6 +1050,15 @@
     const currentPage =
         document.getElementById("currentPage");
 
+    const sectionsContainer =
+        document.getElementById("sectionsContainer");
+
+    const sectionsEmpty =
+        document.getElementById("sectionsEmpty");
+
+    const addSectionButton =
+        document.getElementById("addSectionButton");
+
     const saveButton =
         document.getElementById("saveButton");
 
@@ -947,15 +1068,15 @@
     const logoutButton =
         document.getElementById("logoutButton");
 
+    const dashboardButton =
+        document.getElementById("dashboardButton");
+
 
     /* =========================================================
-       MESSAGE
-    ========================================================= */
+       MESSAGES
+       ========================================================= */
 
-    function showMessage(
-        text,
-        type
-    ) {
+    function showMessage(text, type) {
 
         message.textContent = text;
 
@@ -970,7 +1091,6 @@
     function clearMessage() {
 
         message.textContent = "";
-
         message.className = "";
 
     }
@@ -978,19 +1098,20 @@
 
     /* =========================================================
        STATUS BADGE
-    ========================================================= */
+       ========================================================= */
 
-    function updateStatusBadge(
-        status
-    ) {
+    function updateStatusBadge(status) {
+
+        const currentStatus =
+            status || "draft";
 
         statusBadge.textContent =
-            status || "draft";
+            currentStatus;
 
         statusBadge.className =
             "status-badge " +
             (
-                status === "published"
+                currentStatus === "published"
                     ? "status-published"
                     : "status-draft"
             );
@@ -999,12 +1120,538 @@
 
 
     /* =========================================================
-       LOAD PAGE
-    ========================================================= */
+       SECTION HELPERS
+       ========================================================= */
 
-    async function loadPage(
-        pageKey
+    function createSectionId() {
+
+        if (
+            window.crypto &&
+            typeof window.crypto.randomUUID === "function"
+        ) {
+            return window.crypto.randomUUID();
+        }
+
+        return (
+            "section-" +
+            Date.now() +
+            "-" +
+            Math.random()
+                .toString(36)
+                .slice(2)
+        );
+    }
+
+
+    function normalizeSections(input) {
+
+        if (!Array.isArray(input)) {
+            return [];
+        }
+
+        return input.map(function (section, index) {
+
+            return {
+
+                id:
+                    section &&
+                    section.id
+                        ? String(section.id)
+                        : createSectionId(),
+
+                heading:
+                    section &&
+                    typeof section.heading === "string"
+                        ? section.heading
+                        : "",
+
+                content:
+                    section &&
+                    typeof section.content === "string"
+                        ? section.content
+                        : "",
+
+                order:
+                    Number.isFinite(Number(section?.order))
+                        ? Number(section.order)
+                        : index + 1
+
+            };
+
+        });
+    }
+
+
+    function addSection() {
+
+        sections.push({
+
+            id:
+                createSectionId(),
+
+            heading:
+                "",
+
+            content:
+                "",
+
+            order:
+                sections.length + 1
+
+        });
+
+        renderSections();
+
+        setTimeout(function () {
+
+            const cards =
+                sectionsContainer.querySelectorAll(
+                    ".section-card"
+                );
+
+            const lastCard =
+                cards[cards.length - 1];
+
+            if (lastCard) {
+
+                lastCard.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                const input =
+                    lastCard.querySelector(
+                        ".section-heading-input"
+                    );
+
+                if (input) {
+                    input.focus();
+                }
+            }
+
+        }, 50);
+
+    }
+
+
+    function removeSection(index) {
+
+        const section =
+            sections[index];
+
+        if (!section) {
+            return;
+        }
+
+        if (
+            !confirm(
+                "Remove this section?"
+            )
+        ) {
+            return;
+        }
+
+        sections.splice(index, 1);
+
+        resequenceSections();
+
+        renderSections();
+
+    }
+
+
+    function moveSection(index, direction) {
+
+        const newIndex =
+            index + direction;
+
+        if (
+            newIndex < 0 ||
+            newIndex >= sections.length
+        ) {
+            return;
+        }
+
+        const current =
+            sections[index];
+
+        sections[index] =
+            sections[newIndex];
+
+        sections[newIndex] =
+            current;
+
+        resequenceSections();
+
+        renderSections();
+
+    }
+
+
+    function resequenceSections() {
+
+        sections =
+            sections.map(function (
+                section,
+                index
+            ) {
+
+                return {
+                    ...section,
+                    order: index + 1
+                };
+
+            });
+
+    }
+
+
+    function updateSectionField(
+        index,
+        field,
+        value
     ) {
+
+        if (!sections[index]) {
+            return;
+        }
+
+        sections[index][field] =
+            value;
+
+    }
+
+
+    function renderSections() {
+
+        sectionsContainer
+            .querySelectorAll(".section-card")
+            .forEach(function (card) {
+                card.remove();
+            });
+
+        if (!sections.length) {
+
+            sectionsEmpty.style.display =
+                "block";
+
+            return;
+        }
+
+        sectionsEmpty.style.display =
+            "none";
+
+
+        sections.forEach(function (
+            section,
+            index
+        ) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "section-card";
+
+
+            /* HEADER */
+
+            const head =
+                document.createElement("div");
+
+            head.className =
+                "section-card-head";
+
+
+            const title =
+                document.createElement("div");
+
+            title.className =
+                "section-title";
+
+
+            const number =
+                document.createElement("span");
+
+            number.className =
+                "section-number";
+
+            number.textContent =
+                String(index + 1);
+
+
+            const titleText =
+                document.createElement("span");
+
+            titleText.textContent =
+                section.heading ||
+                "Untitled Section";
+
+
+            title.appendChild(number);
+            title.appendChild(titleText);
+
+
+            const controls =
+                document.createElement("div");
+
+            controls.className =
+                "section-controls";
+
+
+            const upButton =
+                document.createElement("button");
+
+            upButton.type =
+                "button";
+
+            upButton.className =
+                "mini-button";
+
+            upButton.textContent =
+                "↑ Up";
+
+            upButton.disabled =
+                index === 0;
+
+            upButton.addEventListener(
+                "click",
+                function () {
+                    moveSection(
+                        index,
+                        -1
+                    );
+                }
+            );
+
+
+            const downButton =
+                document.createElement("button");
+
+            downButton.type =
+                "button";
+
+            downButton.className =
+                "mini-button";
+
+            downButton.textContent =
+                "↓ Down";
+
+            downButton.disabled =
+                index ===
+                sections.length - 1;
+
+            downButton.addEventListener(
+                "click",
+                function () {
+                    moveSection(
+                        index,
+                        1
+                    );
+                }
+            );
+
+
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.type =
+                "button";
+
+            deleteButton.className =
+                "mini-button delete";
+
+            deleteButton.textContent =
+                "Delete";
+
+            deleteButton.addEventListener(
+                "click",
+                function () {
+                    removeSection(index);
+                }
+            );
+
+
+            controls.appendChild(
+                upButton
+            );
+
+            controls.appendChild(
+                downButton
+            );
+
+            controls.appendChild(
+                deleteButton
+            );
+
+
+            head.appendChild(title);
+            head.appendChild(controls);
+
+
+            /* BODY */
+
+            const grid =
+                document.createElement("div");
+
+            grid.className =
+                "section-grid";
+
+
+            /* HEADING */
+
+            const headingGroup =
+                document.createElement("div");
+
+            headingGroup.className =
+                "form-group";
+
+
+            const headingLabel =
+                document.createElement("label");
+
+            headingLabel.textContent =
+                "Section Heading";
+
+
+            const headingInput =
+                document.createElement("input");
+
+            headingInput.type =
+                "text";
+
+            headingInput.className =
+                "section-heading-input";
+
+            headingInput.value =
+                section.heading || "";
+
+            headingInput.placeholder =
+                "e.g. Our Vision, Key Activities, Results";
+
+            headingInput.addEventListener(
+                "input",
+                function () {
+
+                    updateSectionField(
+                        index,
+                        "heading",
+                        headingInput.value
+                    );
+
+                    titleText.textContent =
+                        headingInput.value ||
+                        "Untitled Section";
+
+                }
+            );
+
+
+            headingGroup.appendChild(
+                headingLabel
+            );
+
+            headingGroup.appendChild(
+                headingInput
+            );
+
+
+            /* CONTENT */
+
+            const contentGroup =
+                document.createElement("div");
+
+            contentGroup.className =
+                "form-group";
+
+
+            const contentLabel =
+                document.createElement("label");
+
+            contentLabel.textContent =
+                "Section Content";
+
+
+            const contentTextarea =
+                document.createElement("textarea");
+
+            contentTextarea.className =
+                "section-textarea";
+
+            contentTextarea.value =
+                section.content || "";
+
+            contentTextarea.placeholder =
+                "Enter the content for this section...";
+
+            contentTextarea.addEventListener(
+                "input",
+                function () {
+
+                    updateSectionField(
+                        index,
+                        "content",
+                        contentTextarea.value
+                    );
+
+                }
+            );
+
+
+            const help =
+                document.createElement("div");
+
+            help.className =
+                "help-text";
+
+            help.textContent =
+                "Plain text is recommended for now. Paragraph breaks will be preserved when the public page is connected.";
+
+            contentGroup.appendChild(
+                contentLabel
+            );
+
+            contentGroup.appendChild(
+                contentTextarea
+            );
+
+            contentGroup.appendChild(
+                help
+            );
+
+
+            grid.appendChild(
+                headingGroup
+            );
+
+            grid.appendChild(
+                contentGroup
+            );
+
+
+            card.appendChild(
+                head
+            );
+
+            card.appendChild(
+                grid
+            );
+
+
+            sectionsContainer.appendChild(
+                card
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       LOAD PAGE
+       ========================================================= */
+
+    async function loadPage(pageKey) {
 
         clearMessage();
 
@@ -1021,23 +1668,28 @@
 
         document
             .querySelectorAll(".page-item")
-            .forEach(function(item) {
+            .forEach(function (item) {
 
                 item.classList.toggle(
                     "active",
-                    item.dataset.page === pageKey
+                    item.dataset.page ===
+                        pageKey
                 );
 
             });
 
 
-        titleInput.value = "";
+        titleInput.value =
+            "";
 
-        subtitleInput.value = "";
+        subtitleInput.value =
+            "";
 
-        contentInput.value = "";
+        contentInput.value =
+            "";
 
-        imageUrlInput.value = "";
+        imageUrlInput.value =
+            "";
 
         statusInput.value =
             "draft";
@@ -1045,6 +1697,11 @@
         updateStatusBadge(
             "draft"
         );
+
+        sections =
+            [];
+
+        renderSections();
 
 
         try {
@@ -1071,19 +1728,17 @@
                 );
 
                 showMessage(
-                    "Unable to load this page's content.",
+                    "Unable to load this page's content. " +
+                    error.message,
                     "error"
                 );
 
                 return;
-
             }
 
 
             if (!data) {
-
                 return;
-
             }
 
 
@@ -1100,14 +1755,27 @@
                 data.image_url || "";
 
             statusInput.value =
-                data.status || "draft";
+                data.status ||
+                "draft";
 
             updateStatusBadge(
-                data.status || "draft"
+                data.status ||
+                "draft"
             );
 
 
-        } catch (error) {
+            sections =
+                normalizeSections(
+                    data.sections
+                );
+
+            resequenceSections();
+
+            renderSections();
+
+        }
+
+        catch (error) {
 
             console.error(
                 error
@@ -1125,7 +1793,7 @@
 
     /* =========================================================
        SAVE CONTENT
-    ========================================================= */
+       ========================================================= */
 
     async function saveContent(
         publicationStatus
@@ -1142,7 +1810,6 @@
             );
 
             return;
-
         }
 
 
@@ -1152,8 +1819,14 @@
         publishButton.disabled =
             true;
 
+        addSectionButton.disabled =
+            true;
+
 
         try {
+
+            resequenceSections();
+
 
             const record = {
 
@@ -1171,6 +1844,9 @@
 
                 image_url:
                     imageUrlInput.value.trim(),
+
+                sections:
+                    sections,
 
                 status:
                     publicationStatus,
@@ -1215,7 +1891,6 @@
                 );
 
                 return;
-
             }
 
 
@@ -1227,15 +1902,27 @@
             );
 
 
+            sections =
+                normalizeSections(
+                    data.sections
+                );
+
+            resequenceSections();
+
+            renderSections();
+
+
             showMessage(
-                publicationStatus === "published"
+                publicationStatus ===
+                    "published"
                     ? "Page published successfully."
                     : "Page saved as a draft successfully.",
                 "success"
             );
 
+        }
 
-        } catch (error) {
+        catch (error) {
 
             console.error(
                 error
@@ -1246,12 +1933,17 @@
                 "error"
             );
 
-        } finally {
+        }
+
+        finally {
 
             saveButton.disabled =
                 false;
 
             publishButton.disabled =
+                false;
+
+            addSectionButton.disabled =
                 false;
 
         }
@@ -1261,15 +1953,15 @@
 
     /* =========================================================
        PAGE NAVIGATION
-    ========================================================= */
+       ========================================================= */
 
     document
         .querySelectorAll(".page-item")
-        .forEach(function(item) {
+        .forEach(function (item) {
 
             item.addEventListener(
                 "click",
-                function() {
+                function () {
 
                     loadPage(
                         item.dataset.page
@@ -1282,12 +1974,28 @@
 
 
     /* =========================================================
+       ADD SECTION
+       ========================================================= */
+
+    addSectionButton.addEventListener(
+        "click",
+        function () {
+
+            clearMessage();
+
+            addSection();
+
+        }
+    );
+
+
+    /* =========================================================
        SAVE BUTTON
-    ========================================================= */
+       ========================================================= */
 
     saveButton.addEventListener(
         "click",
-        function() {
+        function () {
 
             saveContent(
                 "draft"
@@ -1299,20 +2007,18 @@
 
     /* =========================================================
        PUBLISH BUTTON
-    ========================================================= */
+       ========================================================= */
 
     publishButton.addEventListener(
         "click",
-        function() {
+        function () {
 
             if (
                 !confirm(
                     "Publish this page to the RCDA website?"
                 )
             ) {
-
                 return;
-
             }
 
             saveContent(
@@ -1325,11 +2031,11 @@
 
     /* =========================================================
        STATUS SELECT
-    ========================================================= */
+       ========================================================= */
 
     statusInput.addEventListener(
         "change",
-        function() {
+        function () {
 
             updateStatusBadge(
                 statusInput.value
@@ -1340,12 +2046,27 @@
 
 
     /* =========================================================
+       DASHBOARD
+       ========================================================= */
+
+    dashboardButton.addEventListener(
+        "click",
+        function () {
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+    );
+
+
+    /* =========================================================
        LOGOUT
-    ========================================================= */
+       ========================================================= */
 
     logoutButton.addEventListener(
         "click",
-        async function() {
+        async function () {
 
             await supabaseClient
                 .auth
@@ -1360,7 +2081,7 @@
 
     /* =========================================================
        VERIFY ADMINISTRATOR
-    ========================================================= */
+       ========================================================= */
 
     async function verifyAdministrator() {
 
@@ -1384,7 +2105,6 @@
                     "index.html";
 
                 return;
-
             }
 
 
@@ -1421,7 +2141,6 @@
                     "index.html";
 
                 return;
-
             }
 
 
@@ -1456,15 +2175,7 @@
                     "index.html";
 
                 return;
-
             }
-
-
-            /* ---------------------------------------------
-               Editors can edit content.
-               All three authorized roles can access
-               this page.
-            --------------------------------------------- */
 
 
             loading.style.display =
@@ -1478,11 +2189,12 @@
                 "home"
             );
 
+        }
 
-        } catch (error) {
+        catch (error) {
 
             console.error(
-                "Authorization error:",
+                "Administrator verification error:",
                 error
             );
 
@@ -1496,31 +2208,26 @@
 
     /* =========================================================
        AUTH STATE
-    ========================================================= */
+       ========================================================= */
 
-    supabaseClient
-        .auth
-        .onAuthStateChange(
-            function(
-                event
+    supabaseClient.auth.onAuthStateChange(
+        function (event) {
+
+            if (
+                event === "SIGNED_OUT"
             ) {
 
-                if (
-                    event === "SIGNED_OUT"
-                ) {
-
-                    window.location.href =
-                        "index.html";
-
-                }
-
+                window.location.href =
+                    "index.html";
             }
-        );
+
+        }
+    );
 
 
     /* =========================================================
-       START
-    ========================================================= */
+       INITIALIZE
+       ========================================================= */
 
     verifyAdministrator();
 
