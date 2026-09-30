@@ -1,192 +1,97 @@
 /* =========================================================
-   RCDA GLOBAL SITE SCRIPT — CMS v4
-   =========================================================
+   RCDA GLOBAL SITE + CMS CONNECTOR
+   ---------------------------------------------------------
    Purpose:
-   1. Standardize RCDA logo.
-   2. Load published content from Supabase.
-   3. Prevent homepage CMS content from briefly showing
-      stale static content during CMS loading.
-   4. Preserve the existing page layouts.
+   1. Standardize the official RCDA logo across public pages.
+   2. Load published content from Supabase site_content.
+   3. Preserve the existing RCDA page design.
    ========================================================= */
 
 (function () {
     "use strict";
 
-    const SUPABASE_URL =
-        "https://ttuiljvtnfimzcgqogme.supabase.co";
-
+    const SUPABASE_URL = "https://ttuiljvtnfimzcgqogme.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY =
         "sb_publishable_nZYzfjOw8p5eVX_44n3rcw_ioi-IGXA";
 
+    /*
+     * Keep the logo local to the repository so every page uses
+     * the same official image.
+     */
     const RCDA_LOGO = "rcda-logo.png";
 
-    const currentPath =
-        window.location.pathname.toLowerCase();
-
-    const isHomePage =
-        currentPath.endsWith("/") ||
-        currentPath.endsWith("/index.html") ||
-        currentPath === "";
-
-
-    /* =========================================================
-       1. CMS LOADING STATE
-       ========================================================= */
-
-    function activateCmsLoadingState() {
-
-        if (!isHomePage) {
+    /*
+     * Load Supabase only if it has not already been loaded.
+     */
+    function loadSupabase(callback) {
+        if (window.supabase && typeof window.supabase.createClient === "function") {
+            callback();
             return;
         }
 
-        /*
-         * Immediately add a class to <html>.
-         * This allows the page to hide CMS-managed content
-         * until the published version has been retrieved.
-         */
-        document.documentElement.classList.add(
-            "rcda-cms-loading"
-        );
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+        script.async = true;
+        script.onload = callback;
+        script.onerror = function () {
+            console.error("RCDA CMS: Unable to load Supabase.");
+        };
 
-
-        if (
-            !document.getElementById(
-                "rcda-cms-loading-style"
-            )
-        ) {
-
-            const style =
-                document.createElement("style");
-
-            style.id =
-                "rcda-cms-loading-style";
-
-            style.textContent = `
-                html.rcda-cms-loading
-                .hero-content h1,
-
-                html.rcda-cms-loading
-                .hero-content p,
-
-                html.rcda-cms-loading
-                .founder-message {
-                    visibility: hidden;
-                }
-
-                html.rcda-cms-ready
-                .hero-content h1,
-
-                html.rcda-cms-ready
-                .hero-content p,
-
-                html.rcda-cms-ready
-                .founder-message {
-                    visibility: visible;
-                }
-            `;
-
-            document.head.appendChild(style);
-        }
+        document.head.appendChild(script);
     }
-
-
-    function finishCmsLoadingState() {
-
-        if (!isHomePage) {
-            return;
-        }
-
-        document.documentElement.classList.remove(
-            "rcda-cms-loading"
-        );
-
-        document.documentElement.classList.add(
-            "rcda-cms-ready"
-        );
-    }
-
 
     /*
-     * Execute as early as possible.
+     * Normalize the official RCDA logo.
+     *
+     * Existing pages currently use two logo patterns:
+     *   - <img> based logo
+     *   - old "R / RCDA / Nigeria" placeholder
+     *
+     * This function supports both without requiring the page
+     * to be redesigned.
      */
-    activateCmsLoadingState();
-
-
-    /* =========================================================
-       2. STANDARDIZE RCDA LOGO
-       ========================================================= */
-
     function standardizeLogo() {
+        const imageLogos = document.querySelectorAll(
+            ".logo img, header img[alt*='RCDA'], header img[src*='rcda-logo']"
+        );
 
-        document.querySelectorAll(
-            "header .logo"
-        ).forEach(function (logo) {
+        imageLogos.forEach(function (img) {
+            img.src = RCDA_LOGO;
+            img.alt = "Rahama Community Development Association (RCDA) logo";
+            img.loading = "eager";
+            img.decoding = "async";
+        });
 
-            const existingImage =
-                logo.querySelector("img");
+        /*
+         * Replace the old circular R placeholder with the actual
+         * logo image while preserving the existing .logo link.
+         */
+        document.querySelectorAll("header .logo").forEach(function (logo) {
+            const placeholder = logo.querySelector(".logo-emblem");
 
-            if (existingImage) {
-
-                existingImage.src =
-                    RCDA_LOGO;
-
-                existingImage.alt =
-                    "Rahama Community Development Association (RCDA) logo";
-
-                existingImage.classList.add(
-                    "rcda-global-logo"
-                );
-
+            if (!placeholder) {
                 return;
             }
 
+            const img = document.createElement("img");
+            img.src = RCDA_LOGO;
+            img.alt = "Rahama Community Development Association (RCDA) logo";
+            img.loading = "eager";
+            img.decoding = "async";
 
-            /*
-             * Older logo structures.
-             */
-            const oldEmblem =
-                logo.querySelector(".logo-emblem") ||
-                logo.querySelector(".logo-box");
-
-            if (oldEmblem) {
-
-                const img =
-                    document.createElement("img");
-
-                img.src =
-                    RCDA_LOGO;
-
-                img.alt =
-                    "Rahama Community Development Association (RCDA) logo";
-
-                img.className =
-                    "rcda-global-logo";
-
-                logo.innerHTML = "";
-
-                logo.appendChild(img);
-            }
-
+            logo.innerHTML = "";
+            logo.appendChild(img);
         });
 
-
         /*
-         * Consistent logo dimensions.
+         * Add a small amount of consistent logo styling without
+         * overriding the page's broader design.
          */
-        if (
-            !document.getElementById(
-                "rcda-logo-global-style"
-            )
-        ) {
-
-            const style =
-                document.createElement("style");
-
-            style.id =
-                "rcda-logo-global-style";
-
+        if (!document.getElementById("rcda-global-logo-style")) {
+            const style = document.createElement("style");
+            style.id = "rcda-global-logo-style";
             style.textContent = `
-                header .rcda-global-logo {
+                header .logo img {
                     display: block;
                     width: auto;
                     height: 62px;
@@ -196,508 +101,203 @@
                 }
 
                 @media (max-width: 900px) {
-                    header .rcda-global-logo {
+                    header .logo img {
                         height: 52px;
-                        max-width: 200px;
+                        max-width: 190px;
                     }
                 }
 
                 @media (max-width: 600px) {
-                    header .rcda-global-logo {
+                    header .logo img {
                         height: 48px;
-                        max-width: 180px;
+                        max-width: 175px;
                     }
                 }
             `;
-
             document.head.appendChild(style);
         }
     }
 
-
-    /* =========================================================
-       3. DETERMINE CMS PAGE KEY
-       ========================================================= */
-
+    /*
+     * Determine the CMS page key from the current filename.
+     */
     function getPageKey() {
+        const path = window.location.pathname;
+        let filename = path.split("/").pop() || "index.html";
 
-        let filename =
-            window.location.pathname
-                .split("/")
-                .pop();
-
-        if (
-            !filename ||
-            filename === "/"
-        ) {
+        if (!filename || filename === "/") {
             filename = "index.html";
         }
 
-        if (
-            filename.toLowerCase() ===
-            "index.html"
-        ) {
+        if (filename.toLowerCase() === "index.html") {
             return "home";
         }
 
-        return filename.replace(
-            /\.html$/i,
-            ""
-        );
+        return filename.replace(/\.html$/i, "");
     }
 
+    /*
+     * Find the appropriate elements on the existing page.
+     * Explicit data-cms attributes always take priority.
+     */
+    function getCmsTargets(pageKey) {
+        if (pageKey === "home") {
+            return {
+                title:
+                    document.querySelector('[data-cms="home-title"]') ||
+                    document.querySelector(".hero-content h1"),
 
-    /* =========================================================
-       4. LOAD SUPABASE LIBRARY
-       ========================================================= */
+                subtitle:
+                    document.querySelector('[data-cms="home-subtitle"]') ||
+                    document.querySelector(".hero-content p"),
 
-    function loadSupabase(callback) {
+                content:
+                    document.querySelector('[data-cms="home-content"]') ||
+                    document.querySelector(".founder-message"),
 
-        if (
-            window.supabase &&
-            typeof window.supabase.createClient ===
-                "function"
-        ) {
-            callback();
+                image:
+                    document.querySelector('[data-cms="home-image"]') ||
+                    document.querySelector(".hero-image")
+            };
+        }
+
+        return {
+            title:
+                document.querySelector(`[data-cms="${pageKey}-title"]`) ||
+                document.querySelector(".page-hero h1") ||
+                document.querySelector(".page-content h1") ||
+                document.querySelector("main h1"),
+
+            subtitle:
+                document.querySelector(`[data-cms="${pageKey}-subtitle"]`) ||
+                document.querySelector(".page-hero p") ||
+                document.querySelector(".page-content > p") ||
+                document.querySelector("main > p"),
+
+            content:
+                document.querySelector(`[data-cms="${pageKey}-content"]`) ||
+                document.querySelector(".page-content"),
+
+            image:
+                document.querySelector(`[data-cms="${pageKey}-image"]`) ||
+                document.querySelector(".page-hero img")
+        };
+    }
+
+    function setText(element, value) {
+        if (!element || !value) {
             return;
         }
 
-
-        const script =
-            document.createElement("script");
-
-        script.src =
-            "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-        script.async = true;
-
-
-        script.onload = callback;
-
-
-        script.onerror = function () {
-
-            console.error(
-                "RCDA CMS: Unable to load Supabase."
-            );
-
-            /*
-             * Don't leave the homepage permanently hidden
-             * if the external library fails.
-             */
-            finishCmsLoadingState();
-        };
-
-
-        document.head.appendChild(script);
+        element.textContent = value;
     }
 
-
-    /* =========================================================
-       5. FIND CMS TARGETS
-       ========================================================= */
-
-    function getCmsTargets(pageKey) {
-
-        const targets = {
-            title: null,
-            subtitle: null,
-            content: null,
-            image: null
-        };
-
+    function setContent(element, value) {
+        if (!element || !value) {
+            return;
+        }
 
         /*
-         * Explicit CMS hooks.
+         * For explicitly marked CMS content, allow basic HTML.
+         * For the current fallback founder-message, use plain text
+         * with line breaks to avoid replacing page structure.
          */
-        targets.title =
-            document.querySelector(
-                `[data-cms="${pageKey}-title"]`
-            );
-
-        targets.subtitle =
-            document.querySelector(
-                `[data-cms="${pageKey}-subtitle"]`
-            );
-
-        targets.content =
-            document.querySelector(
-                `[data-cms="${pageKey}-content"]`
-            );
-
-        targets.image =
-            document.querySelector(
-                `[data-cms="${pageKey}-image"]`
-            );
-
-
-        /* -----------------------------------------------------
-           HOMEPAGE FALLBACKS
-           ----------------------------------------------------- */
-
-        if (
-            pageKey === "home"
-        ) {
-
-            targets.title =
-                targets.title ||
-                document.querySelector(
-                    ".hero-content h1"
-                );
-
-            targets.subtitle =
-                targets.subtitle ||
-                document.querySelector(
-                    ".hero-content p"
-                );
-
-            targets.content =
-                targets.content ||
-                document.querySelector(
-                    ".founder-message"
-                );
-
-            targets.image =
-                targets.image ||
-                document.querySelector(
-                    ".hero-image"
-                );
-
-            return targets;
+        if (element.hasAttribute("data-cms")) {
+            element.innerHTML = value.replace(/\n/g, "<br>");
+        } else if (element.classList.contains("founder-message")) {
+            element.textContent = value;
         }
-
-
-        /* -----------------------------------------------------
-           INNER PAGE FALLBACKS
-           ----------------------------------------------------- */
-
-        targets.title =
-            targets.title ||
-            document.querySelector(
-                ".page-header h1"
-            );
-
-        targets.subtitle =
-            targets.subtitle ||
-            document.querySelector(
-                ".page-header p"
-            );
-
-
-        targets.title =
-            targets.title ||
-            document.querySelector(
-                ".page-content h1"
-            );
-
-        targets.subtitle =
-            targets.subtitle ||
-            document.querySelector(
-                ".page-content > p"
-            );
-
-
-        return targets;
     }
 
-
-    /* =========================================================
-       6. WRITE CMS CONTENT
-       ========================================================= */
-
-    function setText(
-        element,
-        value
-    ) {
-
-        if (
-            !element ||
-            !value
-        ) {
+    function setImage(element, url) {
+        if (!element || !url) {
             return;
         }
 
-        element.textContent =
-            value;
-    }
-
-
-    function setHtmlContent(
-        element,
-        value
-    ) {
-
-        if (
-            !element ||
-            !value
-        ) {
+        if (element.tagName === "IMG") {
+            element.src = url;
             return;
         }
 
-        element.innerHTML =
-            String(value).replace(
-                /\n/g,
-                "<br>"
-            );
-    }
-
-
-    function setImage(
-        element,
-        url
-    ) {
-
-        if (
-            !element ||
-            !url
-        ) {
-            return;
+        /*
+         * The current homepage hero uses a CSS background image.
+         */
+        if (element.classList.contains("hero-image")) {
+            element.style.backgroundImage =
+                `linear-gradient(rgba(8, 46, 34, 0.12), rgba(8, 46, 34, 0.12)), url("${url}")`;
         }
-
-
-        if (
-            element.tagName ===
-            "IMG"
-        ) {
-
-            element.src =
-                url;
-
-            return;
-        }
-
-
-        element.style.backgroundImage =
-            `url("${String(url)
-                .replace(/"/g, '\\"')}")`;
     }
-
-
-    /* =========================================================
-       7. LOAD PUBLISHED CONTENT
-       ========================================================= */
 
     async function loadPublishedContent() {
-
-        if (
-            !window.supabase ||
-            typeof window.supabase.createClient !==
-                "function"
-        ) {
-
-            finishCmsLoadingState();
-
+        if (!window.supabase || !window.supabase.createClient) {
             return;
         }
 
-
-        const pageKey =
-            getPageKey();
-
-        const targets =
-            getCmsTargets(pageKey);
-
+        const pageKey = getPageKey();
+        const targets = getCmsTargets(pageKey);
 
         try {
+            const client = window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
 
-            const client =
-                window.supabase.createClient(
-                    SUPABASE_URL,
-                    SUPABASE_PUBLISHABLE_KEY
-                );
+            const { data, error } = await client
+                .from("site_content")
+                .select("page_key, title, subtitle, content, image_url, status")
+                .eq("page_key", pageKey)
+                .eq("status", "published")
+                .maybeSingle();
 
-
-            const result =
-                await client
-                    .from("site_content")
-                    .select(
-                        "page_key,title,subtitle,content,image_url,status"
-                    )
-                    .eq(
-                        "page_key",
-                        pageKey
-                    )
-                    .eq(
-                        "status",
-                        "published"
-                    )
-                    .maybeSingle();
-
-
-            if (
-                result.error
-            ) {
-
-                console.error(
-                    "RCDA CMS error:",
-                    result.error
-                );
-
-                finishCmsLoadingState();
-
+            if (error) {
+                console.error("RCDA CMS:", error);
                 return;
             }
 
-
-            const data =
-                result.data;
-
+            if (!data) {
+                return;
+            }
 
             /*
-             * If no CMS record exists, reveal the existing
-             * static content rather than leaving it hidden.
+             * The title and subtitle update the visible page while
+             * preserving the existing layout.
              */
-            if (!data) {
+            setText(targets.title, data.title);
+            setText(targets.subtitle, data.subtitle);
 
-                finishCmsLoadingState();
+            /*
+             * Only explicitly marked content areas are allowed to
+             * replace structured page content. On the existing
+             * homepage, the fallback is the founder message.
+             */
+            setContent(targets.content, data.content);
 
-                return;
-            }
+            setImage(targets.image, data.image_url);
 
-
-            /* -------------------------------------------------
-               TITLE
-               ------------------------------------------------- */
-
-            if (
-                targets.title &&
-                data.title
-            ) {
-
-                setText(
-                    targets.title,
-                    data.title
-                );
-            }
-
-
-            /* -------------------------------------------------
-               SUBTITLE
-               ------------------------------------------------- */
-
-            if (
-                targets.subtitle &&
-                data.subtitle
-            ) {
-
-                setText(
-                    targets.subtitle,
-                    data.subtitle
-                );
-            }
-
-
-            /* -------------------------------------------------
-               MAIN CONTENT
-               ------------------------------------------------- */
-
-            if (
-                targets.content &&
-                data.content
-            ) {
-
-                setHtmlContent(
-                    targets.content,
-                    data.content
-                );
-            }
-
-
-            /* -------------------------------------------------
-               FEATURED IMAGE
-               ------------------------------------------------- */
-
-            if (
-                targets.image &&
-                data.image_url
-            ) {
-
-                setImage(
-                    targets.image,
-                    data.image_url
-                );
-            }
-
-
-            /* -------------------------------------------------
-               BROWSER TITLE
-               ------------------------------------------------- */
-
-            if (
-                pageKey === "home" &&
-                data.title
-            ) {
-
+            /*
+             * Keep the browser title useful when CMS title exists.
+             */
+            if (data.title && pageKey === "home") {
                 document.title =
-                    data.title +
-                    " | Rahama Community Development Association (RCDA)";
+                    data.title + " | Rahama Community Development Association (RCDA)";
             }
 
-
-            console.info(
-                "RCDA CMS loaded:",
-                pageKey
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "RCDA CMS unexpected error:",
-                error
-            );
-
-        }
-
-        finally {
-
-            finishCmsLoadingState();
+        } catch (error) {
+            console.error("RCDA CMS: Unexpected error.", error);
         }
     }
-
-
-    /* =========================================================
-       8. INITIALIZE
-       ========================================================= */
 
     function initialize() {
-
-        /*
-         * Logo works independently of Supabase.
-         */
-
         standardizeLogo();
 
-
-        /*
-         * CMS loading.
-         */
-
-        loadSupabase(
-            function () {
-                loadPublishedContent();
-            }
-        );
+        loadSupabase(function () {
+            loadPublishedContent();
+        });
     }
 
-
-    /* =========================================================
-       9. START
-       ========================================================= */
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initialize
-        );
-
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initialize);
     } else {
-
         initialize();
     }
 
